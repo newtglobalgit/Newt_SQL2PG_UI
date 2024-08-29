@@ -624,19 +624,9 @@
             screenReaderCurrentLabel="You're on page"></pagination-controls>
     </div>
 </div>
-<div class="row adjust body-content-padding" *ngIf="!showButtons && !schemasNotFound">
+<!-- <div class="row adjust body-content-padding" *ngIf="!showButtons && !schemasNotFound">
     <span class="">Please wait while data is being fetched.</span>
 </div>
 <div class="row adjust body-content-padding" *ngIf="schemasNotFound">
     <span class="">No schemas found with current selection.</span>
-</div>
-<!-- <div class="row adjust" *ngIf="currentReportView == 'Schema Conversion'">
-    <app-dmap-schemamigration-report [page]="reValidateTag" [stepStatus]="selectedRow.stepStatus"
-        [stepStage]="selectedRow.step" [databaseSelected]="selectedRow">
-    </app-dmap-schemamigration-report>
-</div> -->
-<!-- <div class="col-md-12 reportHeader padding0" *ngIf="currentReportView == 'Test Migration'">
-    <app-dmap-validation-reports class="col-md-12" [runId]="runId" [isButtonsVisible]="testButtonShown"
-        [databaseSelected]="selectedRow">
-    </app-dmap-validation-reports>
 </div> -->

@@ -1,55 +1,192 @@
-<!-- <div id="sidenavid" class="sidenav" *ngIf="globalMenuData"> -->
-<div class="sidenav" >
-    <div class="menu-list" style="margin-top: -64px;margin-left: -27px;padding-top:10px;">
+<div class="sidenav">
+  <div
+    class="menu-list"
+    style="margin-top: -64px; margin-left: -27px; padding-top: 10px"
+  >
+    <ul class="menu-content collapse out">
+      <li
+        (click)="toggleCollapseAssessment()"
+        data-target="#dbMigration"
+        class="collapsed"
+      >
+        <a class="fw-bold">
+          <span *ngIf="showArrow1" class="arrow-style">&#11166;</span>
+          <span *ngIf="!showArrow1" class="arrow-style">&#11167;</span>
+          Assessment
+        </a>
+      </li>
 
-        <ul class="menu-content collapse out">
-            <li  (click)="toggleCollapse()"
-                data-target="#dbMigration" class="collapsed">
-                <a class="fw-bold" >
-                    <span *ngIf="showArrow1" class="arrow-style">&#11166;</span>
-                    <span *ngIf="!showArrow1" class="arrow-style">&#11167;</span>
-                    Migration Life Cycle Status
-                </a>
-            </li>
+      <ul
+        [ngClass]="visibleAssessment ? 'd-visibleAssessment' : 'd-none'"
+        class="sub-menu"
+        id="subMenu-items1"
+      >
+        <li
+          class="d-flex"
+          [ngClass]="{ active: router.isActive('/dbSetup', true) }"
+        >
+          <a style="margin-left: 40px">
+            <img
+              alt="Complete"
+              class="icon-size marginbtm3"
+              src="assets/images/SVG/Database.svg"
+            />
+          </a>
+          <a
+            style="padding-left: 3px"
+            (click)="putActiveClass('subMenu-items1')"
+            tabindex="-1"
+            [routerLink]="['/dbSetup']"
+            >DB Setup</a
+          >
+        </li>
+        <li class="d-flex" routerLinkActive="active">
+          <a style="margin-left: 40px">
+            <img
+              alt="Complete"
+              class="icon-size marginbtm3"
+              src="assets/images/SVG/Application.svg"
+            />
+          </a>
+          <a
+            style="padding-left: 3px"
+            (click)="putActiveClass('subMenu-items1', 'appDashboard')"
+            tabindex="-1"
+            routerLink="/dbAssessment"
+            >DB Assesssment</a
+          >
+        </li>
+      </ul>
+    </ul>
 
-            <ul [ngClass]="visible ? 'd-visible' : 'd-none'" class="sub-menu" id="subMenu-items1">
-                <li class="d-flex" [ngClass]="{'active': router.isActive('/dbDashboard', true)}">
-                    <a style="margin-left: 40px">
-                        <img alt="Complete" class="icon-size marginbtm3" src="assets/images/SVG/Database.svg">
-                    </a>
-                    <a 
-                        style="padding-left:3px;" (click)="putActiveClass('subMenu-items1')" tabindex="-1"
-                        [routerLink]="['/dbDashboard']">Database</a>
-                    
-                </li>
-                <li class="d-flex" routerLinkActive="active">
-                    <a style="margin-left: 40px">
-                        <img alt="Complete" class="icon-size marginbtm3" src="assets/images/SVG/Application.svg">
-                    </a>
-                    <a 
-                         style="padding-left:3px;"
-                        (click)="putActiveClass('subMenu-items1', 'appDashboard')" tabindex="-1"
-                        routerLink="/appDashboard">Application</a>
-                    
-                </li>
-            </ul>
+    <!--Settings starts-->
 
-        </ul>
+    <ul class="menu-content collapse out">
+      <li
+        (click)="toggleCollapseSettings()"
+        data-target="#dbMigration"
+        class="collapsed"
+      >
+        <a class="fw-bold">
+          <span *ngIf="showArrow2" class="arrow-style">&#11166;</span>
+          <span *ngIf="!showArrow2" class="arrow-style">&#11167;</span>
+          Settings
+        </a>
+      </li>
 
-       
-        <ul class="menu-content collapse out">
-            <ul id="menu-item1">
-                <li class="d-flex" 
-                    data-target="#dbMigration" style="padding-left: 30px;" routerLinkActive="active">
-                    <a tabindex="-1"  routerLink="/schemaConversion"
-                        class="fw-bold" (click)="putActiveClass('menu-item1')">Schema
-                        Conversion</a>
-                    
-                </li>
-            </ul>
-        </ul>
+      <ul
+        [ngClass]="visibleSettings ? 'd-visibleSettings' : 'd-none'"
+        class="sub-menu"
+        id="subMenu-items2"
+      >
+        <li class="d-flex">
+          <a style="margin-left: 40px">
+            <img
+              alt="Complete"
+              class="icon-size marginbtm3"
+              src="assets/images/SVG/Database.svg"
+            />
+          </a>
+          <a
+            style="padding-left: 3px"
+            (click)="putActiveClass('subMenu-items2')"
+            tabindex="-1"
+            [routerLink]="['/genAi']"
+            >Gen AI Configuration</a
+          >
+        </li>
+      </ul>
+    </ul>
 
-       
+    <!--Settings Ends-->
 
-    </div>
+    <ul class="menu-content collapse out">
+      <li
+        (click)="toggleCollapseMiscellaneous()"
+        data-target="#dbMigration"
+        class="collapsed"
+      >
+        <a class="fw-bold">
+          <span *ngIf="showArrow3" class="arrow-style">&#11166;</span>
+          <span *ngIf="!showArrow3" class="arrow-style">&#11167;</span>
+          Miscellaneous
+        </a>
+      </li>
+
+      <ul
+        [ngClass]="visibleMiscellaneous ? 'd-visibleMiscellaneous' : 'd-none'"
+        class="sub-menu"
+        id="subMenu-items3"
+      >
+        <li class="d-flex">
+          <a style="margin-left: 40px">
+            <img
+              alt="Complete"
+              class="icon-size marginbtm3"
+              src="assets/images/SVG/Database.svg"
+            />
+          </a>
+          <a
+            style="padding-left: 3px"
+            (click)="putActiveClass('subMenu-items3')"
+            tabindex="-1"
+            [routerLink]="['/backupDmap']"
+            >Backup DMAP</a
+          >
+        </li>
+        <li class="d-flex" routerLinkActive="active">
+          <a style="margin-left: 40px">
+            <img
+              alt="Complete"
+              class="icon-size marginbtm3"
+              src="assets/images/SVG/Application.svg"
+            />
+          </a>
+          <a
+            style="padding-left: 3px"
+            (click)="putActiveClass('subMenu-items3', 'appDashboard')"
+            tabindex="-1"
+            routerLink="/licenseDetails"
+            >License Details</a
+          >
+        </li>
+
+        <li class="d-flex" routerLinkActive="active">
+          <a style="margin-left: 40px">
+            <img
+              alt="Complete"
+              class="icon-size marginbtm3"
+              src="assets/images/SVG/Application.svg"
+            />
+          </a>
+          <a
+            style="padding-left: 3px"
+            (click)="putActiveClass('subMenu-items3', 'appDashboard')"
+            tabindex="-1"
+            routerLink="/dmapVersion"
+            >DMAP Version</a
+          >
+        </li>
+      </ul>
+    </ul>
+
+    <!-- <ul class="menu-content collapse out">
+      <ul id="menu-item1">
+        <li
+          class="d-flex"
+          data-target="#dbMigration"
+          style="padding-left: 30px"
+          routerLinkActive="active"
+        >
+          <a
+            tabindex="-1"
+            routerLink="/schemaConversion"
+            class="fw-bold"
+            (click)="putActiveClass('menu-item1')"
+            >Schema Conversion</a
+          >
+        </li>
+      </ul>
+    </ul> -->
+  </div>
 </div>
