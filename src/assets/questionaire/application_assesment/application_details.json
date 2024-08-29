@@ -1,0 +1,16 @@
+{"data":[
+    {"seq":1, "key":"application_name", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_name", "label": "Name of the Application", "placeholder": "", "isDefault": false, "readOnly":false, "options": [], "errorMsg": "", "style":""}},    
+    {"seq":2, "key":"application_id", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_id", "label": "Application ID", "placeholder": "", "isDefault": false, "readOnly":false, "options": [], "errorMsg": "", "style":"","min":0}},
+    {"seq":3, "key":"application_description", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_description", "label":"Bried description about Application", "placeholder": "", "isDefault": false, "readOnly":false, "errorMsg": "","options":[], "style":""}},
+    {"seq":4, "key":"application_location", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_location", "label":"Application location", "placeholder": "", "isDefault": false, "readOnly":false, "errorMsg": "","options":[], "style":""}},
+    {"seq":5, "key":"platform_change", "type": "multi_select","others_key":"platform_change_others", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "platform_change", "label": "Please select for changes to OS or Application/Web server version or PaaS (App Service/Containers)", "placeholder": "", "isDefault": false, "readOnly":false, "errorMsg": "","options":["OS of App server or Web Server","OS for both Web and App server","Change of OS for both Web and App server and Change Version of App and Web server","IaaS to PaaS Change","IaaS to PaaS Change + Others","Others"], "style":"","hidden":true}},
+    {"seq":6, "key":"cicd_pipeline", "type": "multi_select","others_key":"cicd_pipeline_others", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "cicd_pipeline", "label": "Please selection option which describes your current CICD pipeline", "placeholder": "", "isDefault": false, "readOnly":false, "options": ["Jenkins/Chef or equivalent/automated deployments","Jenkins build CI but no deployment automation","Bamboo/Azure DevOps with Chef terraform equivalent","Bamboo/Azure DevOps without Chef terraform equivalent","Azure DevOps only","Argo CD","Electric Cloud with CI (Jenkins ADO etc)","Xebia Lab with CI (Jenkins ADO etc)","No CI/CD"],"errorMsg": "", "style":"","hidden":"true"}},
+    {"seq":7, "key":"application_architecture_diagram", "type": "upload", "regex": "", "isRequired": false, "validators":[], "ui_control":{"name": "application_architecture_diagram", "label":"Please upload Application architecture diagram", "placeholder": "", "isDefault": false, "readOnly":false, "errorMsg": "","options":[], "style":""}}
+    ]
+}
+
+
+
+
+
+

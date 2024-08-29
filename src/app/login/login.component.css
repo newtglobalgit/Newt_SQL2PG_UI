@@ -1,0 +1,62 @@
+#loginContainer,
+#signUpContainer {
+  font-size: 12px;
+}
+.loginHeading {
+  font-family: Roboto, sans-serif;
+  font-size: 23px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  /* line-height:  1; */
+  letter-spacing: 0.56px;
+  color: #757575;
+}
+.loginHint {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.3px;
+  color: #a1a1a1;
+}
+.loginD {
+  color: #232d7c;
+}
+.loginMap {
+  color: #edd047;
+}
+
+span.showPasswordIcon > svg {
+  width: 25px;
+  height: 25px;
+  /* margin-top: -5px; */
+  fill: #3f3f3f;
+}
+span.showPasswordIcon > svg:hover {
+  fill: black;
+}
+
+.height32 {
+  height: 32px !important;
+  border-radius: 0.3rem;
+}
+
+.lineHeight11 {
+  line-height: 11px;
+}
+
+
+@media (min-width: 1280px) {
+  .loginBodyHeight{
+    height: 93vh;
+  }
+}
+
+@media (min-width: 1745px) {
+  .loginBodyHeight{
+    height: 95vh;
+  }
+}

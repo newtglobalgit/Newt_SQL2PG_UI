@@ -1,0 +1,9 @@
+{"data":[
+            {"seq":1, "key":"application_owner_name", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_owner_name", "label": "Name", "placeholder": "Enter Application Owner Name", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":2, "key":"application_owner_designation", "type": "text", "regex": "designation", "isRequired":true , "validators":[], "ui_control":{"name": "application_owner_designation", "label": "Designation", "placeholder": "Enter Application Owner Designation", "isDefault": false, "minLength": 2,"errorMsg": "Only Max 50 Characters Allowed ",
+                "maxLength": 50,"readOnly":false, "style":""}},
+            {"seq":3, "key":"application_owner_email", "type": "text", "regex": "email", "isRequired":true , "validators":[], "ui_control":{"name": "application_owner_email", "label": "Email", "placeholder": "Enter Application Owner Email", "isDefault": false, "readOnly":false, "errorMsg": "Invalid format. Hint: johndoe@newtglobal.com1", "style":""}},
+            {"seq":4, "key":"application_owner_phone", "type": "text", "regex": "number", "isRequired":true , "validators":[], "ui_control":{"name": "application_owner_phone", "label": "Mobile Number", "placeholder": "Enter Application Owner Phone", "isDefault": false, "readOnly":false,"errorMsg":"Invalid format. Hint: +14692369715 (or) 469-236-9715 (or) +1469 236 9715","style":""}}
+        ]
+}
+    

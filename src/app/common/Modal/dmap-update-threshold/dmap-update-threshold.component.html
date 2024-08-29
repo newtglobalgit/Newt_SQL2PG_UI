@@ -1,0 +1,39 @@
+<div class="modal-header">
+        <h4 class="modal-title">Update DB Execution Time Threshold Limits</h4>
+       <button type="button" class="close" aria-label="Close" (click)="cancel()">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+   <div class="modal-body">
+     <form [formGroup]="updateThresholdForm"> 
+    <div class = "row">          
+        <div class = "col-md-6">
+            <div class="form-group">
+                <label for="performanceLowerThresholdValue">Lower Limit<span class = "requiredField" >*</span></label>
+                <span class = "validFormCheck marginRight20" *ngIf = "updateThresholdForm.get('performanceLowerThresholdValue').valid && updateThresholdForm.valid">
+                    <i class="fa fa-check"></i>
+                </span>
+                <input type="number" class="form-control"  [(ngModel)] =  "lowerLimit" formControlName = "performanceLowerThresholdValue" id="performanceLowerThresholdValue" placeholder="Enter Lower Limit" required>
+            </div>
+        </div>
+    </div> 
+    
+    <div class = "row">
+        <div class = "col-md-6">
+            <div class="form-group">
+                <label for="performanceUpperThresholdValue">Upper Limit<span class = "requiredField" >*</span></label>
+                <span class = "validFormCheck marginRight20" *ngIf = "updateThresholdForm.get('performanceUpperThresholdValue').valid && updateThresholdForm.valid">
+                    <i class="fa fa-check"></i>
+                </span>
+                <input type="number" class="form-control" [(ngModel)] =  "upperLimit" id="performanceUpperThresholdValue" formControlName = "performanceUpperThresholdValue" 
+                        placeholder="Enter Upper Limit" required>
+            </div>
+        </div>
+    </div>
+    </form> 
+    </div>  
+    <div class="modal-footer"> 
+        <button type="button" class="btn btn-simple" (click)="clear()">Clear</button>
+         <button type="button" class="btn btn-primary" [disabled] = "!updateThresholdForm.valid" (click) = "submitThreshold()">Submit</button>
+     </div>    
+   

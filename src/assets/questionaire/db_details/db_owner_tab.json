@@ -1,0 +1,8 @@
+{"data":[
+            {"seq":1, "key":"spoc_name", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "spoc_name", "label": "Name", "placeholder": "Enter Owners Name", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":2, "key":"spoc_designation", "type": "text", "regex": "designation", "isRequired":true , "validators":[], "ui_control":{"name": "spoc_designation", "label": "Designation", "placeholder": "Enter Designation", "isDefault": false, "readOnly":false,"errorMsg": "Only Max 50 Characters Allowed ", "style":""}},
+            {"seq":3, "key":"spoc_email", "type": "text", "regex": "email", "isRequired":true , "validators":[], "ui_control":{"name": "spoc_email", "label": "Email", "placeholder": "Enter Email", "isDefault": false, "readOnly":false, "errorMsg": "Invalid format. Hint: johndoe@newtglobal.com1", "style":""}},
+            {"seq":4, "key":"spoc_mobile", "type": "text", "regex": "number", "isRequired":true , "validators":[], "ui_control":{"name": "spoc_mobile", "label": "Mobile Number", "placeholder": "Enter Mobile Number", "isDefault": false, "readOnly":false,"errorMsg":"Invalid format. Hint: +14692369715 (or) 469-236-9715 (or) +1469 236 9715", "style":""}}
+        ]
+}
+    

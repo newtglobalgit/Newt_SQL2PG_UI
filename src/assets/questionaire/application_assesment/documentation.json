@@ -1,0 +1,10 @@
+{"data":[
+    {"seq":1, "key":"document_artifacts", "type": "select", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "document_artifacts", "label": "Please select available documents for this application. This Include functional, Architecture document as well as test cases availability for regression testing.", "placeholder": "", "isDefault": false, "readOnly":false, "options":["All Available and Most of them are in sync with application","Available but not in Sync with current application","Few Documents available and are in Sync with Current application","Few available and they are also not in Sync","No documents available"],"style":""}},
+    {"seq":2, "key":"business_criticality", "type": "select", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "business_criticality", "label": "Please select the business continuity and criticality.", "placeholder": "", "isDefault": false, "readOnly":false,"options":["Non Mission critical","Business continuity Non Mission critical","Business continuity Mission critical","Mission Critical"], "style":""}},        
+    {"seq":3, "key":"testing", "type": "text", "regex": "number","min":0,"max":9999,"isRequired": true, "validators":[], "ui_control":{"name": "testing", "label": "Enter number of test cases to be exeuted to certify application post migration. It is assumed that test cases are documented along with test data and privileges to execute.", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}}
+    
+]
+}
+
+
+

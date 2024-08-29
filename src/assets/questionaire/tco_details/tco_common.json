@@ -1,0 +1,7 @@
+{"data":[
+            {"seq":1, "key":"client_name", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "client_name", "label": "Name of the Client", "placeholder": "Enter Client Name", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":2, "key":"client_executive", "type": "text", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "client_executive", "label": "Name of the executive sponsoring TCO", "placeholder": "Enter Sponser Name", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":3, "key":"tco_analysis_period", "type": "select", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "tco_analysis_period", "label": "TCO Analysis period", "placeholder": "", "isDefault": false, "readOnly":false, "errorMsg": "", "options": [1, 2, 3, 4, 5], "style":""}}
+        ]
+}
+    

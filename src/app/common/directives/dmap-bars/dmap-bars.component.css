@@ -1,0 +1,25 @@
+.outerBar{
+    width: 100%;
+    height: 22px;
+    padding: 0px;
+    margin-bottom: 10px;
+    background-color: #f4f4f4;
+    color:#625d5d;
+}
+.innerBar{
+    height:100%;
+    padding:5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color:#625d5d;
+    background-color:rgba(30, 167, 166, 0.2);
+}
+
+.dmapBar{
+    color: #625d5d;
+    background-color:rgba(30, 167, 166, 0.2);
+    min-height: 22px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+}

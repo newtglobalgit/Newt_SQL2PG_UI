@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/intro.js/introjs.css">
+    </head>
+    <body>
+        <script src="https://unpkg.com/intro.js/intro.js"></script>
+        <ngx-spinner type="ball-spin-clockwise-fade"></ngx-spinner>
+
+        <div class="container" style="padding: 0;">
+          <div class="container-fluid padding0" *ngIf="isShowNavBar"
+            style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08); margin-bottom: 24px;height:51px;">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light padding0 mb-2 bg-white">
+              <div class="container">
+                <div class="float-left">
+                  <!-- <span *ngIf="!sideNavBarOpen" class="float-left" style="cursor:pointer;position:relative;top:35px;right:5px;"
+                    (click)="openNav()">
+                    <i *ngIf="sideNavBarArrow" class="fa fa-caret-right headingBullet"></i>
+                  </span>
+
+                  <span *ngIf="sideNavBarOpen" class="float-left" style="cursor:pointer;position:relative;top:35px;right:5px;"
+                    (click)="closeNav()">
+                    <i class="fa fa-caret-left headingBullet"></i>
+                  </span> -->
+                  <a href="#/dbSetup"><img class="dMapLogo float-left" src="assets/images/dmapLogo_new.png" alt="DMAP" />
+                  <div class="float-left dMapLogoText"><span class="dMapLogoHeading d float-left">Database Migration
+                      Acceleration
+                      Platform (DMAP)</span></div></a>
+                    </div>
+
+                    <div class="float-right" style="position:relative;" *ngIf="userLogin && isShowNavBarWelcomeSection">
+                      <div class="start-tour btn btn-md btn-primary float-right" (click)="startTour()">
+                        <img src="../assets/images/start-tour-bulb.png" alt="start tour icon" style="height: 15px; margin: 0px 5px 2px 0px;">
+                        <span>Self Tour</span>
+                      </div>
+                  <!-- <img class="" src="assets/images/newtglobal_logo_small.png" alt="Newt Global" height="55" /> -->
+                  <div class="userWelcomeMsg">
+                    <!-- <div>{{userLogin}}
+                    </div> -->
+                    <a>
+                      <div class="logout-circle">
+                        <img alt="Complete" (click)="logOut()" title="Sign Out"
+                          class="logout-icon float-right marginLeft20 simpleLink pointerCursor"
+                          src="assets/images/SVG/Logout1.svg">
+                      </div>
+                    </a>
+
+                  </div>
+
+                </div>
+              </div>
+            </nav>
+          </div>
+
+          <div style="display: flex;">
+            <div id="mySidenav" class="mySidenav" style="width: 20%;">
+              <app-side-nav-bar ></app-side-nav-bar>
+            </div>
+            <div class="white-div" id="side-white-div">
+
+            </div>
+            <div id="main" class="body-width" style="margin-left:1%;">
+              <div class="container">
+                <router-outlet>
+
+                  <div *ngIf="!sideNavBarOpen && sideNavBarArrow" class="navigation-circle menu-close" (click)="openNav()">
+                    <i title="Toggle Left Pane" class="fa fa-angle-right headingBullet" style="right:8px;"></i>
+                  </div>
+
+
+                  <div *ngIf="sideNavBarOpen" class="navigation-circle menu-open" (click)="closeNav()">
+                    <i title="Toggle Left Pane" class="fa fa-angle-left headingBullet" style="right:9.7px;"></i>
+                  </div>
+                </router-outlet>
+              </div>
+            </div>
+          </div>
+          <app-footer style="position:relative;bottom:0"> </app-footer>
+        </div>
+    </body>
+</html>
+

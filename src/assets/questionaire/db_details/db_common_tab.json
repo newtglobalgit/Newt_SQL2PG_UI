@@ -1,0 +1,16 @@
+{"data":[
+            {"seq":1, "key":"db_name", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "db_name", "label": "Name of the Database", "placeholder": "Enter Name of the Database", "isDefault": false, "readOnly":true, "style":""}},
+            {"seq":2, "key":"database_version", "type": "text", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "database_version", "label": "Database Version", "placeholder": "Enter Database Version", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":3, "key":"database_location", "type": "text", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "database_location", "label": "Database Location", "placeholder": "Enter Database Location", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":4, "key":"azure_location", "type": "select", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "azure_location", "label": "Future Azure location", "placeholder": "Enter Azure location", "isDefault": false, "readOnly":false, 
+                                                                                                                                "options": ["Central US","East US","East US 2","East US 3","North Central US","South Central US",
+                                                                                                                                "West Central US","West US","West US 2","West US 3","UK South","UK West",
+                                                                                                                                "UAE Central","UAE North","Switzerland North","Switzerland West","Norway East",
+                                                                                                                                "Norway West","Korea Central","Korea South","Japan East","Japan West",
+                                                                                                                                "Central India","South India","West India","Germany West Central",
+                                                                                                                                "Germany  North","France Central","France South","North Europe","West Europe",
+                                                                                                                                "Canada Central","Canada East","Brazil South","Brazil Southeast","Australia Central",
+                                                                                                                                "Australia East","Australia Southeast","Australia Central2","East Asia","Southeast Asia","South Africa North","South Africa West"], "style":""}}
+        ]
+}
+    

@@ -1,0 +1,10 @@
+{"data":[
+        {"seq":1, "key":"application_id", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_id", "label": "What is ID of application in Organization Repository for tracking purpose?", "placeholder": "Enter Application Id", "isDefault": false, "readOnly":true, "style":""}},
+        {"seq":2, "key":"application_name", "type": "text", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "application_name", "label": "What is the name of the application?", "placeholder": "Enter Application Name", "isDefault": false, "readOnly":false, "style":""}},
+        {"seq":3, "key":"application_description", "type": "text", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "application_description", "label": "Please provide a brief description of your application in few lines", "placeholder": "Enter Brief Description Of Application", "isDefault": false, "readOnly":false, "errorMsg": "", "style":""}},
+        {"seq":4, "key":"is_cots_application", "type": "select", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "is_cots_application", "label": "Is it custom built or a COTS application?", "placeholder": "", "isDefault": false, "readOnly":false, "options": ["COTS", "Custom"], "style":""}},
+        {"seq":5, "key":"is_application_business_critical", "type": "select", "regex": "", "isRequired":false , "validators":[], "ui_control":{"name": "is_application_business_critical", "label": "Is application business critical?", "placeholder": "", "isDefault": false, "readOnly":false, "options": ["No", "Yes"], "style":""}},
+        {"seq":6, "key":"is_business_willing_to_cloud", "type": "select", "regex": "", "isRequired":false , "validators":[], "ui_control":{"name": "is_business_willing_to_cloud", "label": "Is business owner willing to take the application to cloud?", "placeholder": "", "isDefault": false, "readOnly":false, "options": ["No", "Yes"], "style":""}}
+        ]
+}
+    

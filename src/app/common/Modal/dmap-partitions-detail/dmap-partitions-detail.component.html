@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h5 class="modal-title">Partition Detail</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <table class="table table-bordered table-striped table-sm">
+        <thead class="thead_custom">
+            <tr class="tr_custom_14">
+                <th>Table Name</th>
+                <th>Partition Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="tr_custom_14" *ngFor="let item of data.detail" style="font-size: 12px;">
+                <td>{{item.name.toUpperCase()}}</td>
+                <td>{{item.type}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="ok()">Ok</button>
+</div>

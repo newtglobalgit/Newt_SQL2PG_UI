@@ -1,0 +1,4 @@
+{"data":[ { "application_name": {"seq":1, "key":"application_name", "type": "text", "regex": "", "isRequired": true, "validators":[], "ui_control":{"name": "application_name","label":"Application Name", "tooltip": "Name of the Application", "placeholder": "", "isDefault": false, "readOnly":false, "options": [], "errorMsg": "", "style":""}}}
+        ]
+}
+    

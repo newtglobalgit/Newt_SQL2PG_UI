@@ -1,0 +1,109 @@
+<span class="pageHeading">TCO Details</span>
+<div class="row adjust body-content-padding">
+    <div class="modal-body aq" style="padding:20px;margin-top:-12px;" *ngIf="formStatus.length > 0">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="float-left marginBottom5">Please click
+                    <span class="simpleLink pointerCursor" (click)="openTCOUploadModal()">here</span>  to browse or drag & drop excel file to upload TCO details.
+                </span>
+            </div>
+            <div class="col-md-12">
+                <label style="vertical-align: middle">
+                    <span class="font-weight-bold">Form Status:</span>
+                    <span *ngIf="formStatus == 'Complete'" class="marginRight10 marginLeft5">
+                        <img alt="Complete" src="assets/images/SVG/completed.svg" style="width: 20px;"><span
+                            class="marginLeft5 font-weight-bold">Complete</span>
+                    </span>
+                    <span *ngIf="formStatus == 'Not Started'" class="marginRight10 marginLeft5">
+                        <img alt="Complete" src="assets/images/SVG/not_started.svg" style="width: 20px;"><span
+                            class="marginLeft5 font-weight-bold">Incomplete</span>
+                    </span>
+                    <span *ngIf="formStatus == 'In Progress'" class="marginRight10 marginLeft5">
+                        <img alt="Complete" src="assets/images/SVG/in_progress.svg" style="width: 20px;"><span
+                            class="marginLeft5 font-weight-bold">Incomplete</span>
+                    </span>
+                    <span *ngIf="!allowFormToEdit" class="marginRight10 marginLeft5 colorRed">
+                        Analytics Process is In Progress you can't update the form until the process is completed.
+                    </span>
+                </label>
+            </div>
+
+            <div class="col-md-12">
+                <app-questioaire-template [formData]="tcoQuestionnaireForm" [controls]="tcoCommonConrols"
+                    [formStatus]="formStatus"></app-questioaire-template>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <nav class="dmap-navs col-md-12 padding0 marginTop30" style="border:none;">
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <div class="nav nav-tabs col-md-12">
+                                    <a class="nav-item nav-link dmapdbOwner_detailLink dmapNavLink marginRight10 questionairNav"
+                                        id="nav-tcoOracle_detail-tab" data-toggle="tab" href="#nav-tcoOracle_detail"
+                                        role="tab" aria-controls="nav-tcoOracle_detail" aria-selected="true"
+                                        #tabRef1>Oracle License Cost Details</a>
+                                    <a class="nav-item nav-link dmapdbOwner_detailLink dmapNavLink marginRight10 questionairNav"
+                                        id="nav-tcoHardware_detail-tab" data-toggle="tab" href="#nav-tcoHardware_detail"
+                                        role="tab" aria-controls="nav-tcoHardware_detail" aria-selected="true"
+                                        #tabRef2>Data Center Hardware Cost Details</a>
+                                    <a class="nav-item nav-link dmapdbOwner_detailLink dmapNavLink marginRight10 questionairNav"
+                                        id="nav-tcoRealEstate_detail-tab" data-toggle="tab"
+                                        href="#nav-tcoRealEstate_detail" role="tab"
+                                        aria-controls="nav-tcoRealEstate_detail" aria-selected="true" #tabRef3>Data
+                                        Center Real Estate & Power Details</a>
+
+                                </div>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent"
+                            style="padding-top: 0!important;">
+                            <div class="nav-tcoOracle_detail-tab tab-pane fade show" id="nav-tcoOracle_detail"
+                                role="tabpanel" aria-labelledby="nav-tcoOracle_detail-tab">
+                                <div class="row adjust">
+                                    <div class="col-md-12">
+                                        <app-questioaire-template [formData]="tcoQuestionnaireForm"
+                                            [controls]="tcoOracleDetail"
+                                            [formStatus]="formStatus"></app-questioaire-template>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="nav-tcoHardware_detail-tab tab-pane fade" id="nav-tcoHardware_detail"
+                                role="tabpanel" aria-labelledby="nav-tcoHardware_detail-tab">
+                                <div class="row adjust">
+                                    <div class="col-md-12">
+                                        <app-questioaire-template [formData]="tcoQuestionnaireForm"
+                                            [controls]="tcoDataCenterHardwareCost"
+                                            [formStatus]="formStatus"></app-questioaire-template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nav-tcoRealEstate_detail-tab tab-pane fade" id="nav-tcoRealEstate_detail"
+                                role="tabpanel" aria-labelledby="nav-tcoRealEstate_detail-tab">
+                                <div class="row adjust">
+                                    <div class="col-md-12">
+                                        <app-questioaire-template [formData]="tcoQuestionnaireForm"
+                                            [controls]="tcoDataCenterRealEstates"
+                                            [formStatus]="formStatus"></app-questioaire-template>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <span *ngIf="errorInValidForm" class="errorHint">Please enter all the required fields</span>
+            <button type="button" class="btn btn-simple" (click)="clear()">Clear</button>
+            <button type="button" class="btn btn-primary" (click)="submit('save')">Save</button>
+            <button type="button" class="btn btn-primary" (click)="submit('submit')">Submit</button>
+        </div>
+    </div>
+</div>

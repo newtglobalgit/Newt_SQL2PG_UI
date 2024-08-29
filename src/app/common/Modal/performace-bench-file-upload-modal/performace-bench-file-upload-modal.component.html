@@ -1,0 +1,24 @@
+<div class="modal-header">
+        <h4 class="modal-title">Upload Files</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    
+    <div class="modal-body">
+        
+        <div class = "row adjust ">
+            <div class="col-md-12 marginBottom10" for="typeParam">Please upload the Performance Test Scenarios for {{data.label}} by clicking the icon or by dragging & dropping a file below.
+                Click 
+                <span>
+                    <span class = "simpleLink pointerCursor" (click) = "downloadPerformanceFile()">here</span>
+                    <!-- <a class = "simpleLink pointerCursor fontSize14" [href]="data.sampleFile" target="_blank" download>here</a>  -->
+                </span> to download a {{data.label}}s and its parameters.
+            </div>                  
+        </div>
+        <div class = "row"> 
+            <app-dmap-upload-file [data]="data" class = "col-md-12" style = "margin-top:-20px;" (onFileUploadClicked) = "fileUploadClicked($event)"></app-dmap-upload-file>
+        </div>
+    </div>
+    
+    

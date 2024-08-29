@@ -1,0 +1,16 @@
+<div class="row adjust wizardDiv" *ngIf="isShow && chartSettings != undefined">
+    <div class="col-md-12 wizardHeader">
+        <div>{{chartSettings.mainHeading}}</div>
+    </div>
+    <div class="col-md-12 padding10">
+        <div class="row">
+            <div class="col-md-10 " *ngIf="chartStackData.length > 0">
+                <div class="{{chartSettings.containerId}}" id="{{chartSettings.containerId}}">
+                </div>
+            </div>
+            <div class="col-md-12 marginLeft30" style="font-size: 12px;" *ngIf="chartStackData.length == 0">
+                <span class="alert-warning">No {{ chartSettings.subHeading }} found in database. </span>
+            </div>
+        </div>
+    </div>
+</div>

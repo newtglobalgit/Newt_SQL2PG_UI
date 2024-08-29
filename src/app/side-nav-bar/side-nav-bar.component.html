@@ -1,0 +1,55 @@
+<!-- <div id="sidenavid" class="sidenav" *ngIf="globalMenuData"> -->
+<div class="sidenav" >
+    <div class="menu-list" style="margin-top: -64px;margin-left: -27px;padding-top:10px;">
+
+        <ul class="menu-content collapse out">
+            <li  (click)="toggleCollapse()"
+                data-target="#dbMigration" class="collapsed">
+                <a class="fw-bold" >
+                    <span *ngIf="showArrow1" class="arrow-style">&#11166;</span>
+                    <span *ngIf="!showArrow1" class="arrow-style">&#11167;</span>
+                    Migration Life Cycle Status
+                </a>
+            </li>
+
+            <ul [ngClass]="visible ? 'd-visible' : 'd-none'" class="sub-menu" id="subMenu-items1">
+                <li class="d-flex" [ngClass]="{'active': router.isActive('/dbDashboard', true)}">
+                    <a style="margin-left: 40px">
+                        <img alt="Complete" class="icon-size marginbtm3" src="assets/images/SVG/Database.svg">
+                    </a>
+                    <a 
+                        style="padding-left:3px;" (click)="putActiveClass('subMenu-items1')" tabindex="-1"
+                        [routerLink]="['/dbDashboard']">Database</a>
+                    
+                </li>
+                <li class="d-flex" routerLinkActive="active">
+                    <a style="margin-left: 40px">
+                        <img alt="Complete" class="icon-size marginbtm3" src="assets/images/SVG/Application.svg">
+                    </a>
+                    <a 
+                         style="padding-left:3px;"
+                        (click)="putActiveClass('subMenu-items1', 'appDashboard')" tabindex="-1"
+                        routerLink="/appDashboard">Application</a>
+                    
+                </li>
+            </ul>
+
+        </ul>
+
+       
+        <ul class="menu-content collapse out">
+            <ul id="menu-item1">
+                <li class="d-flex" 
+                    data-target="#dbMigration" style="padding-left: 30px;" routerLinkActive="active">
+                    <a tabindex="-1"  routerLink="/schemaConversion"
+                        class="fw-bold" (click)="putActiveClass('menu-item1')">Schema
+                        Conversion</a>
+                    
+                </li>
+            </ul>
+        </ul>
+
+       
+
+    </div>
+</div>

@@ -1,0 +1,211 @@
+<div class="row">
+  <!-- <div class = "col-md-9">
+          <div class = "mainPageHeading"><span class = "mainPageHeading-full">Database Migration Acceleration Platform (DMAP)</span> </div>
+      </div>
+  
+      <div class = "col-md-3">
+          <div class = "mainPageHeading"><span class = "mainPageHeading-full">
+          </span> </div>
+      </div> -->
+  <!--********* DMAP and DMAP EXTENSION tab starts *********-->
+
+  <!--<div class="col-md-12">
+      <div class="row padding20">
+        <div id="dbFirstAccMainDiv" class="col-md-12 padding0 marginTop20">
+          <nav class="dmap-navs col-md-12">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <div class="nav nav-tabs col-md-12">
+                <div class="col-md-6">
+                  <a class="nav-item nav-link  dmapNavLink marginRight10" id="nav-dmap-tab" data-toggle="tab"
+                    href="#nav-dbConfig" role="tab" aria-controls="nav-dbConfig" aria-selected="true" #tabRef1
+                   >Database Migration Acceleration Platform (DMAP)</a>
+                </div>
+                <div class="col-md-6">
+                  <a class="nav-item nav-link  dmapNavLink marginRight10" id="nav-dmap-tab" data-toggle="tab"
+                    href="#nav-appRemediation" role="tab" aria-controls="nav-appRemdiation" aria-selected="true" #tabRef1
+                    >App Remediation</a>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>-->
+
+  <!--********* DMAP and DMAP EXTENSION tab ends *********-->
+
+  <div class="col-md-12">
+    <div class="row ">
+      <!-- padding20 -->
+      <div id="dbFirstAccMainDiv" class="col-md-12 padding0 marginTop20" style="margin-top: -49px;">
+        <nav class="dmap-navs col-md-12">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <div class="nav nav-tabs col-md-11">
+
+
+
+              <a class="nav-item nav-link dmapDBConfigLink dmapNavLink marginRight10"
+                *ngIf="nodeType != 'analytics_worker'" id="nav-dbConfig-tab" data-toggle="tab" href="#nav-dbConfig"
+                role="tab" aria-controls="nav-dbConfig" aria-selected="true" #tabRef1
+                (click)="openTabNAccordian(tabRef1, 'dbFirstAcc')">Get Started</a>
+
+
+
+              <!-- <a class="nav-item nav-link  dmapDBConfigLink dmapNavLink marginRight50" id="nav-dbList-tab" data-toggle="tab" href="#nav-dbList" role="tab" aria-controls="nav-dbList" aria-selected="true" #tabRef2 (click) = "openTabNAccordian(tabRef2, 'dbFirstAcc')">Existing Migrations</a> -->
+              <!-- <a class="nav-item nav-link  dmapDBConfigLink dmapNavLink marginRight50" *ngIf = "nodeType != 'analytics_worker'" id="nav-batchList-tab" data-toggle="tab" href="#nav-batchList" role="tab" aria-controls="nav-batchList" aria-selected="true" #tabRef4 (click) = "openTabNAccordian(tabRef4, 'dbFirstAcc')">Batch Processes</a> -->
+              <a class="nav-item nav-link  dmapDBConfigLink dmapNavLink marginRight10"
+                *ngIf="nodeType == 'analytics_master' && (licenseType == 'dmap pro' || licenseType == 'dmap enterprise')"
+                id="nav-analyticsDashboard-tab" data-toggle="tab" href="#nav-analyticsDashboard" role="tab"
+                aria-controls="nav-analyticsDashboard" aria-selected="true" #tabRef3
+                (click)="openTabNAccordian(tabRef3, 'dbFirstAcc')">Analytics Dashboard</a>
+
+
+
+              <a class="nav-item nav-link  dmapDBConfigLink dmapNavLink marginRight10"
+                *ngIf="nodeType == 'analytics_master' && (licenseType == 'dmap pro' || licenseType == 'dmap enterprise')"
+                id="nav-workerNode-tab" data-toggle="tab" href="#nav-workerNode" role="tab"
+                aria-controls="nav-workerNode" aria-selected="true" #tabRef4
+                (click)="openTabNAccordian(tabRef4, 'dbFirstAcc')">Worker Node Setup</a>
+              <a class="nav-item nav-link  dmapDBConfigLink dmapNavLink marginRight10" id="nav-dbList-tab"
+                data-toggle="tab" href="#nav-dbList" role="tab" aria-controls="nav-dbList" aria-selected="true" #tabRef5
+                (click)="openTabNAccordian(tabRef5, 'dbFirstAcc')">Existing Migrations</a>
+
+
+              <a class="nav-item nav-link dmapDBConfigLink dmapNavLink marginRight10"
+                *ngIf="nodeType == 'analytics_master' && licenseType == 'dmap enterprise'" id="nav-appDbDetails-tab"
+                data-toggle="tab" href="#nav-appDbDetails" role="tab" aria-controls="nav-appDbDetails"
+                aria-selected="true" #tabRef6 (click)="openTabNAccordian(tabRef6, 'dbFirstAcc')">App & DB Details</a>
+
+            </div>
+            <div class="col-md-1 dropdown dropleft">
+              <span class="marginLeft5 dropdown marginTop15 pull-right float-right dropleft">
+                <span style="cursor:pointer;" class="pull-right float-right dropleft" id="drpdownCreatedBy"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" fill="currentColor"
+                    class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                  </svg>
+                </span>
+
+                <ul class="dropdown-menu" aria-labelledby="drpdownDownloadAs">
+                  <li class="dropdown-item"
+                    *ngIf="nodeType == 'analytics_master' && (licenseType == 'dmap pro' || licenseType == 'dmap enterprise')"
+                    [ngClass]="{disabled:disableAnalytics}" (click)="generateAnalyticsReport()"
+                    style="cursor: pointer;">
+                    <span>Generate Analytics Report</span>
+                  </li>
+                  <!-- <li class="dropdown-item" (click)="masterBackup()" style="cursor: pointer;">
+                      <span>Backup DMAP</span>
+                    </li> -->
+                  <li class="dropdown-item" *ngIf="nodeType != 'analytics_worker'" (click)="settings(settings_label)"
+                    style="cursor: pointer;">
+                    <span>{{settings_label}} Settings</span>
+                  </li>
+                  <li class="dropdown-item" *ngIf="nodeType != 'analytics_worker'"
+                    (click)="mailSettings('Email Settings','settings')" style="cursor: pointer;">
+                    <span>Email Settings</span>
+                  </li>
+                  <li class="dropdown-item" (click)="mailSettings('Email Reminder Settings','reminder')"
+                    style="cursor: pointer;" *ngIf="nodeType == 'analytics_master' && licenseType == 'dmap enterprise'">
+                    <span>Email Reminder Settings</span>
+                  </li>
+                  <li class="dropdown-item"
+                    *ngIf="nodeType == 'analytics_master' && (licenseType == 'dmap pro' || licenseType == 'dmap enterprise')"
+                    (click)="viewLogs()" style="cursor: pointer;">
+                    <span>Worker Node Logs</span>
+                  </li>
+
+                </ul>
+              </span>
+            </div>
+          </div>
+        </nav>
+
+        <div class="collapse" id="dbFirstAcc">
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent" style="padding-top: 0!important;">
+            <div class="nav-dbConfig-tab tab-pane fade show" *ngIf="nodeType != 'analytics_worker'" id="nav-dbConfig"
+              role="tabpanel" aria-labelledby="nav-dbConfig-tab">
+              <div class="row">
+                <app-db-config class="col-md-12"></app-db-config>
+              </div>
+            </div>
+
+            <div class="tab-pane fade nav-dbList-tab show" id="nav-dbList" role="tabpanel"
+              aria-labelledby="nav-dbList-tab">
+              <app-db-list></app-db-list>
+            </div>
+            <div class="tab-pane fade nav-workerNode-tab show"
+              *ngIf="nodeType == 'analytics_master' && (licenseType == 'dmap pro' || licenseType == 'dmap enterprise')"
+              id="nav-workerNode" role="tabpanel" aria-labelledby="nav-workerNode-tab">
+              <app-master-worker-node class="col-md-12"></app-master-worker-node>
+            </div>
+
+            <div class="tab-pane fade nav-analyticsDashboard-tab show"
+              *ngIf="nodeType == 'analytics_master' && (licenseType == 'dmap pro' || licenseType == 'dmap enterprise')"
+              id="nav-analyticsDashboard" role="tabpanel" aria-labelledby="nav-analyticsDashboard-tab">
+              <app-master-analytics-dashboard class="col-md-12"></app-master-analytics-dashboard>
+            </div>
+            <div class="tab-pane fade nav-appDbDetails-tab show"
+              *ngIf="nodeType == 'analytics_master' && licenseType == 'dmap enterprise'" id="nav-appDbDetails"
+              role="tabpanel" aria-labelledby="nav-appDbDetails-tab">
+              <app-master-app-db-details class="col-md-12" [appDbDetailsData]="appDbDetailsData"
+                [showDashboardData]="showDbDetailsDashboardData" [tcoLabel]="tcoLabel" [tcoStatus]="tcoStatus">
+              </app-master-app-db-details>
+            </div>
+            <!-- <div class="tab-pane fade nav-batchList-tab show" id="nav-batchList" role="tabpanel" aria-labelledby="nav-batchList-tab">
+                              <app-batch-process [data] = "schemaList"></app-batch-process>
+                          </div> -->
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- <div id = "dbSecondAccMainDiv"  class = "col-md-12 padding0 marginTop20" [hidden] = "!getSavedTableDataCount() || !showtab"> -->
+      <div id="dbSecondAccMainDiv" class="col-md-12 padding0 marginTop20"
+        [hidden]="!getSavedTableDataCount() || !showtab || showBatchTab">
+        <nav class="dmap-navs">
+          <!-- <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist"> -->
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active dmapDBMigrationLinkk dmapNavLink" id="nav-migrationStatus"
+              data-toggle="tab" href="#nav-migrationStatus" role="tab" aria-controls="nav-migrationStatus"
+              aria-selected="true" #tabRef3 (click)="openTabNAccordian(tabRef3, 'dbSecondAcc')">DB Migration Status</a>
+            <a class="nav-item nav-link dmapDBMigrationLinkk dmapAccordianArrow ml-auto" data-toggle="collapse"
+              href="#dbSecondAcc"><span> <i class="fa fa-chevron-down" role="button" aria-expanded="false"></i>
+              </span></a>
+          </div>
+        </nav>
+        <div class="collapse" id="dbSecondAcc">
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-migrationStatus" role="tabpanel"
+              aria-labelledby="nav-migrationStatus-tab">
+              <div class="row">
+                <app-db-migration-detail class="col-md-12"></app-db-migration-detail>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div id = "dbBatchSecondAccMainDiv"  class = "col-md-12 padding0 marginTop20"  [hidden] = "!showBatchTab">
+                  <nav class = "dmap-navs">
+                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <a class="nav-item nav-link active dmapBatchProcessLink dmapNavLink" id="nav-batchProcessess" data-toggle="tab" href="#nav-batchProcessess" role="tab" aria-controls="nav-batchProcessess" aria-selected="true" #tabRef5 (click) = "openTabNAccordian(tabRef5, 'dbBatchSecondAcc')">Batch Details</a>
+                          <a class="nav-item nav-link dmapBatchProcessLink dmapAccordianArrow ml-auto" data-toggle="collapse" href="#dbBatchSecondAcc"><span> <i class="fa fa-chevron-down" role="button" aria-expanded="false" ></i> </span></a>
+                      </div>
+                  </nav>
+                  <div class="collapse" id="dbBatchSecondAcc">
+                          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                              <div class="tab-pane fade show active" id="nav-batchProcessess" role="tabpanel" aria-labelledby="nav-batchProcessess-tab">
+                                  <div class = "row">
+                                          <app-db-batch-process-detail class = "col-md-12"></app-db-batch-process-detail>
+                                  </div>
+                              </div>
+                          </div>
+                  </div>
+              </div> -->
+
+    </div>
+  </div>
+</div>

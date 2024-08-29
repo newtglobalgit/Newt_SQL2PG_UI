@@ -1,0 +1,228 @@
+{
+    "runId":"20200602184634",
+    "runDate":"2020-0602 21:84:63",
+    "version":"Oracle Database 12c Enterprise Edition Release 12.2.0.1.0",
+    "sourceDatabase":"Demo@localhost:1521:orcl",
+    "sourceSchema":"Demo",
+    "targetDatabase":"himanshu@localhost:5432",
+    "totalConversion":"85%",
+    "manualConversion":"15%",
+    "sourceDBType":"Oracle",
+    "targetDBType":"Azure PostgreSQL",
+    "totalEffort":"400",
+    "totalObject":"64",
+    "totalObjectValid":"59",
+    "totalStorageObject":"42",
+    "totalCodeObject":"42",
+    "simpleObjectPercentage":"72%",
+    "mediumObjectPercentage":"18%",
+    "complexObjectPercentage":"4%",
+    "veryComplexObjectPercentage":"6%",
+    "storageObjectConversion":"88%",
+    "storageObjectManual":"12%",
+    "codeObjectConversion":"85%",
+    "codeObjectManual":"15%",
+    "manualConversionEffort":"10",
+    "analyticData":[
+        {
+            "type":"Storage Objects",
+            "objectAnalysis":[ 
+                {
+                    "objectType":"Table",
+                    "validType":"10",
+                    "inValidType":"0",
+                    "assessedObjects":"10",
+                    "manualConversionEfforts":"2",
+                    "simpleObjects":"6",
+                    "mediumObjects":"2",
+                    "difficultObjects":"0",
+                    "complexObjects":"2"
+                },
+                {
+                    "objectType":"Index",
+                    "validType":"20",
+                    "inValidType":"5",
+                    "assessedObjects":"15",
+                    "manualConversionEfforts":"90"                }, 
+                {
+                    "objectType":"Sequence",
+                    "validType":"12",
+                    "inValidType":"0",
+                    "assessedObjects":"12",
+                    "manualConversionEfforts":"120"
+                },
+                {
+                    "objectType":"Total",
+                    "validType":"42",
+                    "inValidType":"5",
+                    "assessedObjects":"37",
+                    "manualConversionEfforts":"212",
+                    "simpleObjects":"6",
+                    "mediumObjects":"2",
+                    "difficultObjects":"0",
+                    "complexObjects":"2"                    
+                }
+            ]
+        },
+        
+        {
+            "type":"Code Objects",
+            "objectAnalysis":[ 
+                {
+                    "objectType":"Package Body",
+                    "validType":"20",
+                    "inValidType":"0",
+                    "assessedObjects":"20",
+                    "manualConversionEfforts":"2"
+                },
+                {
+                    "objectType":"Function",
+                    "validType":"2",
+                    "inValidType":"0",
+                    "assessedObjects":"2",
+                    "manualConversionEfforts":"12",
+                    "simpleObjects":"1",
+                    "mediumObjects":"1",
+                    "difficultObjects":"0",
+                    "complexObjects":"0"
+                },
+                {
+                    "objectType":"Total",
+                    "validType":"22",
+                    "inValidType":"0",
+                    "assessedObjects":"22",
+                    "manualConversionEfforts":"24",
+                    "simpleObjects":"1",
+                    "mediumObjects":"1",
+                    "difficultObjects":"0",
+                    "complexObjects":"0"                    
+                }              
+            ]
+        },
+       
+        {
+            "type":"grandTotal",
+            "objectAnalysis":[ 
+                {
+                    "objectType":"Grand Total",
+                    "validType":"64",
+                    "inValidType":"5",
+                    "assessedObjects":"59",
+                    "manualConversionEfforts":"226",
+                    "simpleObjects":"7",
+                    "mediumObjects":"2",
+                    "difficultObjects":"0",
+                    "complexObjects":"0"
+                }
+            ]
+        }
+    ],
+    "storageObjects":[
+        {
+        "objectType": "Schema",
+        "converted": 1,
+        "manual": 0,
+        "convertedPercent":"100%",
+        "manualPercent":"0%",
+        "none":0
+      }, {
+        "objectType": "Table",
+        "converted": 200,
+        "manual": 35,
+        "convertedPercent":"90%",
+        "manualPercent":"10%",
+        "none":0
+      }, {
+        "objectType": "Constraint",
+        "converted": 80,
+        "manual": 40,
+        "convertedPercent":"70%",
+        "manualPercent":"30%",
+        "none":0
+      }, {
+        "objectType": "Index",
+        "converted": 101,
+        "manual": 2,
+        "manualPercent":"99%",
+        "convertedPercent":"1%",
+        "none":0
+      }, {
+        "objectType": "Sequence",
+        "converted": 55,
+        "manual": 10,
+        "convertedPercent":"70%",
+        "manualPercent":"30%",
+        "none":0
+      }, {
+        "objectType": "Synonym",
+        "converted": 4,
+        "manual": 2,
+        "convertedPercent":"60%",
+        "manualPercent":"40%",
+        "none":0
+      }, {
+        "objectType": "Database link",
+        "converted": 1,
+        "manual": 2,
+        "convertedPercent":"40%",
+        "manualPercent":"60%",
+        "none":0
+    }
+    ],
+    "codeObjects":[
+        {
+        "objectType": "Schema",
+        "converted": 1,
+        "manual": 0,
+        "convertedPercent":"100%",
+        "manualPercent":"0%",
+        "none":0
+      }, {
+        "objectType": "Funtion",
+        "converted": 100,
+        "manual": 50,
+        "convertedPercent":"60%",
+        "manualPercent":"40%",
+        "none":0
+      }, {
+        "objectType": "Views",
+        "converted": 80,
+        "manual": 0,
+        "convertedPercent":"100%",
+        "manualPercent":"0%",
+        "none":0
+      }, {
+        "objectType": "Package Body",
+        "converted": 10,
+        "manual": 2,
+        "manualPercent":"89%",
+        "convertedPercent":"20%",
+        "none":0
+      }
+    ],
+    "migrationPlan": [{
+        "name": "Review Analysis",
+        "startTime": 0,
+        "endTime": 2.3
+    }, {
+        "name": "Automated Conversion",
+        "startTime": 0,
+        "endTime": 5.7
+    }, {
+        "name": "Manual Conversion",
+        "startTime": 0,
+        "endTime": 4.5
+    }, {
+        "name": "Data Testing",
+        "startTime": 0,
+        "endTime": 7.4
+    }, {
+        "name": "Code Functional Testing",
+        "startTime": 0,
+        "endTime": 3.8
+    }, {
+        "name": "Code Performance Testing",
+        "startTime": 0,
+        "endTime": 5.7
+    }]
+}

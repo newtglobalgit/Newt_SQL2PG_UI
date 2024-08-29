@@ -1,0 +1,17 @@
+.dropdownBottom {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #D3D3D3;
+    height: 35px;
+  }
+
+  .modal-body.dm{
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-header {
+  cursor: move;
+}

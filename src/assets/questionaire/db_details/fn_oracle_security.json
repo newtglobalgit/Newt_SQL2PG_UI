@@ -1,0 +1,8 @@
+{"data":[
+    {"seq":1, "key":"data_encryption", "type": "select", "regex": "", "isRequired":false, "validators":[], "ui_control":{"name": "data_encryption", "label": "Is there any data encryption used?", "placeholder": "", "isDefault": true, "readOnly":false, "errorMsg": "", "options": ["No", "Yes"], "style":""}},
+    {"seq":2, "key":"compliance_req", "type": "text", "regex": "", "isRequired":false , "validators":[], "ui_control":{"name": "compliance_req", "label": "What are your compliance requirements?", "placeholder": "Enter compliance requirements", "isDefault": false, "readOnly":false, "errorMsg": "", "style":""}},
+    {"seq":3, "key":"db_security_consideration", "type": "text", "regex": "", "isRequired":false , "validators":[], "ui_control":{"name": "db_security_consideration", "label": "What are database security considerations?", "placeholder": "Enter database security considerations", "isDefault": false, "readOnly":false, "errorMsg": "", "options": [], "style":""}},
+    {"seq":4, "key":"data_encryption", "type": "select", "regex": "", "isRequired":false , "validators":[], "ui_control":{"name": "data_encryption", "label": "Any 3rd party tools used for encryption?", "placeholder": "", "isDefault": true,  "readOnly":false, "errorMsg": "", "options": ["No", "Yes"], "style":""}},
+    {"seq":5, "key":"associated_pwd_function", "type": "select", "regex": "", "isRequired":false , "validators":[], "ui_control":{"name": "associated_pwd_function", "label": "Is associated Password function used?  If yes, are there any 3rd party tools for password integration? ", "placeholder": "", "isDefault": true, "readOnly":false, "errorMsg": "","options": ["No", "Yes"], "style":""}}
+   ]
+}

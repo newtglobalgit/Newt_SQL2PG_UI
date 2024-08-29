@@ -1,0 +1,170 @@
+.modal-body {
+  width: 100%;
+  height: 400px;
+  float: left;
+  clear: both;
+  margin: 0px;
+  position: relative;
+  font-family: Poppins, sans-serif;
+  background-color: #364087;
+  background-image: url(https://newtglobal.com/wp-content/uploads/2017/06/footer-bg.jpg);
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: cover;
+}
+.modal-body:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+.newtLogoContainer {
+  font-family: Poppins, sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  text-transform: none;
+  color: #fff;
+}
+.contactUsContainer {
+  color: white;
+  margin-bottom: 50px;
+}
+.contactTitle {
+  font-size: 16px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+.contactContent {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+}
+.contactIcon {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+}
+.stayconnected {
+  font-size: 16px;
+  margin-right: 35px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 12px;
+}
+.newtFooterul > li > a {
+  color: white;
+}
+.example-list {
+  font-size: 12px;
+  width: 100%;
+  max-width: 100%;
+  border: solid 1px #ccc;
+  min-height: 60px;
+  display: block;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cdk-overlay-pane.my-dialog {
+  position: relative !important;
+}
+.close.mat-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+/* .newtFooterul {
+  color: white;
+  padding: 0px;
+  margin: 0px;
+  clear: both;
+  display: inline;
+  list-style-type: none;
+} */
+/* .newtFooterul > li {
+  float: left;
+  color: white;
+  margin-right: 25px;
+  font-size: 29px;
+}
+.newtFooterul > li > a {
+  color: white;
+}
+.newtFooterul > li > a:hover {
+  color: #e3f6f9;
+} */
+
+.circle {
+  border-radius: 50%;
+  border: 2px solid white;
+  display: inline-block;
+  padding: 10px;
+}
+
+.hr-lines {
+  position: relative;
+  max-width: 500px;
+  margin-left: 15%;
+  /* margin: 100px auto; */
+  text-align: center;
+}
+
+.hr-lines:before {
+  content: " ";
+  height: 2px;
+  width: 130px;
+  background: white;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.hr-lines:after {
+  content: " ";
+  height: 2px;
+  width: 130px;
+  background: white;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}

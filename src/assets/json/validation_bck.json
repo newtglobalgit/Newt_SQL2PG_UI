@@ -1,0 +1,276 @@
+{
+    "objectValidation":[
+		{
+		 "name":"Tables",
+		 "status": "Success",
+		 "message": "All tables succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"Columns",
+		 "status": "Success",
+		 "message": "All columns succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"Constraint",
+		 "status": "Success",
+		 "message": "All constraint succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"Index",
+		 "status": "Success",
+		 "message": "All index succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"Sequence",
+		 "status": "Success",
+		 "message": "All sequence succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"Procedure",
+		 "status": "Success",
+		 "message": "All procedure succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"DBLink",
+		 "status": "Success",
+		 "message": "All dbLink succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"View",
+		 "status": "Success",
+		 "message": "All view succesfully created in target database",
+		 "data": []
+		},
+		{
+		 "name":"Function",
+		 "status": "Success",
+		 "message": "All function succesfully created in target database",
+		 "data": []
+		}
+	],
+    "dataValidation": [
+		{
+		 "name":"Table",
+		 "status": "Failed",
+		 "message": "Table row count mismatch for tables",
+		 "data": [
+			 {
+				 "name": "t_grievance_steps_attendees",
+				 "sourceRowCount": "201240",
+				 "targetRowCount": "201040"
+			 },
+			 {
+				 "name": "t_grievance_steps",
+				 "sourceRowCount": "197348",
+				 "targetRowCount": "197228"
+			 },
+			 {
+				 "name": "t_employee_info",
+				 "sourceRowCount": "197726",
+				 "targetRowCount": "197716"
+			 }    			
+		 ]
+		},{
+			"name":"View",
+			"status": "Failed",
+    		"message": "View output mismatch",
+    		"data": [
+    			{
+    				"name": "VW_CBA_GRIEVANCE_ALL",
+    				"sourceRowCount": "223346",
+    				"targetRowCount": "223158"
+    			},
+    			{
+    				"name": "VW_EMPL_TO_DIRECTOR_AND_ABOVE",
+    				"sourceRowCount": "190348",
+    				"targetRowCount": "189621"
+    			}  			
+    		]
+
+		}
+	],
+	"codeValidation":[
+		{
+			"name":"Function",
+    		"status": "Failed",
+    		"message": "Output mismatch between the functions",
+    		"data": ["pull_job_family_from_fn","pull_dept_subfunction_from_fn"]
+    	},
+		{
+			"name":"Procedure",
+    		"status": "Success",
+    		"message": "All procedures output matches between source and target database",
+    		"data": []
+		}
+	],
+    "performance":[
+		{
+		"name":"View",
+    	"performance": [
+					{"label":"PS_B_L_SCORECRD_VW", "sourceTime":"57","targetTime":"63"},
+					{"label":"VWLABORCASE", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_AUTHOR_DIRECTOR_DEPTID", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_CBA2", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_CBA_DISCIPLINE", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_CBA_DISCIPLINE_ALL", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_CBA_GRIEVANCE", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_CBA_GRIEVANCE_ALL", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_CBA_GRIEV_DISC", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_CBA_GRIEV_DISC_ALL", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_CBA_INFORMATION", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_CBA_NLRB", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_CBA_NLRB_ALL", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_CONTRACT_DETAILS", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_CONTRACT_PRI_STAT_LOCAL", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_DISCIPLINE_ACTION", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_DISCIPLINE_DEPT", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_DISCIPLINE_JOBTITLE", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_DISCIPLINE_LOB", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_DISCIPLINE_PRIM_REASON", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_DISCIPLINE_SEARCH", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_DISCIPLINE_SEC_REASON", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_DISCIPLINE_TITLE", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_DOCUMENT", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_EID_ROLE_MAPPING", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_EMPLANDSUPVR", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_EMPLOYEE_DIRECTOR_DEPTID", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_EMPLOYEE_INFO_STAGE_PS", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_EMPL_TO_DIRECTOR_AND_ABOVE", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_EMP_INFO_STAGE_PS", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_GETPRIMANDSECREASONS", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_GRIEVANCE_CONTRACT_LOCATIO", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_GRIEVANCE_JOB_CLASS", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_GRIEVANCE_LOB", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_GRIEVANCE_SEARCH", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_GRIEVANCE_STATUS", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_GRIEVANCE_STILL_OPEN", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_GRIEVANCE_SUBCAT", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_GRIEVANCE_SUBJECT", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_INDICATIVE_DATA", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_KEYWORD_DISC", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_KEYWORD_GRIEV", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_KEYWORD_NLRB", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_NLRB_CASES_FILING_PARTY", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_NLRB_CASES_YEAR", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_NLRB_SEARCH", "sourceTime":"600","targetTime":"612"},
+					{"label":"VW_NYGRIEVANCE_MONTHLY_REPORT", "sourceTime":"300","targetTime":"315"},
+					{"label":"VW_RESOURCE", "sourceTime":"223","targetTime":"190"},
+					{"label":"VW_UNION_LOCAL", "sourceTime":"57","targetTime":"63"},
+					{"label":"VW_USER_ITEM_ACCESS", "sourceTime":"927","targetTime":"1023"},
+					{"label":"VW_USER_PROFILE", "sourceTime":"55","targetTime":"51"},
+					{"label":"VW_USER_PROFILE_SEARCH", "sourceTime":"600","targetTime":"612"},
+					{"label":"vw_emplAndSupvr", "sourceTime":"300","targetTime":"315"}]
+		},
+		{
+		"name": "Function",
+    	"performance":[
+					{"label":"FUNCTION_TEST", "sourceTime":"57","targetTime":"63"},
+					{"label":"USP_ADDBULLETINLINK", "sourceTime":"927","targetTime":"1023"},
+					{"label":"USP_FINDCREATOR", "sourceTime":"55","targetTime":"51"},
+					{"label":"USP_FINDLRREPORLOBDIR", "sourceTime":"600","targetTime":"612"},
+					{"label":"USP_FINDUNIONREP", "sourceTime":"300","targetTime":"315"},
+					{"label":"USP_FIND_DIRECTORCOSTCENTER", "sourceTime":"223","targetTime":"190"},
+					{"label":"USP_FIND_DIRECTORDEPTID", "sourceTime":"57","targetTime":"63"},
+					{"label":"USP_FIND_LABORMANAGER", "sourceTime":"927","targetTime":"1023"},
+					{"label":"USP_GETDISCIPLINESEARCH", "sourceTime":"55","targetTime":"51"},
+					{"label":"USP_GETDISCIPLINESEARCH_COUNT", "sourceTime":"600","targetTime":"612"},
+					{"label":"USP_GETEMPLOYEEBYEID", "sourceTime":"300","targetTime":"315"},
+					{"label":"USP_GETGRIEVANCELINKAGESEARCH", "sourceTime":"223","targetTime":"190"},
+					{"label":"USP_GETGRIEVANCESEARCH", "sourceTime":"57","targetTime":"63"},
+					{"label":"USP_GETGRIEVANCESEARCH_COUNT", "sourceTime":"927","targetTime":"1023"},
+					{"label":"USP_GETGRIEVANCESEARCH_TEST", "sourceTime":"55","targetTime":"51"},
+					{"label":"USP_GETGRIEVLINKESEARCH_COUNT", "sourceTime":"600","targetTime":"612"},
+					{"label":"USP_GETLINKEDDISCIPLINES", "sourceTime":"300","targetTime":"315"},
+					{"label":"USP_GETPRIMANDSECREASONS", "sourceTime":"223","targetTime":"190"},
+					{"label":"USP_GETUNLINKEDDISCIPLINES", "sourceTime":"57","targetTime":"63"},
+					{"label":"USP_GRIEVANCESEARCH_COUNT_TEST", "sourceTime":"927","targetTime":"1023"},
+					{"label":"USP_LOADDISCIPLINE", "sourceTime":"55","targetTime":"51"},
+					{"label":"USP_LOAD_EMPLOYEELIST", "sourceTime":"600","targetTime":"612"},
+					{"label":"USP_LOAD_GRIEVANCE", "sourceTime":"300","targetTime":"315"},
+					{"label":"USP_SEABRCHEMPLOYEEBYEID", "sourceTime":"223","targetTime":"190"},
+					{"label":"USP_SEARCHATTENDEE", "sourceTime":"57","targetTime":"63"},
+					{"label":"USP_SEARCHEMPLOYEEBYEID", "sourceTime":"927","targetTime":"1023"},
+					{"label":"USP_UPDATEBULLETINBOARD", "sourceTime":"55","targetTime":"51"}    	
+		]},
+		{
+		"name": "Procedure",
+		"performance" :[
+			{"label":"DELETE_DEPTID_DUPS", "sourceTime":"57","targetTime":"63"},
+			{"label":"DELETE_JOBCODE_DUPS", "sourceTime":"927","targetTime":"1023"},
+			{"label":"GETDATA", "sourceTime":"55","targetTime":"51"},
+			{"label":"GRIEVANCE_OVER_90DAYS_EMAIL", "sourceTime":"600","targetTime":"612"},
+			{"label":"INSERT_AWARD_TYPE", "sourceTime":"300","targetTime":"315"},
+			{"label":"INSERT_CASE_TYPE", "sourceTime":"223","targetTime":"190"},
+			{"label":"LRDB_CHECKPROCESSCOMPLETION", "sourceTime":"57","targetTime":"63"},
+			{"label":"MYPROC", "sourceTime":"927","targetTime":"1023"},
+			{"label":"POPULATE_DIRECTOR_DEPTID", "sourceTime":"55","targetTime":"51"},
+			{"label":"PULL_AMTS_FROM_PS", "sourceTime":"600","targetTime":"612"},
+			{"label":"PULL_BARG_UNIT_FROM_PS", "sourceTime":"300","targetTime":"315"},
+			{"label":"PULL_BUSINESSUNIT_FROM_PS", "sourceTime":"223","targetTime":"190"},
+			{"label":"PULL_COMPANY_FROM_PS", "sourceTime":"57","targetTime":"63"},
+			{"label":"PULL_DEPT_FROM_PS", "sourceTime":"927","targetTime":"1023"},
+			{"label":"PULL_DEPT_FUNCTION_FROM_PS", "sourceTime":"55","targetTime":"51"},
+			{"label":"PULL_DEPT_SUBFUNCTION_FROM_PS", "sourceTime":"600","targetTime":"612"},
+			{"label":"PULL_EID_FLAT_HIERARCHY_PS", "sourceTime":"300","targetTime":"315"},
+			{"label":"PULL_EMPLOYEE", "sourceTime":"223","targetTime":"190"},
+			{"label":"PULL_EMPLOYEE_ACTIVE1_FROM_PS", "sourceTime":"57","targetTime":"63"},
+			{"label":"PULL_EMPLOYEE_ACTIVE2_FROM_PS", "sourceTime":"927","targetTime":"1023"},
+			{"label":"PULL_EMPLOYEE_TERM_FROM_PS", "sourceTime":"55","targetTime":"51"},
+			{"label":"PULL_EMPLSTAT_FROM_PS", "sourceTime":"600","targetTime":"612"},
+			{"label":"PULL_EMPL_CLASS_FROM_PS", "sourceTime":"300","targetTime":"315"},
+			{"label":"PULL_JOBCODE_FROM_PS", "sourceTime":"223","targetTime":"190"},
+			{"label":"PULL_JOBFUNCTION_FROM_PS", "sourceTime":"57","targetTime":"63"},
+			{"label":"PULL_JOB_FAMILY_FROM_PS", "sourceTime":"927","targetTime":"1023"},
+			{"label":"PULL_JOB_SUBFUNCTION_FROM_PS", "sourceTime":"55","targetTime":"51"},
+			{"label":"PULL_LOB_FROM_PS", "sourceTime":"600","targetTime":"612"},
+			{"label":"PULL_MANAGER_LEVEL_FROM_PS", "sourceTime":"300","targetTime":"315"},
+			{"label":"PULL_ORGANIZATION_FROM_PS", "sourceTime":"223","targetTime":"190"},
+			{"label":"PULL_SAFETY_FROM_PS", "sourceTime":"57","targetTime":"63"},
+			{"label":"PULL_SALADMIN_FROM_PS", "sourceTime":"927","targetTime":"1023"},
+			{"label":"PULL_UNION_LOCAL_FROM_PS", "sourceTime":"55","targetTime":"51"},
+			{"label":"REMOVE_DUPLICATE_VALUES_JOB", "sourceTime":"600","targetTime":"612"},
+			{"label":"REMOVE_DUPLICATE_VALUES_WAGES", "sourceTime":"300","targetTime":"315"},
+			{"label":"RESET_SYS_GRIEVANCE_NO", "sourceTime":"223","targetTime":"190"},
+			{"label":"TABLE_COUNT", "sourceTime":"57","targetTime":"63"},
+			{"label":"TABLE_COUNTNCOUNT", "sourceTime":"927","targetTime":"1023"},
+			{"label":"TESTPROC", "sourceTime":"55","targetTime":"51"},
+			{"label":"TEST_CURSOR", "sourceTime":"600","targetTime":"612"},
+			{"label":"TEST_PROC", "sourceTime":"300","targetTime":"315"},
+			{"label":"TEST_PROC1", "sourceTime":"223","targetTime":"190"},
+			{"label":"UPDATEBULLETINBOARD", "sourceTime":"57","targetTime":"63"},
+			{"label":"UP_LOADPSBARGUNIT", "sourceTime":"927","targetTime":"1023"},
+			{"label":"UP_LOADPSBUSINESSUNIT", "sourceTime":"55","targetTime":"51"},
+			{"label":"UP_LOADPSCOMPANY", "sourceTime":"600","targetTime":"612"},
+			{"label":"UP_LOADPSDEPARTMENT", "sourceTime":"300","targetTime":"315"},
+			{"label":"UP_LOADPSDEPTFUNCTION", "sourceTime":"223","targetTime":"190"},
+			{"label":"UP_LOADPSDEPTSUBFUNCTION", "sourceTime":"57","targetTime":"63"},
+			{"label":"UP_LOADPSEIDFLATHIERARCHY", "sourceTime":"927","targetTime":"1023"},
+			{"label":"UP_LOADPSEMPLCLASS", "sourceTime":"55","targetTime":"51"},
+			{"label":"UP_LOADPSEMPLOYEEINFO", "sourceTime":"600","targetTime":"612"},
+			{"label":"UP_LOADPSEMPLSTAT", "sourceTime":"300","targetTime":"315"},
+			{"label":"UP_LOADPSJOBCODE", "sourceTime":"600","targetTime":"612"},
+			{"label":"UP_LOADPSJOBFAMILY", "sourceTime":"300","targetTime":"315"},
+			{"label":"UP_LOADPSJOBFUNCTION", "sourceTime":"223","targetTime":"190"},
+			{"label":"UP_LOADPSJOBSUBFUNCTION", "sourceTime":"57","targetTime":"63"},
+			{"label":"UP_LOADPSLOB", "sourceTime":"927","targetTime":"1023"},
+			{"label":"UP_LOADPSMANAGERLEVEL", "sourceTime":"55","targetTime":"51"},
+			{"label":"UP_LOADPSORGANIZATION", "sourceTime":"600","targetTime":"612"},
+			{"label":"UP_LOADPSSALADMIN", "sourceTime":"300","targetTime":"315"},
+			{"label":"UP_LOADPSUNIONLOCAL", "sourceTime":"600","targetTime":"612"},
+			{"label":"UP_POST_LRDB_LOADS_WEEKEND", "sourceTime":"300","targetTime":"315"},
+			{"label":"UP_POST_LRDB_PEOPLE_INTRAWEEK", "sourceTime":"223","targetTime":"190"},
+			{"label":"VZID_TO_EMPID", "sourceTime":"57","targetTime":"63"},
+			{"label":"MYPROCEDURE", "sourceTime":"927","targetTime":"1023"},
+			{"label":"PULL_JOB_FAMILY_FROM_PS_DBLINK", "sourceTime":"55","targetTime":"51"}		
+		]
+		}
+	
+	]
+}

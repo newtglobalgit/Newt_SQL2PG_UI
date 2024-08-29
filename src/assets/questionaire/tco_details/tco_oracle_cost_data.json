@@ -1,0 +1,9 @@
+{"data":[
+            {"seq":1, "key":"oracle_se_license_cost", "type": "text", "regex": "percentage", "isRequired": true, "validators":[], "ui_control":{"name": "oracle_se_license_cost", "label": "Oracle SE License Cost per Core", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":2, "key":"oracle_ee_license_cost", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "oracle_ee_license_cost", "label": "Oracle EE License Cost per Core", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":3, "key":"is_license_cost_include_support", "type": "select", "regex": "", "isRequired":true , "validators":[], "ui_control":{"name": "is_license_cost_include_support", "label": "Include Oracle Support (Annual)", "placeholder": "", "isDefault": false, "readOnly":false, "errorMsg": "", "options": ["No", "Yes"], "style":""}},
+            {"seq":4, "key":"support_cost_percentage", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "support_cost_percentage", "label": "On Going annual Software Update License & Support cost as a % of Net License Cost", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+            {"seq":5, "key":"oracle_license_discount", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "oracle_license_discount", "label": "Oracle License Discount", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}}
+        ]
+}
+    

@@ -1,0 +1,52 @@
+spring:
+ profiles.active: development
+ jpa:
+    hibernate:
+      naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
+
+spring.jpa:
+    show-sql: true
+    format-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle10gDialect
+        
+        
+---
+spring:
+  application:
+    name: arbitration-sit    
+  cloud:
+    services:
+      registrationMethod: route
+eureka.instance.statusPageUrlPath: /swagger-ui.html
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://obletm01wdvvg.odc.vzwcorp.com:8761/eureka/,http://obletm02wdvvg.odc.vzwcorp.com:8762/eureka/
+profiles: development
+security:
+  basic:
+    enabled: false
+lrdb.datasource:
+
+ 
+  driverClassName: oracle.jdbc.driver.OracleDriver 
+  url: jdbc:oracle:thin:@gi9scplnd-scan.verizon.com:1521/LRDBNP
+  username: LRDBDEV2
+  password: LRDBDEV2
+ 
+  accessToUnderlyingConnectionAllowed: true
+  max-active: 25
+  max-idle: 10
+  min-idle: 1
+  initial-size: 1
+  validation-query: "SELECT 1 FROM DUAL"
+  test-on-borrow: true
+server:
+ port: 8183

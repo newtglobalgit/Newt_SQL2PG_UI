@@ -1,0 +1,35 @@
+{
+    "logicalValidation":
+		{"data":[
+			{"table": "table_1","column": "col1", "sum": {"source": "250", "target": "250", "status": "success"}, "average": {"source": "25", "target": "25", "status": "success"}, "minimum": {"source": "12", "target": "12", "status": "success"}, "maximum" : {"source": "52", "target": "52", "status": "success"}},
+			{"table": "table_2","column": "col1", "sum": {"source": "250", "target": "250", "status": "success"}, "average": {"source": "25", "target": "25", "status": "success"}, "minimum": {"source": "12", "target": "12", "status": "success"}, "maximum" : {"source": "52", "target": "51", "status": "failed"}},
+			{"table": "table_3","column": "col1", "sum": {"source": "250", "target": "250", "status": "success"}, "average": {"source": "25", "target": "25", "status": "success"}, "minimum": {"source": "12", "target": "12", "status": "success"}, "maximum" : {"source": "52", "target": "52", "status": "success"}},
+			{"table": "table_4","column": "col1", "sum": {"source": "250", "target": "250", "status": "success"}, "average": {"source": "25", "target": "25", "status": "success"}, "minimum": {"source": "12", "target": "12", "status": "success"}, "maximum" : {"source": "52", "target": "52", "status": "success"}}
+			], "validation_mode": []
+		},
+    "header_info":{"runDate":"07-Oct-2021 20:14:48","runId":20211006150801,"sourceDBName":"orcl","sourceDBType":"Oracle","sourceDatabase":"dmap_assessment_user@192.168.1.12:1521:orcl","sourceSchema":"DEMO","targetDBType":"PostgreSQL","targetDatabase":"localhost:5432","version":"Oracle Database 19c Enterprise Edition Release 19.0.0.0.0"},
+    "objectValidation":{
+        "Code Objects":[
+            {"fullyConverted":9,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"VIEW","notConverted":"2","sourceCount":11,"sourceInvalid":2,"sourceValid":9,"status":"Success"},
+            {"fullyConverted":3,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"MATERIALIZED VIEW","notConverted":"1","sourceCount":4,"sourceInvalid":0,"sourceValid":4,"status":"Success"},
+            {"fullyConverted":41,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"PROCEDURE","notConverted":"28","sourceCount":69,"sourceInvalid":4,"sourceValid":65,"status":"Success"},
+            {"fullyConverted":4,"manual_confirm":"","message":"All objects successfully created in target DB","name":"FUNCTION","notConverted":"0","sourceCount":4,"sourceInvalid":0,"sourceValid":4,"status":"Success"},
+            {"fullyConverted":0,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"TRIGGER","notConverted":"3","sourceCount":3,"sourceInvalid":0,"sourceValid":3,"status":"Success"},
+            {"fullyConverted":8,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"PACKAGE BODY","notConverted":"2","sourceCount":10,"sourceInvalid":0,"sourceValid":10,"status":"Success"},
+            {"fullyConverted":4,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"SYNONYM","notConverted":"5","sourceCount":9,"sourceInvalid":0,"sourceValid":9,"status":"Success"},
+            {"fullyConverted":0,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"REFERENCE SYNONYM","notConverted":"3","sourceCount":3,"sourceInvalid":0,"sourceValid":3,"status":"Success"}
+        ],
+        "Special Objects":[],
+        "Storage Objects":[
+            {"fullyConverted":0,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"DATABASE LINK","notConverted":"3","sourceCount":3,"sourceInvalid":0,"sourceValid":3,"status":"Success"},
+            {"fullyConverted":32,"manual_confirm":"","message":"All objects successfully created in target DB","name":"TABLE","notConverted":"0","sourceCount":32,"sourceInvalid":0,"sourceValid":32,"status":"Success"},
+            {"fullyConverted":13,"manual_confirm":"","message":"All objects successfully created in target DB","name":"TABLE PARTITION","notConverted":"0","sourceCount":13,"sourceInvalid":0,"sourceValid":13,"status":"Success"},
+            {"fullyConverted":15,"manual_confirm":"","message":"All objects successfully created in target DB","name":"GTT","notConverted":"0","sourceCount":15,"sourceInvalid":0,"sourceValid":15,"status":"Success"},
+            {"fullyConverted":13,"manual_confirm":"Y","message":"Manually validated that all objects are created in target DB","name":"INDEX","notConverted":"4","sourceCount":14,"sourceInvalid":0,"sourceValid":14,"status":"Success"},
+            {"fullyConverted":5,"manual_confirm":"","message":"All objects successfully created in target DB","name":"GTT INDEX","notConverted":"0","sourceCount":5,"sourceInvalid":0,"sourceValid":5,"status":"Success"},
+            {"fullyConverted":8,"manual_confirm":"","message":"All objects successfully created in target DB","name":"TYPE","notConverted":"0","sourceCount":8,"sourceInvalid":0,"sourceValid":8,"status":"Success"},
+            {"fullyConverted":1,"manual_confirm":"","message":"All objects successfully created in target DB","name":"SEQUENCE","notConverted":"0","sourceCount":1,"sourceInvalid":0,"sourceValid":1,"status":"Success"},
+            {"fullyConverted":7,"manual_confirm":"","message":"All objects successfully created in target DB","name":"LOB","notConverted":"0","sourceCount":7,"sourceInvalid":0,"sourceValid":7,"status":"Success"}
+            ]
+    }
+}

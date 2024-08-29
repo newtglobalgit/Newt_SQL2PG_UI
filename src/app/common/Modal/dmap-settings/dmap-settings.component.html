@@ -1,0 +1,118 @@
+<div class="modal-header">
+        <h4 class="modal-title">{{data.title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <div class = "row">
+                <div class = "col-md-12 marginBottom20 fontSize15">
+                    <span>Following are the different ways in which <span class = "font-weight-bold fontSize17">MERGE</span> can be handled in PostgreSQL world, kindly choose the appropriate option as per use case</span>
+                </div>
+                <div class = "col-md-12">
+                    <table class = "table table-bordered">
+                        <tbody>
+                            
+                            <tr class = "fontSize15">
+                                <td style = "width:35%">
+                                    <div class="form-check float-left" style = "padding:0px;">
+                                        <label class="radioContainer">NOT IN
+                                            <input type="radio" name="notIn" value = "notIn" [(ngModel)]="codeMergeOptions">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td  style = "width:65%">
+                                    <ul>
+                                        <li>The exception is where have NULL in the NOT IN sub query, This the NOT IN always be false and will not return any rows . Not In does not have the ability to compare the NULL values.</li>
+                                        <li>The NOT IN operator is used when want to retrieve a column that has no entries in the table or referencing table.</li>
+                                        <li>Where using NOT IN the query performs nested full tables scans.</li>
+                                    </ul>
+                                </td>                        
+                            </tr>
+                            
+                            <tr class = "fontSize15">
+                                <td style = "width:35%">
+                                    <div class="form-check float-left" style = "padding:0px;">
+                                        <label class="radioContainer">NOT EXISTS
+                                            <input type="radio" name="notExist" value = "notExist" [(ngModel)]="codeMergeOptions">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td  style = "width:65%">
+                                    <ul>
+                                        <li>Exists cannot return NULL. It’s checking solely for the presence or absence of a row in the subquery and, hence, it can only return true or false.</li>
+                                        <li>Not EXISTS query can use an index within the sub-query.</li>
+                                    </ul>
+                                </td>                        
+                            </tr>
+                            
+                            <tr class = "fontSize15">
+                                <td style = "width:35%">
+                                    <div class="form-check float-left" style = "padding:0px;">
+                                        <label class="radioContainer">MERGE CONDITION
+                                            <input type="radio" name="mergeCondition" value = "mergeCondition" [(ngModel)]="codeMergeOptions">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td  style = "width:65%">
+                                    <ul>
+                                        <li>MATCHED</li>
+                                        <li>NOT MATCHED BY TARGET</li>
+                                        <li>NOT MATCHED BY SOURCE</li>
+                                    </ul>
+                                </td>                        
+                            </tr>
+                            
+                            <tr class = "fontSize15">
+                                <td style = "width:35%">
+                                    <div class="form-check float-left" style = "padding:0px;">
+                                        <label class="radioContainer">ON CONFLICT
+                                            <input type="radio" name="onConflict" value = "onConflict" [(ngModel)]="codeMergeOptions">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td  style = "width:65%">
+                                    <span>ON CONFLICT clause is a powerful clause to resolve any conflict between the data and the data to modify.</span>
+                                    <ul>
+                                        <li>ON CONFLICT DO UPDATE</li>
+                                        <li>ON CONFLICT DO NOTHING</li>
+                                        <li>INSERT ON CONFLICT [DO UPDATE] [DO NOTHING]
+                                            <ul>
+                                                <li>INSERT ON CONFLICT DO UPDATE: If record matched, it is updated with the new data value.</li>
+                                                <li>INSERT ON CONFLICT DO NOTHING: If record matched, it skips the record or error</li>
+                                            </ul>
+                                        </li>
+                                        <li>UPSERT with ON CONFLICT</li>
+                                        <li>ON CONFLICT Delete </li>
+                                    </ul>
+                                </td>                        
+                            </tr>
+                            
+                            <tr class = "fontSize15">
+                                <td style = "width:35%">
+                                    <div class="form-check float-left" style = "padding:0px;">
+                                        <label class="radioContainer">PERFORMANCE
+                                            <input type="radio" name="performance" value = "performance" [(ngModel)]="codeMergeOptions">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td  style = "width:65%">
+                                    <ul>
+                                        <li>When using “NOT IN”, the query performs nested full table scans, whereas for “NOT EXISTS”, query can use an index within the sub-query.</li>
+                                    </ul>
+                                </td>                        
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="update()" [disabled]="!onRadioSelected()">Update</button>
+        </div>

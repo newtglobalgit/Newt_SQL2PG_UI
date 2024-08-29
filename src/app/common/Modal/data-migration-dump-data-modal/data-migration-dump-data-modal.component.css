@@ -1,0 +1,9 @@
+.modal-body.dm{
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-header {
+    cursor: move;
+}

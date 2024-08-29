@@ -1,0 +1,238 @@
+<!-- <div class = "col-md-12" *ngFor = "let comm of getcommunications(shortQuestionnaireForm)"> -->
+<div class="row qsection">
+    <div class="col-md-12 qsection_heading text-center-align">
+        <span>{{getAppName(content)}}</span>
+    </div>
+    <div class="col-md-12 qsection_body">
+        <div class="row adjust">
+
+            <div class="col-md-12" *ngFor="let app of getAppvalue(content); let idx=index">
+                <div class="row sub_qsection">
+                    <div class="col-md-12 sub_qsection_heading text-center-align font-weight-bold">
+                        <span *ngIf="setRadio(app)"> {{getDBName(app)}} </span>
+                        <div style="margin-top: -24px;">
+                            <button type="button" class="btn btn-md btn-primary float-right" (click)="submitEmitEvent(getAppName(content), getDBName(app))">Submit</button>
+                            <button type="button" class="btn btn-md btn-simple float-right marginRight10"
+                                (click)="clearEmitEvent(getAppName(content), getDBName(app))">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 sub_qsection_body">
+                        <div class="row" [formGroup]="getDBControls(app)">
+                            <!-- <div class = "col-md-3" *ngFor="let x of getDBControls(app) | keyvalue;let i=index"> -->
+                            <div class="col-md-3">
+                                <label>Host Enviornment</label>
+                                <select class="form-control formheight" formControlName="host_environment">
+                                    <option *ngFor="let option of host_environment" [value]="option">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>DB Server Location</label>
+                                <input type="text" class="form-control" formControlName="database_location" placeholder="Enter DB Location">
+                                <div class="hint" style="margin-top: -24px;padding-left: 8px;"><span
+                                        *ngIf="isNotValid(app, 'database_location')"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Azure Location</label>
+                                <select class="form-control formheight" formControlName="azure_location">
+                                    <option *ngFor="let option of azure_locations" [value]="option">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>DB Server Type</label>
+                                <select class="form-control formheight" formControlName="db_server_type">
+                                    <option *ngFor="let option of db_server_type" [value]="option">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>DB Server (#)</label>
+                                <input type="text" class="form-control" formControlName="db_server_count">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'db_server_count')"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Cores (#)</label>
+                                <input type="text" class="form-control" formControlName="number_cores">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'number_cores')"></span></div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>DB Server RAM (GB)</label>
+                                <input type="text" class="form-control" formControlName="memory_server_gb">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'memory_server_gb')"></span></div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>DB Server Configuration</label>
+                                <select class="form-control formheight" formControlName="db_server_configuration">
+                                    <option *ngFor="let option of db_server_configuration" [value]="option">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Storage Provisioned (in GB)</label>
+                                <input type="text" class="form-control" formControlName="db_storage_provisioned">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'db_storage_provisioned')"></span></div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Storage Utilized (in GB)</label>
+                                <input type="text" class="form-control" formControlName="database_size_gb">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'database_size_gb')"></span></div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Oracle Core Processor Licensing Factor</label>
+                                <input type="text" class="form-control" formControlName="core_proc_license_factor">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'core_proc_license_factor')"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>HA as % of Prod</label>
+                                <input type="text" class="form-control" formControlName="ha_percentage_prod">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'ha_percentage_prod')"></span></div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>DR as % of Prod</label>
+                                <input type="text" class="form-control" formControlName="dr_percentage_prod">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'dr_percentage_prod')"></span></div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Dev & Test as % of Prod</label>
+                                <input type="text" class="form-control" formControlName="dev_test_percentage_prod">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'dev_test_percentage_prod')"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Other Env as % of Prod</label>
+                                <input type="text" class="form-control" formControlName="other_env_percentage_prod">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'other_env_percentage_prod')"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Workload Type</label>
+                                <select class="form-control formheight" formControlName="db_work_load">
+                                    <option *ngFor="let option of work_load" [value]="option">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>Hardware Refresh Time Period (in years)</label>
+                                <input type="text" class="form-control" formControlName="hardware_refresh_year">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'hardware_refresh_year')"></span></div>
+                            </div>
+
+                            <div class="col-md-12 sub_qsection_heading text-center-align font-weight-bold">
+                                <span>Please select the database features used:</span>
+                            </div>
+
+                            <ng-container *ngFor="let control of DB_DETAILS; let i = index">
+                                <div class="col-md-3 marginTop20" *ngIf="control.type == 'checkbox'">
+                                    <div class="checkbox-container">
+                                        <input type="checkbox" name="control.key" [formControlName]="control.key"
+                                            value="control.key" class="form_checkbox"
+                                            [ngClass]="{'yellowBorder': control.ui_control.isDefault}" style="top: 2px;">
+                                        <span class="checkbox-label">{{control.ui_control.label}}</span>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <!-- <div class="col-md-3 marginTop5">
+                                <label>Hardware Refresh Time Period (in years)<span
+                                        class="requiredField">*</span></label>
+                                <input type="text" class="form-control" formControlName="hardware_refresh_year">
+                                <div class="hint"><span *ngIf="isNotValid(app, 'hardware_refresh_year')"></span></div>
+                            </div> -->
+
+                            <div class="col-md-12 sub_qsection_heading text-center-align font-weight-bold">
+                                <span>Database Prod Details:</span>
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Database Name</label>
+                                <input type="text" class="form-control"   disabled [value]="getDBName(app)">
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Database Host URL / IP address<span class="requiredField">*</span></label>
+                                <input type="text" class="form-control" formControlName="prod_db_host_name"  >
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Port<span class="requiredField">*</span></label>
+                                <input type="text" class="form-control" formControlName="prod_db_port"  >
+                            </div>
+
+                            <div class="col-md-1 marginTop25">
+                                <div class="form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio" type="radio"
+                                        [value]=true  formControlName="prod_db_is_sid" (change)="isSID(true,app)"/>
+                                    <label class="marginLeft5" for="sid">SID</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 marginTop25">
+                                <div class="form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio" type="radio"
+                                         [value]=false   formControlName="prod_db_is_sid" (change)="isSID(false,app)"/>
+                                    <label class="marginLeft5" for="serviceName">Service Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 marginTop5">
+                                <label>SID<span *ngIf="disableSIDFn(app)" class="requiredField">*</span></label>
+                                <input type="text" class="form-control" formControlName="prod_db_sid"  >
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Service Name<span *ngIf="disableSnameFn(app)" class="requiredField">*</span></label>
+                                <input type="text" class="form-control" formControlName="prod_db_service_name"  >
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Username<span class="requiredField">*</span></label>
+                                <input type="text" class="form-control" formControlName="prod_db_username"  >
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Password<span class="requiredField">*</span></label>
+                                <app-show-password (showPasswordClicked)="toggleSourcePassword($event)"
+                                            [password]="sourceDBPasswordValue" [right]="'43px'"
+                                            [top]="'23px'"></app-show-password>
+                                <input class="form-control" formControlName="prod_db_password" type="{{sourcePasswordType}}" class="form-control"
+                                            name="sourceDBPassword" placeholder="Enter password">
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <label>Environment<span class="requiredField">*</span></label>
+                                <select class="form-control" formControlName="prod_db_env" >
+                                    <option value="DEV">DEV</option>
+                                    <option value="SIT">SIT</option>
+                                    <option value="PROD">PROD</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 marginTop5">
+                                <button type="button" class="btn btn-md btn-primary marginTop20 " (click)="testConnection(app,getDBName(app))">Test Connection</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- <div class = "col-md-12 padding0 " [formGroup]="content">
+                    <label>Please provide current lines of code (LOC) of application<span class = "requiredField" >*</span></label>
+                    <input type = "text" class = "form-control" formControlName = "appLoc">
+                    <div class = "hint"><span *ngIf= "isAppLOCValid(content, 'appLoc')">Invalid format. Hint: 14520</span></div>
+                </div> -->
+        </div>
+    </div>
+
+</div>
+<!-- <app-questioaire-template [formData] = "tcoQuestionnaireForm" [controls] = "tcoOracleDetail" [formStatus] = "formStatus"></app-questioaire-template> -->
+<!-- </div> -->

@@ -1,0 +1,84 @@
+<div class="modal-header">
+    <h5 class="modal-title">Server Details</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body aq" style="padding:20px;">
+
+    <div *ngIf="isDataAvailable">
+        <div class="col-md-12 row">
+            <span class="col-md-12 float-left marginBottom5">In this screen, please enter the infrastructure
+                details of each Web & Application server of {{application_name}} application.</span>
+        </div>
+
+        <div class="col-md-12 row">
+            <!-- <label style = "vertical-align: middle"> -->
+            <!-- <span class="marginLeft5 font-weight-bold col-md-5"></span>
+            <span class="marginLeft5 font-weight-bold col-md-5"></span> -->
+            <!-- <span  class = "marginLeft5 font-weight-bold col-md-5">Application ID: {{application_id}}</span>
+                <span  class = "marginLeft5 font-weight-bold col-md-4">Application Name: {{application_name}}</span> -->
+            <!-- <button type="button" class="btn btn-primary  col-md-2" (click)="addInterface()">Add Interface</button> -->
+            <a class="simpleLink pointerCursor col-md-12 float-left"
+                [ngClass]="{disabled: hideaddServerDetails === true}" (click)="addServerDetails()">Add Server
+                Details</a>
+            <!-- </label> -->
+        </div>
+
+        <div class="col-md-12 padding10 " *ngIf="showInterfaceData">
+            <div class="table-responsive">
+                <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered">
+                    <thead class="thead_custom">
+                        <tr class="tr_custom_14">
+                            <th>Server Type
+                            </th>
+                            <th>Host Name
+                            </th>
+                            <th>Cores
+                            </th>
+                            <th>RAM (GB)
+                            </th>
+                            <th>Storage (GB)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let serverDetail of appServerDetails">
+                            <tr class="tr_custom_14">
+                                <td>{{serverDetail.server_type}}</td>
+                                <td>{{serverDetail.host_name}}</td>
+                                <td>{{serverDetail.num_core}}</td>
+                                <td>{{serverDetail.ram_gb}}</td>
+                                <td>{{serverDetail.storage_gb}}</td>
+                                <td>
+                                    <span class="marginRight10 simpleLink pointerCursor"
+                                        (click)="editInterfaceDetails(serverDetail.server_id)"
+                                        title="Edit Server Details" style="cursor: pointer;">Edit</span>
+                                    <span class="marginRight10 simpleLink pointerCursor"
+                                        (click)="removeInterfaceDetails(serverDetail.server_id)"
+                                        title="Remove Server Details" style="cursor: pointer;">Remove</span>
+                                </td>
+                            </tr>
+
+                        </ng-container>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <!-- <div class="row col-md-12" *ngIf="!showInterfaceData">
+            <div class="row col-md-12 marginBottom20 marginLeft5 marginTop15">
+                <div class="col-md-12 adjust wizardDiv fontSize15 marginBottom10 padding10">
+                    <span>Please fill all the Interface Details for {{application_name}} application.</span>
+                </div>
+            </div>
+        </div> -->
+
+
+
+    </div>
+
+
+</div>

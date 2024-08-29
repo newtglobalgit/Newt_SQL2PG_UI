@@ -1,0 +1,40 @@
+{
+    "schemas":[
+        {	
+            "applicationName": "DMAP",
+            "businessUnit":"NEWT",
+            "sourceDbName": "DEMO",
+            "sourceSchema": "DEMO",
+            "workerNode": "VM1",
+            "lastUpdated": "05/19/21"
+           
+        },
+        {	
+            "applicationName": "DMAP",
+            "businessUnit":"NEWT",
+            "sourceDbName": "NSB",
+            "sourceSchema": "NSB",
+            "workerNode": "VM2",
+            "lastUpdated": "05/19/21"
+           
+        },
+        {	
+            "applicationName": "DMAP",
+            "businessUnit":"MICROSOFT",
+            "sourceDbName": "RATE",
+            "sourceSchema": "RATE",
+            "workerNode": "VM3",
+            "lastUpdated": "05/19/21"
+           
+        },
+        {	
+            "applicationName": "DMAP",
+            "businessUnit":"MICROSOFT",
+            "sourceDbName": "APSQT",
+            "sourceSchema": "APSQT",
+            "workerNode": "VM4",
+            "lastUpdated": "05/19/21"
+           
+        }
+    ]
+}

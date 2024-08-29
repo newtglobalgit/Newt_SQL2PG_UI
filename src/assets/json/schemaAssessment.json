@@ -1,0 +1,157 @@
+{
+    "schemaAssessment":{
+    	"databaseVersion": "Oracle Database 12c Standard Edition Release 12.1.0.2.0",
+    	"schema" : "WDB",
+    	"totalSize": "934.31 MB",
+    	"databaseObjects": [
+			{
+			"name":"Tables",
+			"total": "351",
+			"totalRows": "2733070",
+			"levels": [{"name" : "Very difficult", "value" : "6"},
+						{"name" : "Difficult", "value" : "28"},
+						{"name" : "Moderate", "value" : "25"},
+						{"name" : "Low", "value" : "293"}],
+			"mostDifficult":[{"name": "t_eid_flat_hierarchy ", "value": "634746 "},
+							{"name": "t_grievance_steps_attendees ", "value": "200000"},
+							{"name": "t_employee_info ", "value": "197726"},
+							{"name": "t_grievance_steps", "value": "197348"},
+							{"name": "t_grievance", "value": "151464"}]				
+    		},
+			{
+			"name":"Functions",
+			"total": "27",
+			"levels": [{"name" : "Very difficult", "value" : "0"},
+						{"name" : "Difficult", "value" : "3"},
+						{"name" : "Moderate", "value" : "15"},
+						{"name" : "Low", "value" : "9"}],
+			"mostDifficult":[{"name": "usp_getdisciplinesearch", "value": "31"},
+								{"name": "usp_loaddiscipline", "value": "30"},
+								{"name": "usp_getdisciplinesearch_count", "value": "30"},
+								{"name": "usp_getgrievancesearch", "value": "29"},
+								{"name": "usp_findunionrep", "value": "26"}]	
+    		},
+			{
+			"name":"Procedures",
+			"total": "67",
+			"levels": [{"name" : "Very difficult", "value" : "3"},
+						{"name" : "Difficult", "value" : "3"},
+						{"name" : "Moderate", "value" : "26"},
+						{"name" : "Low", "value" : "32"}],
+			"mostDifficult":[{"name": "grievance_over_90days_email", "value": "100"},
+								{"name": "reset_sys_grievance_no", "value": "83"},
+								{"name": "up_post_lrdb_loads_weekend", "value": "58"},
+								{"name": "up_loadpsemployeeinfo", "value": "42"},
+								{"name": "pull_saladmin_from_ps", "value": "36"}]	
+    		}
+    	],
+    	"effortBreakdown":[
+    		{"label": "total","value": "1106"},
+    		{"label": "dbLink","value": "3"},
+    		{"label": "function","value": "300"},
+    		{"label": "index","value": "3"},
+    		{"label": "procedure","value": "538"},
+    		{"label": "sequence","value": "4"},
+    		{"label": "trigger","value": "144"},
+    		{"label": "tables","value": "88"},
+    		{"label": "view","value": "26"}
+		],
+    	"schemaMigrationAutomation": {
+    		"storageObjects":[
+				{	
+					"totalAction": "351",
+					"label":"Table",
+					"completelyConverted": "322",
+					"simpleAction": "29",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0	
+				},
+				{
+					"totalAction": "56",
+					"label": "Constraint",
+					"completelyConverted": "56",
+					"simpleAction": "0",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0
+				},
+				{
+					"totalAction": "2",
+					"label": "Index",
+					"completelyConverted": "1",
+					"simpleAction": "0",
+					"mediumAction": "0",
+					"significantAction": "1",
+					"none":0   		
+				},
+				{
+					"totalAction": "78",
+					"label": "Sequence",
+					"completelyConverted": "78",
+					"simpleAction": "0",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0  		
+				},
+				{
+					"totalAction": "1",
+					"label": "dbLink",
+					"completelyConverted": "0",
+					"simpleAction": "1",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0
+				}    
+			],
+			"codeObjects": [
+				{
+					"totalAction": "53",
+					"label": "view",
+					"completelyConverted": "51",
+					"simpleAction": "2",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0
+				},
+				{
+					"totalAction": "67",
+					"label": "procedure",
+					"completelyConverted": "19",
+					"simpleAction": "40",
+					"mediumAction": "4",
+					"significantAction": "4",
+					"none":0
+				},
+				{
+					"totalAction": "27",
+					"label": "function",
+					"completelyConverted": "14",
+					"simpleAction": "13",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0
+				},
+				{
+					"totalAction": "1",
+					"label": "package",
+					"completelyConverted": "1",
+					"simpleAction": "0",
+					"mediumAction": "0",
+					"significantAction": "0",
+					"none":0
+				}			
+			]    	
+    	},    	
+    	"migrationPlan": [
+							{"name":"Review Analysis", "startTime":"0", "endTime":"1"},
+							{"name":"Automated Conversion", "startTime":"1", "endTime":"3"},
+							{"name":"Manual Conversion", "startTime":"3", "endTime":"6"},
+							{"name":"Data Testing", "startTime":"6", "endTime":"8"},
+							{"name":"Code Objects Testing", "startTime":"8", "endTime":"10"},
+							{"name":"Performance Tuning and Testing", "startTime":"10", "endTime":"12"}
+		]
+
+    }
+    
+}

@@ -1,0 +1,174 @@
+/* #footer {
+  width: 100%;
+  float: left;
+  clear: both;
+  margin: 0px;
+  position: relative;
+  font-family: Poppins;
+  background-color: #364087;
+  background-image: url(https://newtglobal.com/wp-content/uploads/2017/06/footer-bg.jpg);
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: cover;
+} */
+#footer:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.footer {
+  float: left;
+  clear: both;
+  margin: 0px;
+  position: relative;
+  height: 40px;
+  width: 100%;
+  padding: 10px;
+  background: #f3f2f1;
+}
+
+.footer-div-left {
+  float: left;
+  padding-left: 10px;
+}
+.footer-div-right {
+  float: right;
+  padding-right: 10px;
+  margin-top: 2px;
+}
+
+.newtFooterul {
+  color: black;
+  padding: 0px;
+  margin: 0px;
+  clear: both;
+  display: inline;
+  list-style-type: none;
+}
+.newtFooterul > li {
+  float: left;
+  color: black;
+  margin-right: 25px;
+  font-size: 12px;
+}
+.newtFooterul > li > a {
+  color: black;
+}
+.newtFooterul > li > a:hover {
+  color: black;
+}
+/* .newtLogoContainer {
+  font-family: Poppins;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: left;
+  text-transform: none;
+  color: #fff;
+}
+.contactUsContainer {
+  color: white;
+  margin-bottom: 50px;
+} */
+/* .contactTitle {
+  font-size: 20px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+  font-weight: bold;
+}
+.contactContent {
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+}
+.contactIcon {
+  font-family: Poppins;
+  font-size: 29px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+} */
+
+.copyRightText {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: black;
+}
+.copyrightul > a {
+  text-decoration: none;
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+}
+.copyrightul > a:hover {
+  color: #7699e3;
+}
+/* .copyrightul.menuLink > a:before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 8px;
+  left: -20px;
+  top: 50%;
+  color: white;
+} */
+/* .stayconnected {
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color: #ffffff;
+
+  margin-bottom: 30px;
+} */
+
+.min-window-main{
+  /* height: 4rem; */
+  width: 20rem;
+  position: fixed;
+  bottom: 0px;
+}
+
+.min-window-header{
+  color: white;
+  background: #252d76;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.min-window-header  img {
+  transition: transform 0.3s ease-in-out;
+  width: 1rem;
+}

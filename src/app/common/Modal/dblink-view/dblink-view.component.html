@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{data.title}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" style="max-height: 600px;overflow: hidden;">
+    <div class="scrollbar"> 
+    <table id="dmapTable" class="table table-bordered table-striped table-sm" style="font-size:12px; padding-top:5px;">
+        <thead class="thead_custom">
+            <tr class="tr_custom_14">
+                <th class="high">DB Link Name</th>
+                <th class="medium">Remote Database Type</th>
+                <th class="medium">Host Name</th>
+                <th class="medium">User Name</th>
+                <th class="medium">Database Name</th>
+                <th class="medium">Port</th>
+                <th class="high">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="tr_custom_14 example-box" *ngFor="let item of data.data">
+                <td>{{item.name}}</td>
+                <td>{{item.dbtype}}</td>
+                <td>{{item.host}}</td>
+                <td>{{item.username}}</td>
+                <td>{{item.dbname}}</td>
+                <td>{{item.port}}</td>
+                <td>
+                    <a class="col-md-5 float-left simpleLink pointerCursor padding0" (click)="deleteDbLinkDetails(item)"
+                        target="_blank"><img class="icon-size" alt="Complete"
+                        src="assets/images/SVG/trash.svg" style="cursor: pointer;"
+                        title="Delete"></a>
+                    <a class="col-md-5 float-left simpleLink pointerCursor padding0" (click)="updateDbLinkDetails(item)"
+                        target="_blank"><img class="icon-size" alt="Complete"
+                        src="assets/images/SVG/pencil-square.svg"
+                        style="cursor: pointer;" title="Edit"></a>
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="ok()">Submit</button>
+</div>

@@ -1,0 +1,93 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{data.title}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" style="max-height: 600px;overflow-y: scroll;"
+    *ngIf="data.showId == 'batchDetails' || data.showId == 'analyticsDasboard'">
+    <table id="dmapTable" class="table table-bordered table-striped table-sm" style="font-size:12px; padding-top:5px;">
+        <thead class="thead_custom">
+            <tr class="tr_custom_14">
+                <ng-container *ngFor="let header of data.headers">
+                    <th [ngStyle]="{width:getWidthStyle(header)}"
+                        [ngClass]="{textCenter: header.name == 'Run Order' ||header.name == 'Error' }">{{header.name}}
+                    </th>
+
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="data.showId == 'batchDetails'">
+                <tr class="tr_custom_14" *ngFor="let item of data.content">
+                    <td>{{item.schema_name}}</td>
+                    <td>{{item.db_name}}</td>
+                    <td>{{item.run_id}}</td>
+                    <td class="text-center">{{item.run_order}}</td>
+                    <td>{{item.stage}}</td>
+                    <td>{{item.status}}</td>
+                    <td>{{item.last_updated}}</td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="data.showId == 'analyticsDasboard' && data.show_error == 'show'">
+                <tr class="tr_custom_14" *ngFor="let item of data.content">
+                    <td>{{item.application_name}}</td>
+                    <td>{{item.business_unit}}</td>
+                    <td>{{item.source_schema_name}}</td>
+                    <td>{{item.source_db_name}}</td>
+                    <td>{{item.assigned_vm}}</td>
+                    <td>{{item.last_updated_date}}</td>
+                    <td class="text-center"> <span (click)="viewDetail(item.errors)" title="View Error Details">
+                            <svg class="bi bi-file-plus filePlusIcon" width="2em" height="2em" viewBox="0 0 16 16"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z" />
+                                <path fill-rule="evenodd"
+                                    d="M13.5 1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
+                                <path fill-rule="evenodd"
+                                    d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
+                            </svg>
+                        </span></td>
+                    <td>
+                        <div *ngIf="item.reset"><button type="button" class="btn btn-primary"
+                                (click)="reset_rerun_count(item.run_id, item.assigned_vm)">Reset</button></div>
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="data.showId == 'analyticsDasboard' && data.show_error == 'hide'">
+                <tr class="tr_custom_14" *ngFor="let item of data.content">
+                    <td>{{item.application_name}}</td>
+                    <td>{{item.business_unit}}</td>
+                    <td>{{item.source_schema_name}}</td>
+                    <td>{{item.source_db_name}}</td>
+                    <td>{{item.assigned_vm}}</td>
+                    <td>{{item.last_updated_date}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+
+    </table>
+</div>
+<div class="modal-body" *ngIf="data.showId == 'batchLogs' || data.showId == 'masterAssessmentLogs'">
+    <table id="dmapTable" class="table table-bordered table-striped table-sm" style="font-size:12px; padding-top:5px;">
+        <thead class="thead_custom">
+            <tr class="tr_custom_14">
+                <ng-container *ngFor="let header of data.headers">
+                    <th [ngStyle]="{width:getWidthStyle(header)}">{{header.name}}</th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+
+            <ng-container *ngFor="let item of data.content ">
+                <tr class="tr_custom_14">
+                    <td>{{item}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="ok()">Ok</button>
+</div>

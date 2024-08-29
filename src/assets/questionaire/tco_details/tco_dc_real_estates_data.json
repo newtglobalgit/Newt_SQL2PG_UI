@@ -1,0 +1,11 @@
+{"data":[
+        {"seq":1, "key":"watt_per_core", "type": "text", "regex": "number", "isRequired": true, "validators":[], "ui_control":{"name": "watt_per_core", "label": "Watts used per Core", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+        {"seq":2, "key":"elec_cost_per_kw", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "elec_cost_per_kw", "label": "Electricity Cost (per kilowatt-hour)", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+        {"seq":3, "key":"avg_cpu_per_ru", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "avg_cpu_per_ru", "label": "Average CPUs per RU (Rack Unit)", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+        {"seq":4, "key":"avg_tb_per_ru", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "avg_tb_per_ru", "label": "Average TB per Rack Unit", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+        {"seq":5, "key":"avg_cost_per_ru", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "avg_cost_per_ru", "label": "Annual Average Facilities Cost per Rack Unit (RU)", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},
+        {"seq":6, "key":"ser_maint_per_fte", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "ser_maint_per_fte", "label": "Number of physical servers that can be managed by a full time equivalent (FTE) administrator", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}},                
+        {"seq":7, "key":"cost_admin_per_fte", "type": "text", "regex": "percentage", "isRequired":true , "validators":[], "ui_control":{"name": "cost_admin_per_fte", "label": "Cost of administrator (one FTE) per year", "placeholder": "", "isDefault": false, "readOnly":false, "style":""}}
+        ]
+}
+    

@@ -1,0 +1,70 @@
+.borderBottom {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #d3d3d3;
+  }
+  
+  textarea {
+    overflow-y: auto;
+    height: auto;
+    resize: none; /* Remove this if you want the user to resize the textarea */
+  }
+  
+  .multiselect-dropdown.dropdown-btn.selected-item {
+    margin-top: 5px;
+  }
+  
+  .form-status {
+    width: 182px;
+    height: 44px;
+    margin: 0 0px 10px 0;
+    padding: 6px 70px 6px 12px;
+    border-radius: 3px;
+    border: solid 1px grey;
+    background-color: #fff;
+  }
+  
+  .form-status-icon {
+    position: relative;
+    top: 6px;
+    height: 20px;
+    width: 20px;
+  }
+  
+  .form-fileupload-center{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+  
+  
+  .form-height{
+    height: 40px !important;
+    border: 1px solid #adadad;
+  }
+  
+  .qsection {
+    /* border: 1px solid #dfd7d7; */
+    margin-bottom: 10px;
+  }
+  
+  .qsection_heading {
+    padding: 20px;
+    background-color: #252d76;
+    font-weight: bold;
+    height: 36px;
+    margin-bottom: -5px;
+    color: white;
+  }
+  
+  .text-center-align {
+    display: table-caption;
+    vertical-align: middle;
+    padding: 10px;
+  }
+  
+  .qsection_body {
+    padding: 20px;
+  }
+  

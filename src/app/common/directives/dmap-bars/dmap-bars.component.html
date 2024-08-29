@@ -1,0 +1,27 @@
+<!-- <div class = "outerBar"> 
+    <div class = "float-right marginRight5">{{bar.value}}</div>
+    <div class = "innerBar" [ngStyle] = "getBarWidth()">
+        <div class = "float-left text-wrap" [title] = "bar.name">{{bar.shortName}}</div>
+       
+    </div>
+</div> -->
+
+<div class = "row dmapBar" style = "color:#625d5d;">
+    <div class = "col-md-7" [title] = "bar.name" style = "overflow: hidden; text-overflow: ellipsis;padding-left:5px;">{{bar.shortName}}</div>
+    <div class = "col-md-5" style = "padding-right:5px;"><span class = "float-right">{{bar.value | number}}</span></div>
+</div>
+
+<!-- <div class = "row dmapBar" style = "color:#625d5d;">
+    <div class = "col-md-12" [title] = "bar.name" style = "overflow: hidden; text-overflow: ellipsis;padding-left:5px;">
+        <span class = "float-left" style = "overflow: hidden; text-overflow: ellipsis;padding-left:5px;">{{bar.shortName}}</span>
+        <span class = "float-right">{{bar.value}}</span>
+    </div>
+</div> -->
+
+
+<!-- 
+<div class = "row dmapBar" style = "color:#625d5d;">
+    <div class = "float-left" [title] = "bar.name" style = "overflow: hidden; text-overflow: ellipsis;padding-left:5px;">{{bar.shortName}}</div>
+    <div class = "float-right" style = "padding-right:5px;"><span class = "float-right">{{bar.value}}</span></div>
+</div> -->
+

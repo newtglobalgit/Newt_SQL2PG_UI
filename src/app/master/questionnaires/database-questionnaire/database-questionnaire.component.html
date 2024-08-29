@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h5 class="modal-title">Database Questionnaire</h5>
+</div>
+
+<div class = "row adjust">
+    <div class="col-md-2"></div>
+    <div class = "col-md-10">
+        <span  class = "float-left marginBottom5">Please click 
+            <span class = "simpleLink pointerCursor" (click) = "openDatabaseUploadModal()">here</span> to browse or drag & drop excel file to upload database questionnaire.
+        </span>
+    </div>
+    <div class = "col-md-2 padding0" style = "border-right:1px solid #ededed;">
+        <div class = "sideTab active" (click) = "toggleSideBar('dbDetail')" [ngClass]="{'active': isDbDetailClicked}">DB Details</div>
+        <div class = "sideTab" (click) = "toggleSideBar('fnDetail')" [ngClass]="{'active': !isDbDetailClicked}">Functional Details</div>
+    </div>
+    <div class = "col-md-10">        
+        <!--Tab1-->
+        <div class = "tabContent" [ngClass]="{'hideSideContent': !isDbDetailClicked}">
+            <div class = "row" *ngIf = "formStatus.length > 0">
+                <div class = "col-md-12"> 
+                    <app-database-details [dbQuestionnaireForm] = "dbQuestionnaireForm" [controls] = "dbDetailsControls" [formStatus] = "formStatus" [allowFormToEdit]="analyticsStatus"></app-database-details>
+                </div>
+            </div>
+        </div>
+
+        <!--Tab2-->
+        <div class = "tabContent" [ngClass]="{'hideSideContent': isDbDetailClicked}">
+            <div class = "row" *ngIf = "formStatus.length > 0">
+                <div class = "col-md-12"> 
+                    <app-functional-details [dbQuestionnaireForm] = "dbQuestionnaireForm" [controls] = "fnDetailsControls"  [formStatus] = "formStatus"></app-functional-details>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class = "col-md-12">
+        <div class="modal-footer">
+            <span *ngIf = "errorInValidForm" class = "errorHint">Please enter all the required fields</span>
+            <button type="button" class="btn btn-simple" (click)="clear()">Clear</button>
+            <button type="button" class="btn btn-primary" (click)="submit('save')">Save</button>
+            <button type="button" class="btn btn-primary" (click)="submit('submit')">Submit</button>
+        </div>
+    </div>
+</div>
+
+    

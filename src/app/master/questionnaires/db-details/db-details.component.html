@@ -1,0 +1,64 @@
+<span class="pageHeading">Database Details</span>
+<div class="row adjust body-content-padding">
+
+    <ng-container>
+
+
+        <div class="modal-body" style="margin-top:-12px;" [formGroup]="shortQuestionnaireForm"
+            *ngIf="formStatus == 'success'">
+
+            <div class="col-md-12 row">
+                <span class="float-left ">Please click
+                    <span class="simpleLink pointerCursor" (click)="openApplicationUploadModal()">here</span> to browse
+                    or
+                    drag & drop excel file to upload database details.
+                </span>
+            </div>
+            <div class="row" style="margin-bottom: -10px;">
+                <div class="col-md-12">
+                    <nav class="dmap-navs col-md-12 padding0" style="border:none;">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <div class="nav nav-tabs col-md-12">
+                                <ng-container *ngFor="let tab of shortQuestionnaireData.bunits">
+                                    <a class="nav-item nav-link dmapdbOwner_detailLink dmapNavLink marginRight10 questionairNav"
+                                        id="nav-{{replaceSpacesWithUnderscores(tab.bunit)}}-tab" data-toggle="tab" href="#nav-{{replaceSpacesWithUnderscores(tab.bunit)}}_detail"
+                                        role="tab" aria-controls="nav-comm_detail"
+                                        aria-selected="true">{{tab.bunit}}</a>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent" style="padding-top: 0!important;">
+                        <ng-container *ngFor="let tab of shortQuestionnaireData.bunits;let i= index">
+                            <div class="nav-{{replaceSpacesWithUnderscores(tab.bunit)}}_detail-tab tab-pane fade show" id="nav-{{replaceSpacesWithUnderscores(tab.bunit)}}_detail"
+                                role="tabpanel" aria-labelledby="nav-comm_detail-tab">
+
+                                <div class="row adjust">
+
+                                    <div class="col-md-12"
+                                        *ngFor="let content of getBunitTabContent(shortQuestionnaireForm, i)">
+                                        <app-db-details-template [shortQuestionnaireForm]="shortQuestionnaireForm"
+                                            [content]="content" (dbSectionSubmitted)="submit($event)" (dbSectionCleared)="clear($event)"
+                                            [azure_locations]="azure_locations"></app-db-details-template>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- <span *ngIf="errorInValidForm" class="errorHint">Please enter all the required fields</span>     -->
+            <button type="button" class="btn btn-md btn-primary float-right" (click)="submitAll()">Submit All</button>
+            <button type="button" class="btn btn-md btn-simple float-right marginRight10"
+                (click)="clearAll()">Clear All</button>
+
+
+        </div>
+    </ng-container>
+</div>

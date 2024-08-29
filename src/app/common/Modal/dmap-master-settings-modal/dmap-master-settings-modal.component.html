@@ -1,0 +1,192 @@
+<form name="masterSettingsForm" #f="ngForm">
+    <div class="modal-header">
+        <h5 *ngIf="data.title == 'Node Settings'" class="modal-title">DB Node Settings</h5>
+        <h5 *ngIf="data.title != 'Node Settings'" class="modal-title">{{data.title}}</h5>
+        <button type="button" class="close" aria-label="Close" (click)="cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" style="max-height: 55vh; overflow-y: scroll; overflow-x: hidden;">
+
+        <div class="row" style="width:798px;" *ngIf="data.node_type == 'analytics_master'">
+
+            <div class="col-md-12 marginBottom10 fontWeightBold">
+                <label for="count">Master Node Configuration Details</label>
+            </div>
+
+            <!-- <div class = "col-md-6">
+                <div class="form-group">
+                    <label for="miscellaneous1">Miscellaneous 1</label>
+                    <span class = "validFormCheck" *ngIf = "miscellaneous1Ref.valid && miscellaneous1Ref.touched"><i class="fa fa-check"></i></span>
+                    <input type="miscellaneous1" class="form-control" id="miscellaneous1"
+                    placeholder="Enter Miscellaneous 1" #miscellaneous1Ref= "ngModel"
+                    [(ngModel)] =  "miscellaneous1Value" name = "miscellaneous1" title = "Hint: Location">
+                </div>
+            </div>
+            <div class = "col-md-6">
+                <div class="form-group">
+                    <label for="miscellaneous2">Miscellaneous 2</label>
+                    <span class = "validFormCheck" *ngIf = "miscellaneous2Ref.valid && miscellaneous2Ref.touched"><i class="fa fa-check"></i></span>
+                    <input type="miscellaneous2" class="form-control" id="miscellaneous2"
+                    placeholder="Enter Miscellaneous 2" #miscellaneous2Ref= "ngModel"
+                    [(ngModel)] =  "miscellaneous2Value" name = "miscellaneous2" title = "Hint: Region">
+                </div>
+            </div> -->
+
+            <!-- <div class="col-md-6">
+                <div class="form-group">
+                    <label for="backupInterval">Frequency to take worker node backup (in seconds)<span
+                            class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="backupIntervalRef.valid && backupIntervalRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="number" class="form-control no-spinner" id="backupInterval" [pattern]="numberOnlyPattern" min="1800"
+                        placeholder="Enter frequency to take worker node backup in seconds" #backupIntervalRef="ngModel"
+                        [(ngModel)]="backupIntervalValue" name="backupInterval" title="Hint: 200" required >
+                </div>
+            </div> -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="timeToSyncWorkerNodes">Frequency to sync up worker nodes (in seconds)<span
+                            class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="timeToSyncWorkerNodesRef.valid && timeToSyncWorkerNodesRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="timeToSyncWorkerNodes" class="form-control" id="timeToSyncWorkerNodes"
+                        [pattern]="numberOnlyPattern" placeholder="Enter frequency to sync up worker nodes in seconds"
+                        #timeToSyncWorkerNodesRef="ngModel" [(ngModel)]="timeToSyncWorkerNodesValue"
+                        name="timeToSyncWorkerNodes" title="Hint: 200" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="timeToSyncWorkerNodesStatus">Worker node status refresh period (in seconds)<span
+                            class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="timeToSyncWorkerNodesStatusRef.valid && timeToSyncWorkerNodesStatusRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="timeToSyncWorkerNodesStatus" class="form-control" id="timeToSyncWorkerNodesStatus"
+                        [pattern]="numberOnlyPattern" placeholder="Enter worker node status refresh period in seconds"
+                        #timeToSyncWorkerNodesStatusRef="ngModel" [(ngModel)]="timeToSyncWorkerNodesStatusValue"
+                        name="timeToSyncWorkerNodesStatus" title="Hint: 200" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="selectCurrency">Select Currency</label>
+                    <select class="form-control" id="selectCurrency" [(ngModel)]="selectedCurrencyValue"
+                        name="selectCurrency" #selectCurrency="ngModel">
+                        <ng-container *ngFor="let currency_val of currency">
+                            <option>{{currency_val}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class = "col-md-6">
+                <div class="form-group">
+                    <label for="selectedtimeZone">Select Timezone</label>
+                    <select class="form-control"
+                            id="selectedtimeZone"
+                            [(ngModel)] = "selectedtimeZoneValue"
+                            name = "selectedtimeZoneValue"
+                            #selectedtimeZone = "ngModel">
+                            <ng-container *ngFor = "let timeZone of timeZones">
+                                <option>{{timeZone}}</option>
+                            </ng-container>
+                    </select>
+                </div>
+            </div> -->
+
+            <div class="col-md-12 marginBottom10 fontWeightBold">
+                <label for="count">Worker Node Configuration Details</label>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="maxTimeToWaitInprogressSchema">Time out for In Progress Schema (in seconds)<span
+                            class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="maxTimeToWaitInprogressSchemaRef.valid && maxTimeToWaitInprogressSchemaRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="maxTimeToWaitInprogressSchema" class="form-control" id="smtpPort"
+                        [pattern]="numberOnlyPattern" placeholder="Enter time out for In Progress schema in seconds"
+                        #maxTimeToWaitInprogressSchemaRef="ngModel" [(ngModel)]="maxTimeToWaitInprogressSchemaValue"
+                        name="maxTimeToWaitInprogressSchema" title="Hint: 200" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="timeToExecuteDiscoveryAssessmentAutomatically">Frequency to execute discovery and
+                        assessment automatically (in seconds)<span class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="timeToExecuteDiscoveryAssessmentAutomaticallyRef.valid && timeToExecuteDiscoveryAssessmentAutomaticallyRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="timeToExecuteDiscoveryAssessmentAutomatically" class="form-control"
+                        id="timeToExecuteDiscoveryAssessmentAutomatically" [pattern]="numberOnlyPattern"
+                        placeholder="Enter frequency to execute discovery and assessment automatically in seconds"
+                        #timeToExecuteDiscoveryAssessmentAutomaticallyRef="ngModel"
+                        [(ngModel)]="timeToExecuteDiscoveryAssessmentAutomaticallyValue"
+                        name="timeToExecuteDiscoveryAssessmentAutomatically" title="Hint: 200" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="timeToTimedOutInprogressSchemas">In Progress Schema Timeout refresh period (in
+                        seconds)<span class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="timeToTimedOutInprogressSchemasRef.valid && timeToTimedOutInprogressSchemasRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="timeToTimedOutInprogressSchemas" class="form-control"
+                        id="timeToTimedOutInprogressSchemas" [pattern]="numberOnlyPattern"
+                        placeholder="Enter In Progress schema timeout refresh period in seconds"
+                        #timeToTimedOutInprogressSchemasRef="ngModel" [(ngModel)]="timeToTimedOutInprogressSchemasValue"
+                        name="timeToTimedOutInprogressSchemas" title="Hint: 200" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="maxErrorRerunAttempt">Maximum attempt to rerun error schema<span
+                            class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="maxErrorRerunAttemptRef.valid && maxErrorRerunAttemptRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="maxErrorRerunAttempt" class="form-control" id="maxErrorRerunAttempt"
+                        [pattern]="numberOnlyPattern" placeholder="Enter Maximum attempt to rerun error schema"
+                        #maxErrorRerunAttemptRef="ngModel" [(ngModel)]="maxErrorRerunAttempt"
+                        name="maxErrorRerunAttempt" title="Hint: 200" required>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="width:798px;" >
+
+            <div class="col-md-12 marginBottom10 fontWeightBold">
+                <label for="count">DMAP Configuration Details</label>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="selectedtimeZone">Select Timezone</label>
+                    <select class="form-control" id="selectedtimeZone" [(ngModel)]="selectedtimeZoneValue"
+                        name="selectedtimeZoneValue" #selectedtimeZone="ngModel">
+                        <ng-container *ngFor="let timeZone of timeZones">
+                            <option>{{timeZone}}</option>
+                        </ng-container>
+                    </select>
+                    <span class="marginLeft5">Note: Time zone entered for Master node will be synced with all worker nodes (Database and Application containers)</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-md btn-simple marginRight5" (click)="clear()">Clear</button>
+        <button type="button" class="btn btn-md btn-primary marginRight10" [disabled]="!f.valid" (click)="submit()">Save</button>
+
+    </div>
+</form>

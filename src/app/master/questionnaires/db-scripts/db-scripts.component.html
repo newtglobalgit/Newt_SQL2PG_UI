@@ -1,0 +1,73 @@
+<span class="pageHeading">Database Scripts</span>
+<div class="row adjust body-content-padding">
+    <div class="row col-md-12" *ngIf="showDbScriptsData">
+        <div class="col-md-12" *ngIf="!allowFormToEdit">
+            <label style="vertical-align: middle">
+                <span *ngIf="!allowFormToEdit" class="marginRight10 marginLeft5 marginTop5 colorRed">
+                    Analytics Process is In Progress you can't upload or download any of the scripts until the process
+                    is
+                    completed.
+                </span>
+            </label>
+        </div>
+        <div class="col-md-12 padding10 ">
+            <div class="table-responsive">
+                <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered">
+                    <thead>
+                        <tr class="tr_custom_14 analyticsReports">
+                            <th>S No.</th>
+                            <th>Script Name</th>
+                            <th>Status</th>
+                            <th>Last Updated Date</th>
+                            <th>Actions</th>
+                            <th class="text-center">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let dbDetails of dbScriptDetails" class="tr_custom_14">
+                            <td>{{dbDetails.sno}}</td>
+                            <td>{{dbDetails.script_name}}</td>
+                            <td><span *ngIf="dbDetails.status != 'Error'">{{ dbDetails.status }}</span> <span *ngIf="dbDetails.status == 'Error'"><br/>{{error30Characters(dbDetails.status)}} &nbsp;<a *ngIf="showError(dbDetails.status)" (click)="viewFullError(dbDetails.status)">View</a></span></td>
+                            <td>{{dbDetails.last_updated}}</td>
+                            <td style="vertical-align: middle;" class="marginTop0">
+                                <!-- <span class="simpleLink pointerCursor" (click) = "opneUploadModal(dbDetails.script_name)" 
+                            *ngIf = "dbDetails.status =='Not Uploaded'" [ngClass] = "{disabled: !allowFormToEdit}">Upload</span><br/>
+                            <span  class="simpleLink pointerCursor" (click) = "executeDbScript(dbDetails.script_name)" [ngClass] = "{disabled: !allowFormToEdit}"
+                            *ngIf = "dbDetails.status =='Not Uploaded' ">Execute</span> -->
+                                <span class="simpleLink pointerCursor" (click)="opneUploadModal(dbDetails.script_name)"
+                                    [ngClass]="{disabled: !allowFormToEdit}">{{dbDetails.upload_label}}</span><br />
+                                <span class="simpleLink pointerCursor" (click)="executeDbScript(dbDetails.script_name)"
+                                    [ngClass]="{disabled: !allowFormToEdit}">{{dbDetails.execute_label}}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="marginRight10" (click)="downloadScripts(dbDetails.script_name)"
+                                    *ngIf="dbDetails.status =='Uploaded' || dbDetails.status =='Executed'" title="Download SQL Script"
+                                    style="cursor: pointer;">
+                                    <svg class="bi bi-download downloadIcon" width="2em" height="2em"
+                                        viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z" />
+                                        <path fill-rule="evenodd"
+                                            d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z" />
+                                        <path fill-rule="evenodd"
+                                            d="M8 1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 1z" />
+                                    </svg>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row col-md-12" *ngIf="!showDbScriptsData">
+        <div class="row col-md-12 marginBottom20 marginLeft5">
+            <div class="col-md-12 adjust wizardDiv fontSize15 marginBottom10 padding10">
+                <span>Exception occurred while getting db script details</span>
+            </div>
+        </div>
+    </div>
+</div>

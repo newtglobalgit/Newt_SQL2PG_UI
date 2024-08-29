@@ -1,0 +1,29 @@
+#licenseActivationContainer {
+  font-size: 12px;
+}
+.loginHeading {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1;
+  letter-spacing: 0.56px;
+  color: #757575;
+}
+.loginHint {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.3px;
+  color: #a1a1a1;
+}
+.loginD {
+  color: #232d7c;
+}
+.loginMap {
+  color: #edd047;
+}

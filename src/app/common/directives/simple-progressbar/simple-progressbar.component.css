@@ -1,0 +1,107 @@
+
+.stepwizard {
+    margin: auto;
+    display: table;
+    width: 100%;
+    position: relative;
+}
+.stepwizard-step p {
+    margin-top: 0px;
+    color:#666;
+}
+.stepwizard-row {
+    display: table-row;
+}
+
+.stepwizard .btn.disabled, .stepwizard .btn[disabled], .stepwizard fieldset[disabled] .btn {
+    opacity:1 !important;
+    color:black;
+}
+.stepwizard-row:before {
+    top: 25px;
+    bottom: 0;
+    position: absolute;
+    content:" ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-index: 0;
+}
+.stepwizard-step {
+    display: table-cell;
+    text-align: center;
+    position: relative;
+}
+.stepwizard-step>.btn-circle {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 9px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 25px;
+    margin-left: 35px;
+    margin-right: 35px;
+    border: 3px solid #ccc;
+}
+.btnOrange{
+    background-color: orange !important;
+    color:white  !important;    
+}
+
+.btnBlue{
+    background-color: #0062cc !important;
+    color: white !important;
+    border: 3px solid #0062cc !important;
+}
+.btnGreen{
+    background-color: green !important;
+    color:white  !important;
+}
+
+.activeBtn{
+    border: 3px solid #89c1d2 !important;
+}
+
+.ngx-spinner[name = "progressBarSpinner"]>.overlay > div:not(.loading-text) {
+    top: 25px !important;
+    left: 50%;
+    margin: 0;
+    position: absolute;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.la-ball-spin.la-sm {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+/* .btnGreenWizard{
+    color: white;
+    background-color: #e2e6ea;
+    border:3px solid #4880ff!important;
+    padding: 4px 0;
+    cursor: pointer;
+}
+.btnGreenWizardSelected{
+    color: white!important;
+    background-color: #4880ff;
+}
+.btnGreenWizard:hover{
+    border-color:grey;
+} */
+.stepwizard-step>.btn-light{
+    color: grey ;
+}
+/* .stepwizard-step>.btn-light:hover {
+    color: black !important;
+    background-color: #e2e6ea;
+    border:3px solid black;
+    cursor: pointer;
+} */
+
+.fontBold800{
+    font-weight: 800;
+    color:#0062cc
+}

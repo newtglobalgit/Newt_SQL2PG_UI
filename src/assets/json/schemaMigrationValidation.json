@@ -1,0 +1,67 @@
+{
+ "objectValidation":[
+		{
+		 "name":"Tables",
+		 "status": "Success",
+		 "message": "All tables succesfully created in target database",
+		 "sourceTime":"351",
+		 "targetTime":"351"
+		},
+		{
+		 "name":"Columns",
+		 "status": "Success",
+		 "message": "All columns succesfully created in target database",
+		 "sourceTime":"5509",
+		 "targetTime":"5509"
+		},
+		{
+		 "name":"Constraint",
+		 "status": "Success",
+		 "message": "All constraint succesfully created in target database",
+		 "sourceTime":"810",
+		 "targetTime":"810"
+		},
+		{
+		 "name":"Index",
+		 "status": "Success",
+		 "message": "All index succesfully created in target database",
+		 "sourceTime":"56",
+		 "targetTime":"56"
+		},
+		{
+		 "name":"Sequence",
+		 "status": "Success",
+		 "message": "All sequence succesfully created in target database",
+		 "sourceTime":"78",
+		 "targetTime":"78"
+		},
+		{
+		 "name":"Procedure",
+		 "status": "Success",
+		 "message": "All procedure succesfully created in target database",
+		 "sourceTime":"67",
+		 "targetTime":"67"
+		 },
+		{
+		 "name":"DBLink",
+		 "status": "Success",
+		 "message": "All dbLink succesfully created in target database",
+		 "sourceTime":"1",
+		 "targetTime":"1"
+		},
+		{
+		 "name":"View",
+		 "status": "Success",
+		 "message": "All view succesfully created in target database",
+		 "sourceTime":"53",
+		 "targetTime":"53"
+		},
+		{
+		 "name":"Function",
+		 "status": "Success",
+		 "message": "All function succesfully created in target database",
+		 "sourceTime":"27",
+		 "targetTime":"27"
+		}
+	]
+}

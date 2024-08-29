@@ -1,0 +1,44 @@
+.reload-btn {
+  background: url("../../../../assets/images/SVG/reload-svg-icon.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20px;
+  border: none;
+}
+.show-error-msg {
+  background: url("../../../../assets/images/SVG/message-square.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20px;
+  border: none;
+}
+
+.show-download {
+  background: url("../../../../assets/images/SVG/file-download.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20px;
+  border: none;
+}
+
+.progressCompleted {
+  color: rgb(17, 136, 17);
+}
+.progressInProgress {
+  color: rgb(37 45 118);
+}
+.progressError {
+  color: rgb(230, 55, 11);
+}
+.progress-pending {
+  color: rgb(235, 194, 15);
+}
+
+.filePlusIcon{
+  cursor: pointer;
+  fill: rgb(230, 55, 11);
+}
+
+.modal-header {
+  cursor: move;
+}

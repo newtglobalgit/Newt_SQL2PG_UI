@@ -1,0 +1,112 @@
+<form name="submitProdDbCredentials" #t="ngForm" style="max-height: 600px;overflow: hidden;">
+    <div class="modal-header">
+        <h5 class="modal-title">{{data.title}}</h5>
+        <button type="button" class="close" aria-label="Close" (click)="cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="modalProdDBName">Database Name<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="modalProdDBNameRef.valid && modalProdDBNameRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="modalProdDBName" class="form-control" id="modalProdDBName"
+                        #modalProdDBNameRef="ngModel" ngModel [(ngModel)]="modalProdDBName" name="modalProdDBName"
+                        placeholder="Enter prod database name" title="SAMPLEDB" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="modalProdDBHost">Database Host URL / IP address<span
+                            class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="modalProdDBHostRef.valid && modalProdDBHostRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="modalProdDBHost" class="form-control" id="modalProdDBHost"
+                        #modalProdDBHostRef="ngModel" ngModel [(ngModel)]="modalProdDBHost" name="modalProdDBHost"
+                        placeholder="Enter prod database host URL / IP address"
+                        title="Hint:sample-pgs.cqswlsq35j26.us-east-1.rds.amazonaws.com" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="modalProdDBPort">Port<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="modalProdDBPortRef.valid && modalProdDBPortRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="modalProdDBPort" class="form-control" id="modalProdDBPort"
+                        [pattern]="numberOnlyPattern" #modalProdDBPortRef="ngModel" ngModel name="modalProdDBPort"
+                        [(ngModel)]="modalProdDBPort" placeholder="Enter prod database port" title="Hint: 1521"
+                        required>
+                </div>
+            </div>
+            <div class=" form-group form-check form-check-inline col-md-12">
+                <input class="form_radio marginLeft10" type="radio" name="inlineRadioOptionss"
+                    [checked]="oracleConnect == 'sid'" id="inlineRadioo1" value="sid"
+                    (change)="onRadioButtonSelected($event)">
+                <label class="col-md-1" for="inlineRadioo1"
+                    [ngClass]="{fontWeightBold:oracleConnect == 'sid'}">SID</label>
+                <input type="prodDBSidValue" [disabled]="oracleConnect == 'servicename'"
+                    class="form-control marginLeft25" id="prodDBSidValue" #prodDBSidValueRef="ngModel" ngModel
+                    [(ngModel)]="prodDBSidValue" name="prodDBSidValue" placeholder="Enter prod database SID"
+                    title="Hint: ORCL" required>
+            </div>
+
+
+            <div class=" form-group form-check form-check-inline col-md-12">
+                <input class="form_radio marginLeft10" type="radio" name="inlineRadioOptionss" id="inlineRadioo2"
+                    [checked]="oracleConnect == 'servicename'" value="servicename"
+                    (change)="onRadioButtonSelected($event)">
+                <label class="col-md-1" for="inlineRadioo2" style="white-space:nowrap;"
+                    [ngClass]="{fontWeightBold:oracleConnect == 'servicename'}">Service Name</label>
+                <input type="prodDBServiceNameValue" [disabled]="oracleConnect == 'sid'"
+                    class="form-control marginLeft25" id="prodDBServiceNameValue" #prodDBServiceNameValueRef="ngModel"
+                    ngModel [(ngModel)]="prodDBServiceNameValue" name="prodDBServiceNameValue"
+                    placeholder="Enter prod database Service Name" title="Hint: xe" required>
+            </div>
+
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="modalProdDBUserName">Username<span class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="modalProdDBUserNameRef.valid && modalProdDBUserNameRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="modalProdDBUserName" class="form-control" id="modalProdDBUserName"
+                        #modalProdDBUserNameRef="ngModel" ngModel [(ngModel)]="modalProdDBUserName"
+                        name="modalProdDBUserName" placeholder="Enter prod database username"
+                        title="Hint: reportuser" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="modalProdDBPassword">Password<span class="requiredField">*</span></label>
+                    <span class="validFormCheck"
+                        *ngIf="modalProdDBPasswordRef.valid && modalProdDBPasswordRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <app-show-password (showPasswordClicked)="togglePassword($event)" [password]="modalProdDBPassword"
+                        [right]="'45px'" [top]="'23px'"></app-show-password>
+                    <input type="{{passwordType}}" class="form-control" id="modalProdDBPassword"
+                        #modalProdDBPasswordRef="ngModel" ngModel [(ngModel)]="modalProdDBPassword"
+                        name="modalProdDBPassword" placeholder="Enter prod database password" required>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-md btn-simple" (click)="clear()">Clear</button>
+        <button class="btn btn-md btn-simple" [disabled]="!t.valid || disableConnection"
+            (click)="testProdDbConnection()">Test Connection</button>
+        <button type="button" class="btn btn-md btn-primary" [disabled]="!t.valid || disableSubmit"
+            (click)="submitTarget()">Submit</button>
+
+    </div>
+</form>

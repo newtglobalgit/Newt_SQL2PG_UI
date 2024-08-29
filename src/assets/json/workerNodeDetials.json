@@ -1,0 +1,60 @@
+[
+	{
+		"worker_node_ip":  "192.16.1.12",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM1",
+		"node_status": "Live"
+		
+	},
+    {
+		"worker_node_ip":  "192.16.1.13",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM2",
+		"node_status": "Live"
+		
+	},
+
+	{
+		"worker_node_ip":  "192.16.1.14",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM3",
+		"node_status": "Live"
+		
+	},
+	{
+		"worker_node_ip":  "192.16.1.15",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM4",
+		"node_status": "Error"
+		
+	},
+	{
+		"worker_node_ip":  "192.16.1.15",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM5",
+		"node_status": "Live"
+		
+	},
+	{
+		"worker_node_ip":  "192.16.1.15",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM4",
+		"node_status": "Error"
+		
+	},
+	{
+		"worker_node_ip":  "192.16.1.15",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM4",
+		"node_status": "Live"
+		
+	},
+	{
+		"worker_node_ip":  "192.16.1.15",
+		"worker_node_url": "http://localhost:8080/DMAP/#/service",
+		"node_name": "VM4",
+		"node_status": "Live"
+		
+	}
+	
+]

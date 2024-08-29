@@ -1,0 +1,58 @@
+<!-- <div class = "col-md-12" *ngFor = "let comm of getcommunications(shortQuestionnaireForm)"> -->
+    <div class = "row marginTop10 qsection" >
+        <div class = "col-md-12 qsection_heading">{{getAppName(content)}}</div>
+        <div class = "col-md-12 qsection_body">
+            <div class = "row adjust" >
+
+                <div class = "col-md-12 marginBottom10" *ngFor = "let app of getAppvalue(content); let idx=index">
+                    <div class = "row sub_qsection">
+                        <div class = "col-md-12 sub_qsection_heading">
+                            {{getDBName(app)}}
+                        </div>
+                        <div class = "col-md-12 sub_qsection_body">
+                           <div class = "row" [formGroup]="getDBControls(app)">
+                               <!-- <div class = "col-md-3" *ngFor="let x of getDBControls(app) | keyvalue;let i=index"> -->
+                                <div class = "col-md-2" >
+                                   <label>DB size in GB<span class = "requiredField" >*</span></label>                                                              
+                                    <input type = "text" class = "form-control" formControlName = "database_size_gb">
+                                    <div class = "hint"><span *ngIf= "isNotValid(app, 'database_size_gb')">Invalid format. Hint: 4</span></div>
+                                </div>
+                                <div class = "col-md-3" >
+                                    <label>Number of cores<span class = "requiredField" >*</span></label>                                                              
+                                    <input type = "text" class = "form-control" formControlName = "number_cores">  
+                                    <div class = "hint"><span *ngIf= "isNotValid(app, 'number_cores')">Invalid format. Hint: 4</span></div>
+                                </div>
+                                <div class = "col-md-2" >
+                                    <label>DB memory in GB<span class = "requiredField" >*</span></label>                                                              
+                                    <input type = "text" class = "form-control" formControlName = "memory_server_gb">  
+                                    <div class = "hint"><span *ngIf= "isNotValid(app, 'memory_server_gb')">Invalid format. Hint: 4</span></div>
+                                </div>
+                                <div class = "col-md-3" >
+                                    <label>DB storage growth(%)<span class = "requiredField" >*</span></label>                                                              
+                                    <input type = "text" class = "form-control" formControlName = "data_size_growth_percentage">  
+                                    <div class = "hint"><span *ngIf= "isNotValid(app, 'data_size_growth_percentage')">Invalid format. Hint: 95.09</span></div>
+                                </div>
+                                <div class = "col-md-2" >
+                                    <label>Number of sockets<span class = "requiredField" >*</span></label>                                                              
+                                    <input type = "text" class = "form-control" formControlName = "num_socket">  
+                                    <div class = "hint"><span *ngIf= "isNotValid(app, 'num_socket')">Invalid format. Hint: 4</span></div>
+                                </div>
+                               
+                           </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+                <div class = "col-md-12 padding0 " [formGroup]="content">
+                    <label>Please provide current lines of code (LOC) of application<span class = "requiredField" >*</span></label>                                                              
+                    <input type = "text" class = "form-control" formControlName = "appLoc"> 
+                    <div class = "hint"><span *ngIf= "isAppLOCValid(content, 'appLoc')">Invalid format. Hint: 14520</span></div> 
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <app-questioaire-template [formData] = "tcoQuestionnaireForm" [controls] = "tcoOracleDetail" [formStatus] = "formStatus"></app-questioaire-template> -->
+<!-- </div> -->

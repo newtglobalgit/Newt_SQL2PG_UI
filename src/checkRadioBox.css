@@ -1,0 +1,52 @@
+.checkbox-custom {
+    position: relative;
+    width: 25px;
+    height: 26px;
+    margin: 0;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+}
+
+.checkbox-custom:after {
+    content: '';
+    position: absolute;
+    display: block;
+    z-index: 1;
+    width: 25px;
+    height: 26px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+}
+
+.checkbox-custom[type=checkbox]:checked:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    opacity: 1;
+    left: 0px;
+    border: 1px solid #274584;
+    border-radius: 4px;
+}
+
+.checkbox-custom[type=checkbox]:before {
+    background-color: #274584; /* url("http://i.imgur.com/dR1TM0y.png"); */
+    background-size: 14px 8px;
+    background-repeat: no-repeat;
+    background-position: 3px 6px;
+    position: absolute;
+    left: 2px;
+    z-index: 2;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    color: #274584;
+}
+

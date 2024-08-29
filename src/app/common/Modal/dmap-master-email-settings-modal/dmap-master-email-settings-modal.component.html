@@ -1,0 +1,168 @@
+<div>
+    <span class="pageHeading">Email Server Settings</span>
+</div>
+
+<form class="adjust body-content-padding" name="masterEmailSettingsForm" #f="ngForm" data-intro="User this page to setup the SMTP server details that DMAP will use to send email notifications. Emails can be dispatched upon completion of schema discovery or assessment. Additionally, reminders can be scheduled at specified intervals for recipients who haven't submitted the Application &r Interface intake forms, Database and TCO details." data-title="Email Server Settings">
+
+    <div class="modal-body" style="max-height: 600px;overflow: hidden;" *ngIf="data.emailType == 'settings'">
+
+        <div class="row" style="width:798px;" data-intro="User can either select Yes/No to trigger email with schema status after completing Discovery, Assessment and Schema Conversion stages.">
+            <div class="col-md-12">
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <div for="sendSchemaStatusEmail" style="margin-bottom: .5rem;" class="font-weight-bold">Send email
+                        after completing schema Discovery, Assessment and Schema conversion?<span
+                            class="requiredField">*</span></div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form_radio dmRadio" type="radio" id="true" value='true' ngModel
+                            [(ngModel)]="sendSchemaStatusEmail" name="sendSchemaStatusEmail" required>
+                        <label class="marginLeft5" for="true">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline marginLeft15">
+                        <input class="form-check-input form_radio dmRadio" type="radio" id="false" value='false' ngModel
+                            [(ngModel)]="sendSchemaStatusEmail" name="sendSchemaStatusEmail">
+                        <label class="marginLeft5" for="false">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="width:798px;">
+
+            <div class="col-md-12 marginBottom10 fontWeightBold">
+                <label for="count">Email configuration details</label>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="smtpHost">SMTP host<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="smtpHostRef.valid && smtpHostRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="smtpHost" class="form-control" id="smtpHost" placeholder="Enter SMTP host"
+                        #smtpHostRef="ngModel" [(ngModel)]="smtpHostValue" name="smtpHost" title="Hint: 192.168.1.1"
+                        required>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="smtpPort">SMTP port<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="smtpPortRef.valid && smtpPortRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="smtpPort" class="form-control" id="smtpPort" placeholder="Enter SMTP port"
+                        #smtpPortRef="ngModel" [(ngModel)]="smtpPortValue" name="smtpPort" title="Hint: 1234" required
+                        pattern="[0-9]{1,4}">
+                    <span *ngIf="smtpPortRef.invalid && smtpPortRef.dirty" style="color: red;">Please enter only numbers.</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="emails">Email recipients<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="emailsRef.valid && emailsRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="emails" class="form-control" id="emails" style="margin-bottom:2px;"
+                        placeholder="Enter recipient's email addresses" #emailsRef="ngModel" [(ngModel)]="emailsValue"
+                        name="emails" title="Hint: abc@gmail.com,xyz@gmail.com" required
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\s*,\s*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})*">
+                    <span style="display: block;">Note: Use comma as a separator for multiple email addresses</span>
+                    <span *ngIf="emailsRef.invalid && emailsRef.dirty" style="display: block; color: red;">Please enter a valid Email ID.</span>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="licenseType == 'dmap enterprise'">
+                <div class="form-group">
+                    <label for="tcoemails">TCO intake form email recipients<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="tcoemailsRef.valid && tcoemailsRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="tcoemails" class="form-control" id="tcoemails" placeholder="Enter TCO emails"
+                        style="margin-bottom:2px;" #tcoemailsRef="ngModel" [(ngModel)]="tcoEmailsValue" name="tcoemails"
+                        title="Hint: abc@gmail.com,xyz@gmail.com" required
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\s*,\s*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})*">
+                    <span style="display: block;">Note: Use comma as a separator for multiple email addresses</span>
+                    <span *ngIf="tcoemailsRef.invalid && tcoemailsRef.dirty" style="display: block;color: red;">Please enter a valid Email ID.</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="emailAddress">Sender email address<span class="requiredField">*</span></label>
+                    <span class="validFormCheck" *ngIf="emailAddressRef.valid && emailAddressRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="emailAddress" class="form-control" id="emailAddress"
+                        placeholder="Enter sender's email address" #emailAddressRef="ngModel"
+                        [(ngModel)]="emailAddressValue" name="emailAddress" title="Hint: abc@gmail.com" required
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                    <span *ngIf="emailAddressRef.invalid && emailAddressRef.dirty" style="color: red;">Please enter a valid Email ID.</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="emailPassword">Password<span class="requiredField">*</span></label>
+                    <app-show-password (showPasswordClicked)="togglePassword($event)" [password]="  emailPasswordValue"
+                        [right]="'43px'" [top]="'23px'"></app-show-password>
+                    <span class="validFormCheck" *ngIf="emailPasswordRef.valid && emailPasswordRef.touched"><i
+                            class="fa fa-check"></i></span>
+                    <input type="{{passwordType}}" class="form-control" id="emailPassword"
+                        placeholder="Enter email password" #emailPasswordRef="ngModel" [(ngModel)]="emailPasswordValue"
+                        name="emailPassword" title="Hint: password" required>
+                </div>
+            </div>
+            <div class="row" style="width:798px; margin: 0px 0px;">
+              <div class="col-md-12">
+                  <div class="form-group" style="margin-bottom: 10px;">
+                      <div for="sendEmailReminder" style="margin-bottom: .5rem;" class="font-weight-bold">
+                        Send email reminder
+                        <span class="requiredField">*</span></div>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input form_radio dmRadio" type="radio" id="true" value='true' ngModel
+                              [(ngModel)]="sendEmailReminder" name="sendEmailReminder" required>
+                          <label class="marginLeft5 marginBottom0" for="true">True</label>
+                      </div>
+                      <div class="form-check form-check-inline marginLeft15">
+                          <input class="form-check-input form_radio dmRadio" type="radio" id="false" value='false' ngModel
+                              [(ngModel)]="sendEmailReminder" name="sendEmailReminder">
+                          <label class="marginLeft5 marginBottom0" for="false">False</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group">
+                      <label for="reminderFrequency">Reminder Frequency (in days) :<span
+                              class="requiredField">*</span></label>
+                      <select class="form-control" id="reminderFrequency" [(ngModel)]="reminderFrequencyValue" required
+                          name="reminderFrequency" #reminderFrequency="ngModel">
+                          <ng-container *ngFor="let in of counter(7) ;let i = index">
+                              <option>{{i+1}}</option>
+                          </ng-container>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-md-5">
+                  <div class="form-group">
+                      <label for="reminderFrequency">Scheduler runs at (hour) :<span
+                              class="requiredField">*</span></label>
+                      <!-- <label for="reminderFrequency" *ngIf="selectedTimeZone" class="marginLeft5">Note: Your preferred
+                          timezone is {{selectedTimeZone}}</label> -->
+                      <select class="form-control" id="schedulerRuns" [(ngModel)]="schedulerRunsValue" required
+                          name="schedulerRuns" #schedulerRuns="ngModel">
+                          <ng-container *ngFor="let in of counter(24) ;let i = index">
+                              <option>{{i}}</option>
+                          </ng-container>
+                      </select>
+                      <span> (Note: Your preferred
+                          timezone is {{selectedTimeZone}})</span>
+                  </div>
+              </div>
+
+          </div>
+        </div>
+
+    </div>
+
+
+    <div style="padding-left:10px" data-intro="Fill SMTP Host, SMTP Port, Sender Email Address, Password fields and click on Test SMTP Connection to test SMTP connection
+    Fill all required fields and click on Submit to save the email configurations.">
+        <button type="button" class="btn btn-md btn-simple marginRight5" (click)="clear()">Clear</button>
+        <button type="button" class="btn btn-md btn-primary marginRight5"
+            [disabled]="!smtpHostValue || !smtpPortValue || !emailAddressValue || !emailPasswordValue || disableTestConnection"
+            (click)="testemailConnection()">Test SMTP Connection</button>
+        <button type="button" class="btn btn-md btn-primary marginRight10" [disabled]="!f.valid"
+            (click)="submit()">Submit</button>
+
+    </div>
+</form>

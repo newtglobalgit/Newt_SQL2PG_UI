@@ -1,0 +1,106 @@
+.logout_class {
+  margin-left: 691px;
+}
+
+.closebtn {
+  display: block;
+}
+
+.logout-icon {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  top: -10px;
+  left: 10px;
+}
+
+.logout-circle {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px lightgrey;
+  padding: 18px;
+  margin: 0px;
+  width: 0px;
+}
+
+.body-width {
+  min-height: 88vh;
+}
+
+@media (min-width: 1280px) {
+  .body-width {
+    min-height: 82vh;
+  }
+
+  .menu-close {
+    position: absolute;
+    left: 0.9vw !important;
+  }
+  .menu-open {
+    position: absolute;
+    left: 15.5vw !important;
+  }
+}
+
+@media (min-width: 1745px) {
+  .body-width {
+    min-height: 88vh;
+  }
+
+  .menu-close {
+    position: sticky;
+    left: 6.9vw !important;
+  }
+  .menu-open {
+    position: sticky;
+    left: 19.5vw !important;
+  }
+}
+
+.navigation-circle {
+  /* background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px lightgrey;
+  padding: 17px;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: 66px;
+  left: 192px; */
+  /* box-shadow: 0 3px 10px lightgrey; */
+  height: 25px;
+  width: 25px;
+  border: 1px solid lightgrey;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  /* position: absolute;
+  top: 27%;
+  left: 15.7%; */
+}
+
+.white-div {
+
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.08),
+    -5px 0 5px -5px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  margin-top: -13px;
+}
+
+.toggleBtnDisable {
+  display: none;
+}
+
+.start-tour{
+  margin-right: 5vw;
+  margin-top: 1px;
+  box-shadow: 2px 3px 4px lightgrey;
+  /* background-color: blue;
+  color: white;
+  padding: 3px; */
+  border-radius: 15px;
+}

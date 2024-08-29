@@ -1,0 +1,426 @@
+<span class="pageHeading">Database Migration Life Cycle Status</span>
+<div class="row adjust body-content-padding" data-title="Database Migration Life Cycle"
+    data-intro="This page shows a visual representation of the Dashboard displaying the status of each individual schemas throughout the various stages of the database migration life cycle, including assessment, conversion, data migration, schema & data validation, and analytics.">
+    <div class="row" *ngIf="analyticsDashboard!= undefined">
+
+        <div class="col-md-12" style="margin:10px 0px -12px 0px;padding:0px 31px 0px 31px;">
+            <nav class="dashboard-navs col-md-12 padding0">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <!-- <div class = "nav nav-tabs col-md-10">
+                        <a class="nav-item nav-link  dashboardNavLink marginRight10"  [ngClass]="{'active':isSchemaReportsClicked}" id="nav-schemaStatus-tab" (click) = navigateDashboardTabs(true) data-toggle="tab"  role="tab" aria-controls="nav-schemaStatus" aria-selected="true" >Schema Status</a>
+                        <a class="nav-item nav-link   dashboardNavLink marginRight10" [ngClass]="{'active':!isSchemaReportsClicked}" id="nav-Reports-tab" (click) = navigateDashboardTabs(false) data-toggle="tab" role="tab" aria-controls="nav-Reports" aria-selected="true" >Reports</a>
+                    </div> -->
+                    <div class="col-md-12 padding0">
+                        <span class="dropdown fontWeightBold">
+                            <label for="count">Total Schemas: {{analyticsDashboard.total_schemas}}</label>
+                            <button type="button" class="btn btn-primary btn-md float-right" data-title="Run Analytics"
+                                data-intro="Click on this button to run the analytics process and generate reports. The Run Analytics function consolidates data from all worker nodes, offering comprehensive reports on Application & Database migration assessment, Oracle DB Performance analysis, and Business Case for Oracle takeout."
+                                [disabled]="disableAnalytics" (click)="generateAnalyticsReport()">Run Analytics</button>
+                        </span>
+
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row adjust" style="margin-bottom:22px;">
+                <div class="col-md-4 table-responsive-md marginTop10">
+                    <table id="analyticsTable" class="analyticsTable table table-hover">
+                        <thead class="analyticsHead textCenter">
+                            <tr class="tr_custom_14">
+                                <th scope="col">Analytics Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="analyticStatusData!= undefined">
+                                <tr class="tr_custom_14 textCenter fontWeightBold">
+                                    <td style="height: 37.33px !important;">{{analyticStatusData}}
+                                        <span class="marginLeft5"
+                                            *ngIf="analyticsDashboard.analytics_status == 'Error' || analyticsDashboard.analytics_status == 'Partially Completed'"
+                                            aria-hidden="true" style="cursor:pointer;" (click)="viewDetail()"
+                                            class="viewMoreErrorDetail_acc" title="View Error Details">
+                                            <svg class="bi bi-file-plus" width="1em" height="1em" viewBox="0 0 16 16"
+                                                fill="#274584" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M13.5 1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
+                                            </svg>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class = "col-md-4 table-responsive-md marginTop10" *ngIf = "analyticsDashboard.analytics_status == 'Completed'"> -->
+                <div class="col-md-4 table-responsive-md marginTop10">
+                    <table id="analyticsTable" class="analyticsTable table table-hover">
+                        <thead class="analyticsHead textCenter">
+                            <tr class="tr_custom_14">
+                                <th scope="col">Last Completion Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container>
+                                <tr class="tr_custom_14 textCenter fontWeightBold">
+                                    <td style="height: 37.33px !important;">{{analyticsDashboard.completion_time}}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class = "col-md-4 table-responsive-md marginTop10" *ngIf = "analyticsDashboard.analytics_status == 'Completed' ||analyticsDashboard.analytics_status == 'In Progress' "> -->
+                <div class="col-md-4 table-responsive-md marginTop10">
+                    <table id="analyticsTable" class="analyticsTable table table-hover">
+                        <thead class="analyticsHead textCenter">
+                            <tr class="tr_custom_14">
+                                <th scope="col">Errors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container>
+                                <tr class="tr_custom_14 textCenter fontWeightBold">
+                                    <td style="height: 37.33px !important;">
+                                        {{analyticsDashboard.analytics_error_schema_count}}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- <div class = "col-md-12 marginBottom10 marginTop20 marginLeft20  "  *ngIf = "analyticsDashboard!= undefined">
+            <label for="count">Total Schemas: {{analyticsDashboard.total_schemas}}</label>
+    </div> -->
+        <!-- <div class = "col-md-12">
+        <div class = "row adjust">
+            <div class = "col-md-5 table-responsive-md marginTop10">
+                <table id = "analyticsTable" class="analyticsTable table table-hover  table-sm">
+                    <thead>
+                        <tr class = "tr_custom_14 fontWeightBold" *ngIf = "analyticsSchemaData!=undefined">
+                            <th scope="col" colspan="5" class = "analyticsCustomHead">Completion Status - Schema Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf = "analyticsSchemaData!=undefined" >
+                            <tr class = "tr_custom_14 fontWeightBold">
+                                <td>Status</td>
+                                <td>Discovery</td>
+                                <td>Assessment</td>
+                                <td>Analytics</td>
+                                <td>Schema Conversion</td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngFor = "let object of analyticsSchemaData.data">
+                                <td>{{object.status}}</td>
+                                <td><a class="simpleLink pointerCursor" *ngIf = "object.discovery_worker_total_schemas && object.discovery_worker_total_schemas != 'NA'"
+                                     (click) = "viewSchemaDetails('discovery',object.status,'worker')">{{object.discovery_worker_total_schemas}}</a>
+                                <label for="count"  *ngIf = "!object.discovery_worker_total_schemas || object.discovery_worker_total_schemas == 'NA'"> {{object.discovery_worker_total_schemas}}</label>  </td>
+                                <td><a class="simpleLink pointerCursor" *ngIf = "object.assessment_worker_total_schemas && object.assessment_worker_total_schemas != 'NA'"
+                                (click) = "viewSchemaDetails('assessment',object.status,'worker')">{{object.assessment_worker_total_schemas}}</a>
+                                <label for="count"  *ngIf = "!object.assessment_worker_total_schemas || object.assessment_worker_total_schemas == 'NA'"> {{object.assessment_worker_total_schemas}}</label>  </td>
+                                <td><a class="simpleLink pointerCursor"  *ngIf = "object.analytics_total_schemas && object.analytics_total_schemas != 'NA'"
+                                     (click) = "viewSchemaDetails('assessment',object.status,'analytics')">{{object.analytics_total_schemas}}</a>
+                                <label for="count"  *ngIf = "!object.analytics_total_schemas || object.analytics_total_schemas == 'NA'"> {{object.analytics_total_schemas}}</label> </td>
+                                <td><a class="simpleLink pointerCursor" *ngIf = "object.schema_conversion_worker_total_schemas && object.schema_conversion_worker_total_schemas != 'NA'"
+                                (click) = "viewSchemaDetails('schema Conversion',object.status,'worker')">{{object.schema_conversion_worker_total_schemas}}</a>
+                                <label for="count"  *ngIf = "!object.schema_conversion_worker_total_schemas || object.schema_conversion_worker_total_schemas == 'NA'"> {{object.schema_conversion_worker_total_schemas}}</label>  </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class = "col-md-3 table-responsive-md marginTop10" *ngIf = "analyticsAlertData.total_schemas_in_error ||analyticsAlertData.total_unassigned_schemas || analyticsAlertData.offline_worker_nodes || analyticsDashboard.analytics_status == 'Partially Completed'">
+                <table id = "analyticsTable" class="analyticsTable table table-hover table-sm" *ngIf = "analyticsAlertData.total_schemas_in_error ||analyticsAlertData.total_unassigned_schemas || analyticsAlertData.offline_worker_nodes || analyticsDashboard.analytics_status == 'Partially Completed'">
+                    <thead>
+                        <tr class = "tr_custom_14 fontWeightBold"  *ngIf = "analyticsAlertData!= undefined">
+                            <th scope="col" class = "analyticsCustomHead" colspan = "2">Alerts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf = "analyticsAlertData!= undefined">
+                            <tr class = "tr_custom_14 fontWeightBold">
+                                <td>Alert Name</td>
+                                <td>Action</td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf ="analyticsAlertData.total_schemas_in_error">
+                                <td style="color: red;">Schemas in error - {{analyticsAlertData.total_schemas_in_error}}/{{analyticsDashboard.total_schemas}}</td>
+                                <td>
+                                <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "viewSchemaDetails(null,'Error','alert')">
+                                    View
+                                </button>
+                                </td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf ="analyticsAlertData.total_unassigned_schemas">
+                                <td style="color: red;">Unassigned schemas - {{analyticsAlertData.total_unassigned_schemas}}/{{analyticsDashboard.total_schemas}}</td>
+                                <td>
+                                <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "assignUnassignedSchemas()">
+                                Assign
+                                </button>
+                            </td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf ="analyticsAlertData.offline_worker_nodes || analyticsDashboard.analytics_status == 'Partially Completed'">
+                                <td style="color: red;">Offline worker nodes - {{analyticsAlertData.offline_worker_nodes}}/{{analyticsAlertData.total_worker_nodes}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "reviewWorkerNodes()">
+                                        Review
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class = "col-md-4 table-responsive-md marginTop10" *ngIf = "analyticsAlertData!= undefined">
+                <table id = "analyticsTable" class="analyticsTable table table-hover table-sm" *ngIf = "analyticsAlertData.total_schemas_in_error ||analyticsAlertData.total_unassigned_schemas || analyticsAlertData.offline_worker_nodes || analyticsDashboard.analytics_status == 'Partially Completed' || analyticsAlertData.report_generated_date">
+                    <thead>
+                        <tr class = "tr_custom_14 fontWeightBold"  *ngIf = "analyticsAlertData!= undefined">
+                            <th scope="col" class = "analyticsCustomHead" colspan = "2">Reports</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf = "analyticsAlertData!= undefined">
+                            <tr class = "tr_custom_14 fontWeightBold">
+                                <td>Report Name</td>
+                                <td>Action</td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf = "analyticsAlertData.report_generated_date">
+                                <td>
+                                    <span>Assessment Summary Report</span>
+                                    <p class="td_custom_10" *ngIf = "analyticsAlertData.report_generated_date">
+                                        Generated on {{analyticsAlertData.report_generated_date}}
+                                    </p>
+                                    <p class="td_custom_10" *ngIf = "!analyticsAlertData.report_generated_date">
+                                        Report not yet generated
+                                     </p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button" [disabled] = "!analyticsAlertData.report_generated_date" (click) = "downloadReport('summary')">
+                                        Download
+                                     </button>
+                                     <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "emailReport('summary')">
+                                        Email
+                                     </button>
+                                </td>
+                            </tr>
+
+                            <tr class = "tr_custom_14" *ngIf = "analyticsAlertData.report_generated_date">
+                                <td>
+                                <span>Schema Assessment Reports</span>
+                                    <p class="td_custom_10" *ngIf = "analyticsAlertData.report_generated_date">
+                                        Generated on {{analyticsAlertData.report_generated_date}}
+                                    </p>
+                                    <p class="td_custom_10" *ngIf = "!analyticsAlertData.report_generated_date">
+                                       Report not yet generated
+                                    </p>
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button" [disabled] = "!analyticsAlertData.report_generated_date" (click) = "downloadReport('schema_reports')">
+                                        Download
+                                     </button>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "emailReport('schema_reports')">
+                                        Email
+                                     </button>
+                                </td>
+                            </tr>
+                              <tr class = "tr_custom_14" *ngIf = "licenseType == 'dmap enterprise' && analyticsAlertData.report_generated_date">
+                                <td>
+                                <span>Business Case Report</span>
+
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "downloadReport('business')">
+                                        Download
+                                     </button>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "emailReport('business')">
+                                        Email
+                                     </button>
+                                </td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf = "licenseType == 'dmap enterprise' && analyticsAlertData.report_generated_date">
+                                <td>
+                                <span>DB and APP Details</span>
+
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "downloadReport('db_and_app_details')">
+                                        Download
+                                     </button>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "emailReport('db_and_app_details')">
+                                        Email
+                                     </button>
+                                </td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf = "licenseType == 'dmap enterprise' && analyticsAlertData.report_generated_date">
+                                <td>
+                                <span>Azure Cost Report</span>
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "downloadReport('azure_cost')">
+                                        Download
+                                     </button>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "emailReport('azure_cost')">
+                                        Email
+                                     </button>
+                                </td>
+                            </tr>
+                            <tr class = "tr_custom_14" *ngIf = "licenseType == 'dmap enterprise' && analyticsAlertData.report_generated_date">
+                                <td>
+                                <span>On-Premise Oracle Cost Report</span>
+                                <td>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "downloadReport('on_prem_orcale_cost')">
+                                        Download
+                                     </button>
+                                    <button class="btn btn-sm btn-simple marginRight10" type="button"  (click) = "emailReport('on_prem_orcale_cost')">
+                                        Email
+                                     </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div> -->
+        <div class="col-md-12">
+
+            <div class="col-md-12" style="margin-top:-15px;">
+                <div class="row adjust" *ngIf="isSchemaReportsClicked">
+                    <div class="col-md-12 table-responsive padding0">
+                        <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered">
+                            <thead>
+                                <!-- <tr class="tr_custom_14 fontWeightBold">
+                                    <th scope="col" colspan="1" class="analyticsSchemaStatus"></th>
+                                    <th scope="col" colspan="3" class="analyticsSchemaStatus table-border">Assessment &
+                                        Business Case
+                                    </th>
+                                    <th scope="col" colspan="6" class="analyticsReports table-border">Migration
+                                        Lifecycle</th>
+                                </tr> -->
+                                <tr class="tr_custom_14 analyticsReports table-border">
+                                    <th>Schema Status</th>
+                                    <th>Discovery</th>
+                                    <th>Assessment</th>
+                                    <th>Analytics</th>
+                                    <th>Auto Conversion</th>
+                                    <th>Remediation</th>
+                                    <th>Schema Validation</th>
+                                    <th>Data Migration</th>
+                                    <th>Data Validation</th>
+                                    <th>Functional Validation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="analyticsSchemaData!=undefined">
+                                    <tr class="tr_custom_14" *ngFor="let object of analyticsSchemaData.data">
+                                        <td class="fontWeightBold">{{object.status}}</td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.discovery_worker_total_schemas && object.discovery_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('discovery',object.status,'worker')">{{object.discovery_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.discovery_worker_total_schemas || object.discovery_worker_total_schemas == 'NA'">
+                                                {{object.discovery_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.assessment_worker_total_schemas && object.assessment_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('assessment',object.status,'worker')">{{object.assessment_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.assessment_worker_total_schemas || object.assessment_worker_total_schemas == 'NA'">
+                                                {{object.assessment_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.analytics_total_schemas && object.analytics_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('assessment',object.status,'analytics')">{{object.analytics_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.analytics_total_schemas || object.analytics_total_schemas == 'NA'">
+                                                {{object.analytics_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.auto_conversion_worker_total_schemas && object.auto_conversion_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('auto conversion',object.status,'worker')">{{object.auto_conversion_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.auto_conversion_worker_total_schemas || object.auto_conversion_worker_total_schemas == 'NA'">
+                                                {{object.auto_conversion_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.remediation_worker_total_schemas && object.remediation_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('remediation',object.status,'worker')">{{object.remediation_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.remediation_worker_total_schemas || object.remediation_worker_total_schemas == 'NA'">
+                                                {{object.remediation_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.schema_conversion_worker_total_schemas && object.schema_conversion_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('schema validation',object.status,'worker')">{{object.schema_conversion_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.schema_conversion_worker_total_schemas || object.schema_conversion_worker_total_schemas == 'NA'">
+                                                {{object.schema_conversion_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.data_migation_worker_total_schemas && object.data_migation_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('data migration',object.status,'worker')">{{object.data_migation_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.data_migation_worker_total_schemas || object.data_migation_worker_total_schemas == 'NA'">
+                                                {{object.data_migation_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.data_validation_worker_total_schemas && object.data_validation_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('data validation',object.status,'worker')">{{object.data_validation_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.data_validation_worker_total_schemas || object.data_validation_worker_total_schemas == 'NA'">
+                                                {{object.data_validation_worker_total_schemas}}</label>
+                                        </td>
+                                        <td class="textCenter"><a class="simpleLink pointerCursor"
+                                                *ngIf="object.performance_comparison_worker_total_schemas && object.performance_comparison_worker_total_schemas != 'NA'"
+                                                (click)="viewSchemaDetails('performance',object.status,'worker')">{{object.performance_comparison_worker_total_schemas}}</a>
+                                            <label for="count"
+                                                *ngIf="!object.performance_comparison_worker_total_schemas || object.performance_comparison_worker_total_schemas == 'NA'">
+                                                {{object.performance_comparison_worker_total_schemas}}</label>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row adjust" *ngIf="!isSchemaReportsClicked">
+                    <div class="col-md-12 table-responsive-md marginTop10">
+                        <table id="analyticsTable" class="analyticsTable table table-hover  table-sm">
+                            <thead>
+                                <tr class="tr_custom_14 fontWeightBold">
+                                    <th>Report Name</th>
+                                    <th>Generated On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr class="tr_custom_14" *ngFor="let report of reportsList">
+                                    <td class="fontWeightBold">{{report.reportName}}</td>
+                                    <td>
+                                        <p *ngIf="analyticsAlertData.report_generated_date">
+                                            {{analyticsAlertData.report_generated_date}}
+                                        </p>
+                                        <p *ngIf="!analyticsAlertData.report_generated_date">
+                                            Report not yet generated
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <a class="simpleLink pointerCursor marginRight10"
+                                            *ngIf="analyticsAlertData.report_generated_date"
+                                            (click)="downloadReport(report.requestName)">Download</a>
+                                        <a class="simpleLink pointerCursor marginLeft30"
+                                            *ngIf="analyticsAlertData.report_generated_date"
+                                            (click)="emailReport(report.requestName)">Email</a>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+{
+  "host": "http://0.0.0.0:5002/api",
+  "appRemdHost": "http://localhost:5002/appapi"
+}

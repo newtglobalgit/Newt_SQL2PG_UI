@@ -1,0 +1,167 @@
+{
+    "schemaMigration": {
+        "storageObjects":[
+            {	
+                "totalAction": "351",
+                "label":"Table",
+                "completelyConverted": "351",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0	
+            },
+            {
+                "totalAction": "56",
+                "label": "Constraint",
+                "completelyConverted": "56",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0
+            },
+            {
+                "totalAction": "2",
+                "label": "Index",
+                "completelyConverted": "2",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0   		
+            },
+            {
+                "totalAction": "78",
+                "label": "Sequence",
+                "completelyConverted": "78",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0  		
+            },
+            {
+                "totalAction": "1",
+                "label": "dbLink",
+                "completelyConverted": "0",
+                "simpleAction": "1",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0
+            }    
+        ],
+        "codeObjects": [
+            {
+                "totalAction": "53",
+                "label": "view",
+                "completelyConverted": "53",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0
+            },
+            {
+                "totalAction": "67",
+                "label": "procedure",
+                "completelyConverted": "63",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "4",
+                "none":0
+            },
+            {
+                "totalAction": "27",
+                "label": "function",
+                "completelyConverted": "27",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0
+            },
+            {
+                "totalAction": "1",
+                "label": "package",
+                "completelyConverted": "1",
+                "simpleAction": "0",
+                "mediumAction": "0",
+                "significantAction": "0",
+                "none":0
+            }			
+        ],
+        "error": [
+            {
+            "object":"Tables",
+            "list":[]
+        },
+        {
+        "object":"Functions",
+        "list":[]
+        },
+        {
+        "object":"Procedures",
+        "list":[
+                {
+                    "name": "GRIEVANCE_OVER_90DAYS_EMAIL",
+                    "count":"1",
+                    "errors":[
+                       {
+                            "errorId": "5584",
+                            "errorDescription": "Converted functions depends on the time zone settings",
+                            "recommendedAction": "Review the transformed code, and set time zone manually if necessary"
+                        }  
+                    ]
+                
+                },
+                {
+                    "name": "PULL_BARG_UNIT_FROM_PS",
+                    "count":"2",
+                    "errors":[
+                        {
+                            "errorId": "5334",
+                            "errorDescription": "Unable to convert statements with dynamic SQL statement",
+                            "recommendedAction": "Please perform a manual conversion"
+                        },
+                        {
+                            "errorId": "5584",
+                            "errorDescription": "Converted functions depends on the time zone settings",
+                            "recommendedAction": "Review the transformed code, and set time zone manually if necessary"
+                        } 
+                    ]
+                
+                },
+                {
+                    "name": "PULL_COMPANY_FROM_PS",
+                    "count":"2",
+                    "errors":[
+                        {
+                            "errorId": "5337",
+                            "errorDescription": "Unable to convert statements with dynamic SQL statement",
+                            "recommendedAction": "Please perform a manual conversion"
+                        },
+                        {
+                            "errorId": "5589",
+                            "errorDescription": "Converted functions depends on the time zone settings",
+                            "recommendedAction": "Review the transformed code, and set time zone manually if necessary"
+                        }
+                    ]
+                
+                },
+                {
+                    "name": "REMOVE_DUPLICATE_VALUES_WAGES",
+                    "count":"1",
+                    "errors":[
+                        {
+                            "errorId": "5598",
+                            "errorDescription": "PostgreSQL doesn't support a ROWID",
+                            "recommendedAction": "Set the option 'Create ROWID' ON and convert all related objects"
+                        }	
+                    ]
+                
+                }
+
+            ]
+        },
+        {
+        "object":"Views",
+        "list":[]
+        }          
+        ]
+    }
+}

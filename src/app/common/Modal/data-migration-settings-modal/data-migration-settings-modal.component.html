@@ -1,0 +1,336 @@
+<div class="modal-header">
+    <h5 class="modal-title">Data Migration Settings</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body dm" style="padding:20px; max-height: 83vh;">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="dmSettingsForm">
+                <ng-container>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio marginRight10" type="checkbox"
+                                        id="ignoreSettingsChecked" value='ignoreSettingsChecked'
+                                        formControlName="ignoreSettings" #isUploadRef
+                                        (change)="onUploadCustomConfChecked(isUploadRef.checked)">
+                                    <label class="" for="ignoreSettingsChecked"
+                                        style="word-wrap: break-word; margin-bottom: 0px;">Ignore DMAP Migration
+                                        Settings defined in this screen and upload your own conf file for Data Migration
+                                    </label>
+                                </div>
+                            </div>
+                            <!--<div *ngIf = "isUploadFile"> -->
+                            <div *ngIf="isUploadFile" style="margin-left: 20px;">
+                                <!-- <button type = "button" class = "btn btn-primary ">Upload Custom Conf file </button> -->
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-left: 30px;padding-right: 50px;"
+                            *ngIf="isUploadedSuccess != undefined && isUploadRef.checked">
+                            <div class="alert alert-success" *ngIf="isUploadedSuccess">File uploaded successfully</div>
+                            <div class="alert alert-danger" *ngIf="!isUploadedSuccess">Something went wrong. Unable to
+                                upload the file, please try again</div>
+                        </div>
+                        <div class="col-md-12" style="margin-left: 30px; margin-bottom: 20px;">
+                            <button class="btn btn-primary marginRight10" [ngClass]="{disabled:!isUploadRef.checked}"
+                                (click)="downloadConfFile()">Download File</button>
+                            <button class="btn btn-primary" (click)="onUploadCustomeConfBtnClicked(isUploadRef.checked)"
+                                [ngClass]="{disabled:!isUploadRef.checked}">Upload File</button>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- <ng-container *ngIf = "!isUploadFile">     -->
+                <ng-container>
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="!ispgdumpCheckboxSelected">
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <div for="sourceDBType" style="margin-bottom: .5rem;" class="font-weight-bold"
+                                    [ngClass]="{disableTextColor:isUploadRef.checked}">Data migration mode:<span
+                                        class="requiredField">*</span></div>
+                                <div class="form-check form-check-inline" *ngFor='let item of migrationMethodList'>
+                                    <input class="form-check-input form_radio dmRadio" type="radio" id="{{item.value}}"
+                                        [value]='item.value' formControlName="migrationMethod">
+                                    <label class="form-check-label " for="{{item.value}}"
+                                        [ngClass]="{disableTextColor:isUploadRef.checked}">{{item.label}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class = "col-md-12">
+                            <div class="form-group">
+                                <label for="sourceDBType" class = "font-weight-bold">Select Migration Method<span class = "requiredField" >*</span></label>
+                                <select class="form-control dm"
+                                        id="migrationMethod"
+                                        formControlName = "migrationMethod"
+                                        (change) = "onMigrationMethodChange($event)">
+                                    <option *ngFor='let item of migrationMethodList' [value] = "item.value">{{ item.label }}</option>
+                                </select>
+                            </div>
+                        </div> -->
+
+
+                        <div class="col-md-12" *ngIf="!ispgdumpCheckboxSelected">
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <div for="sourceDBType" style="margin-bottom: .5rem;" class="font-weight-bold"
+                                    [ngClass]="{disableTextColor:isUploadRef.checked}">Specified list of tables will
+                                    be:<span class="requiredField">*</span></div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio" type="radio" id="allowed"
+                                        value='allowed' formControlName="tablesType">
+                                    <label class="form-check-label " for="allowed"
+                                        [ngClass]="{disableTextColor:isUploadRef.checked}">Allowed for migration</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio" type="radio" id="exclude"
+                                        value='exclude' formControlName="tablesType">
+                                    <label class="form-check-label " for="exclude"
+                                        [ngClass]="{disableTextColor:isUploadRef.checked}">Exclude from
+                                        migration</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" *ngIf="!ispgdumpCheckboxSelected">
+                            <div style="margin-bottom: .5rem;" class="font-weight-bold"
+                                [ngClass]="{disableTextColor:isUploadRef.checked}">Select tables<span
+                                    class="requiredField">*</span></div>
+
+                            <div class="form-check form-check-inline" style="width:inherit;">
+                                <input class="form-check-input form_radio dmRadio" type="radio" id="all" value='0'
+                                    formControlName="tableList" (change)="onSelectTablesSelection('all')" selected>
+                                <label class="form-check-label " for="all" style="width:inherit;">
+                                    <div class="" [ngClass]="{disableTextColor:isUploadRef.checked}">
+                                        Select all tables
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Radio button to enter comma seperated values -->
+                            <div class="form-check form-check-inline" style="width:inherit;">
+                                <input class="form-check-input form_radio dmRadio" type="radio" id="comma" value='1'
+                                    formControlName="tableList" (change)="onSelectTablesSelection('1')">
+                                <label class="form-check-label " for="allowed" style="width:inherit;">
+                                    <div class="" [ngClass]="{disableTextColor:isUploadRef.checked}">
+                                        Enter comma seperated list of tables
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="marginBottom15" style="margin-left: 29px;">
+                                <input type="text" class="form-control dm" placeholder="Example: table1,table2,table3"
+                                    [disabled]="tableSelectionType != '1'" formControlName="tableInput">
+                            </div>
+
+                            <!-- Radio button to select from list -->
+                            <div class="form-check form-check-inline" style="width:inherit;">
+                                <input class="form-check-input form_radio dmRadio" type="radio" id="drop" value='2'
+                                    formControlName="tableList" (change)="onSelectTablesSelection('2')">
+                                <label class="form-check-label " for="drop" style="width:inherit;">
+                                    <div class="" [ngClass]="{disableTextColor:isUploadRef.checked}">
+                                        Select tables from list
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="marginBottom15" style="margin-left: 29px;">
+                                <div class="row">
+                                    <div class="col-md-5" style="padding-right: 0px;">
+                                        <select id="leftValues" size="10" multiple style="width: 100%;"
+                                            (change)="onSelectTablesList('left')"
+                                            [disabled]="tableSelectionType != '2' || isUploadRef.checked"
+                                            class="scroll-container">
+                                            <option *ngFor="let item of sourceTableList">{{item}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2" style="margin: auto;">
+                                        <div class="row">
+                                            <div class="col-md-12 moveBtn">
+                                                <input type="button" class="btn btn-xs btn-simple marginBottom10"
+                                                    id="btnRight" value="&gt;&gt;"
+                                                    [disabled]="tableSelectionType != '2' || sourceTableListSelected.length == 0 || isUploadRef.checked"
+                                                    (click)="moveSelectedTables('toRight')" />
+                                            </div>
+                                            <div class="col-md-12 moveBtn">
+                                                <input type="button" class="btn btn-xs btn-simple" id="btnLeft"
+                                                    value="&lt;&lt;"
+                                                    [disabled]="tableSelectionType != '2' || targetTableListSelected.length == 0"
+                                                    (click)="moveSelectedTables('toLeft')" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5" style="padding-left: 0px;">
+                                        <select id="rightValues" size="10" multiple style="width: 100%;"
+                                            formControlName="tableSelect" class="scroll-container"
+                                            (change)="onSelectTablesList('right')">
+                                            <option *ngFor="let item of targetTableList">{{item}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <div for="dataTransfer" style="margin-bottom: .5rem;" class="font-weight-bold">Select
+                                    data transfer mode:<span class="requiredField">*</span></div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio" type="radio" id="livedata"
+                                        value='livedata' formControlName="pgdump"
+                                        (change)="onSelectDataTransferMode('livedata')">
+                                    <label class="form-check-label " for="livedata"
+                                        [ngClass]="{disableTextColor:isUploadRef.checked}">Live data transfer</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio" type="radio" id="dumpdata"
+                                        value='dumpdata' formControlName="pgdump"
+                                        (change)="onSelectDataTransferMode('dumpdata')">
+                                    <label class="form-check-label " for="dumpdata"
+                                        [ngClass]="{disableTextColor:isUploadRef.checked}">Dump data in files</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" *ngIf="dataTransferMode =='livedata'">
+                            <div class="form-group" [ngClass]="{isRedBorder:isRedBorder}">
+                                <label for="migrationOptions" class="font-weight-bold"
+                                    [ngClass]="{disableTextColor:isUploadRef.checked}">Data migration options<span
+                                        class="requiredField">*</span></label>
+                                <ng-multiselect-dropdown *ngIf="isMigrationOptions" [placeholder]="'Select'"
+                                    id="migrationOptions" [settings]="migrationOptions_dropdownSettings" [data]="migrationOptionsList"
+                                    formControlName="migrationOptions"
+                                    (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" *ngIf="dataTransferMode=='dumpdata'">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="outputFilename" class="font-weight-bold"
+                                            [ngClass]="{disableTextColor:isUploadRef.checked}">Output filename<span
+                                                class="requiredField">*</span></label>
+                                        <input type="outputFilename" class="form-control" id="outputFilename"
+                                            name="outputFilename" placeholder="Enter Output Filename"
+                                            formControlName="dumptableFilenameInput" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group" style="margin-bottom: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input form_radio dmRadio marginRight10"
+                                                type="checkbox" id="dumpTable" value='dumpTable'
+                                                formControlName="dumpTable" #eck
+                                                (change)="onDumpPerFileSelect(eck.checked)">
+                                            <label class="form-check-label " for="dumpTable"
+                                                [ngClass]="{disableTextColor:isUploadRef.checked}">Dump file per
+                                                table</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin-bottom: 5px;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input form_radio dmRadio marginRight10" type="checkbox"
+                                        id="runQuickMigrationChecked" value='runQuickMigrationChecked'
+                                        formControlName="runQuickMigration" #isQuickMig
+                                        (change)="onSelectQuickMigration(isQuickMig.checked)">
+                                    <label class="" for="runQuickMigrationChecked"
+                                        style="word-wrap: break-word; margin-bottom: 0px;"
+                                        [ngClass]="{disableTextColor:isUploadRef.checked}">Run a quick Data Migration to
+                                        insert upto {{ quickTestCount }} records per table
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin-bottom: 10px;"
+                                [ngClass]="{disableTextColor:isUploadRef.checked}">
+                                <label>(Please manually disable the Foreign Key constraints in target database before
+                                    running quick test as this may cause constraints to fail)</label>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12 row" style="margin-bottom: 10px;"
+                            [ngClass]="{disableTextColor:isUploadRef.checked}">
+                            <div for="dataMigrationOptions" style="margin-bottom: .5rem;"
+                                class="col-md-12 font-weight-bold">Data Migration Options:<span
+                                    class="requiredField">*</span></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="jobs">Jobs</label>
+                                    <input type="text" class="form-control dm" id="jobs" placeholder="Enter Jobs"
+                                        title="This directive is used to set the number of cores used to parallelize data import into PostgreSQL. There's no more limitation in parallel processing than the number of cores and the PostgreSQL I/O performance capabilities"
+                                        formControlName="jobsValue">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="oracleCopies">Oracle Copies</label>
+                                    <input type="text" class="form-control dm" id="oracleCopies"
+                                        placeholder="Enter Oracle Copies"
+                                        title="This directive should defined the number of parallel connection to Oracle when extracting data. The limit is the number of cores on your machine"
+                                        formControlName="oracleCopiesValue" name="oracleCopies">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parallelTables">Parallel Tables</label>
+                                    <input type="text" class="form-control dm" id="parallelTables"
+                                        placeholder="Enter Parallel Tables"
+                                        title="This directive should defined the number of tables in parallel data extraction. The limit is the number of cores on your machine"
+                                        formControlName="parallelTablesValue" name="parallelTables">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parallelismDegree">Default Parallelism Degree</label>
+                                    <input type="text" class="form-control dm" id="parallelismDegree"
+                                        placeholder="Enter Default Parallelism Degree"
+                                        title="You can force Ora2Pg to use /*+ PARALLEL(tbname, degree) */ hint in each query used to export data from Oracle by setting a value upper than 1 to this directive"
+                                        formControlName="parallelismDegreeValue" name="parallelismDegree">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="parallelMinRows">Parallel Min Rows</label>
+                                    <input type="text" class="form-control dm" id="miscellaneous2"
+                                        placeholder="Enter Parallel Min Rows"
+                                        title="Parallel mode will not be activated if the table have less rows than this directive"
+                                        formControlName="parallelMinRowsValue" name="parallelMinRows">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dataLimit">Data Limit</label>
+                                    <input type="text" class="form-control dm" id="miscellaneous2"
+                                        placeholder="Enter Data Limit"
+                                        title="Data will be extracted as bulk of DATA_LIMIT tuples at once"
+                                        formControlName="dataLimitValue" name="dataLimit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <span *ngIf="errorInValidForm" class="errorHint">Please enter all the required fields</span>
+    <button type="button" class="btn btn-primary" [ngClass]="{disabled:isUploadRef.checked && !isUploadedSuccess}"
+        (click)="submit()">Submit</button>
+</div>

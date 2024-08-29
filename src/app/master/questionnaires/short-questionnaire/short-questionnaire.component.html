@@ -1,0 +1,62 @@
+<ng-container>
+    <div class="modal-header">
+        <h5 class="modal-title">Short Questionnaire</h5>
+       <button type="button" class="close" aria-label="Close" (click)="cancel()">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+   
+    <div class="modal-body" style = "max-height: 600px;overflow: auto;" [formGroup]="shortQuestionnaireForm" *ngIf="formStatus == 'success'" >
+        <div class = "row" >
+            <div class = "col-md-6 marginTop10 ">
+                <label>Name of the client<span class = "requiredField" >*</span></label>
+                <input type = "text" class = "form-control" formControlName="client_name" placeholder = "Enter client name">                 
+            </div>
+            
+            <div class = "col-md-6 marginTop10" >
+                <label>Name of the executive sponsoring TCO<span class = "requiredField" >*</span></label>
+                <input type = "text" class = "form-control" formControlName="client_executive">  
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col-md-12">
+                <nav class = "dmap-navs col-md-12 padding0 marginTop30" style = "border:none;">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <div class = "nav nav-tabs col-md-12">
+                            <ng-container *ngFor = "let tab of shortQuestionnaireData.bunits">                           
+                                <a class="nav-item nav-link dmapdbOwner_detailLink dmapNavLink marginRight10 questionairNav" id="nav-{{tab.bunit}}-tab" 
+                                data-toggle="tab" href="#nav-{{tab.bunit}}_detail" role="tab" aria-controls="nav-comm_detail" aria-selected="true">{{tab.bunit}}</a>
+                            </ng-container>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent" style = "padding-top: 0!important;">
+                    <ng-container *ngFor = "let tab of shortQuestionnaireData.bunits;let i= index">
+                        <div class="nav-{{tab.bunit}}_detail-tab tab-pane fade show" id="nav-{{tab.bunit}}_detail" role="tabpanel" aria-labelledby="nav-comm_detail-tab">
+                            
+                            <div class = "row adjust">
+                                
+                                 <div class = "col-md-12" *ngFor = "let content of getBunitTabContent(shortQuestionnaireForm, i)">
+                                    <app-short-questionnaire-template [shortQuestionnaireForm] = "shortQuestionnaireForm" [content] = "content"></app-short-questionnaire-template>                                
+                                </div> 
+                                    
+                            </div>
+                        </div>
+                    </ng-container>
+                    
+                </div>
+
+            </div>
+        </div>
+
+         
+    <div class="modal-footer">
+        <span *ngIf = "errorInValidForm" class = "errorHint">Please enter all the required fields</span>
+        <button type="button" class="btn btn-md btn-primary"  (click) = "clear()">Clear</button> 
+        <button type="button" class="btn btn-md btn-primary" (click) = "submit()">Submit</button>
+    </div>
+
+    </div>
+</ng-container>
+
