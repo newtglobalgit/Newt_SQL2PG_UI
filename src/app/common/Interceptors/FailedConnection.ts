@@ -21,7 +21,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoginService } from '../Services/login-service.service';
-import { DmapAlertDialogModal } from '../Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +33,7 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
     private modalService: NgbModal,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private loginService: LoginService,
+    private loginService: LoginService
   ) {}
   intercept(
     req: HttpRequest<any>,
@@ -68,7 +67,7 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
     var appMigration_getExistingDecorators = req['url']
       .toString()
       .indexOf('appapi/get_existing_decorators');
-      var appMigration_getUploadedAppsInDecorator = req['url']
+    var appMigration_getUploadedAppsInDecorator = req['url']
       .toString()
       .indexOf('appapi/get_uploaded_apps');
     var appMigration_getJreAppDetails = req['url']
@@ -77,14 +76,16 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
     var appMigration_getAppWorkerNodeDetails = req['url']
       .toString()
       .indexOf('appapi/getAppWorkerNodeDetails');
-      var appMigration_getDMAPImageDetails = req['url']
+    var appMigration_getDMAPImageDetails = req['url']
       .toString()
       .indexOf('appapi/getDMAPImageDetails');
     var databaseDetails = req['url']
       .toString()
       .indexOf('get_database_details_data');
     var submitAskForm = req['url'].toString().indexOf('submit_ask_form');
-    var analyticsDashboard = req['url'].toString().indexOf('analytics_dashboard');
+    var analyticsDashboard = req['url']
+      .toString()
+      .indexOf('analytics_dashboard');
     //var appAssessment = req['url'].toString().indexOf("upload_tco_questionnaire");
     if (
       appMigration_getAppDetails > 0 ||
@@ -94,23 +95,16 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
       appMigration_getAppWorkerNodeDetails > 0 ||
       appMigration_getDMAPImageDetails > 0
     ) {
-      if(this.checkAppNode()=='failed'){
+      if (this.checkAppNode() == 'failed') {
         return;
-      
-    } 
-    
-     else if (this.checkAppNode() == 'app_not_configured') {
-       
+      } else if (this.checkAppNode() == 'app_not_configured') {
+      } else if (this.checkAppNode() == 'success') {
+      } else {
+        this.alertMessage =
+          'An error has occured while submitting the request. Please try again.';
+      }
     }
-    else if (this.checkAppNode() == 'success'){
-      
-    }
-    else {
-      this.alertMessage =
-        'An error has occured while submitting the request. Please try again.';
-       
-    }}
-    
+
     if (
       discoveryBatch_index < 0 &&
       assessmentBatch_index < 0 &&
@@ -136,12 +130,14 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
             scan((retryCount, err) => {
               if (err && err.status == 500) {
                 // If status is 500, display and throw the error immediately without retrying
-                const errMsg = err?.error?.message || err?.message || "Something went wrong. Please try again.";
-                this.openAlert('Alert', errMsg);
+                const errMsg =
+                  err?.error?.message ||
+                  err?.message ||
+                  'Something went wrong. Please try again.';
+                // this.openAlert('Alert', errMsg);
                 this.spinner.hide();
                 throw err;
-              } else
-              if (retryCount == 5) {
+              } else if (retryCount == 5) {
                 this.onErrorStatus();
                 throw error;
               } else {
@@ -157,7 +153,6 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
       return next.handle(req).pipe(
         catchError((error: HttpErrorResponse) => {
           if (error) {
-            
             this.spinner.hide();
             if (
               appMigration_getAppDetails < 0 &&
@@ -167,7 +162,7 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
               appMigration_getUploadedAppsInDecorator < 0 &&
               appMigration_getDMAPImageDetails < 0
             ) {
-            this.openAlert('Alert', this.alertMessage);
+              // this.openAlert('Alert', this.alertMessage);
             }
           } else {
             return throwError(error);
@@ -184,18 +179,18 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
     this.router.navigate(['/login']);
   }
 
-  openAlert(title, msg) {
-    if (!this.modalService.hasOpenModals()) {
-      const modalRef = this.modalService.open(DmapAlertDialogModal);
-      modalRef.componentInstance.data = { msg: msg, title: title };
-      modalRef.result.then((result) => {});
-    }
-  }
+  // openAlert(title, msg) {
+  //   if (!this.modalService.hasOpenModals()) {
+  //     const modalRef = this.modalService.open(DmapAlertDialogModal);
+  //     modalRef.componentInstance.data = { msg: msg, title: title };
+  //     modalRef.result.then((result) => {});
+  //   }
+  // }
 
-  checkAppNode(){
+  checkAppNode() {
     this.loginService.checkAppNodeStatus().subscribe((data) => {
-      this.appRemediationStatus = data['status']
+      this.appRemediationStatus = data['status'];
     });
     return this.appRemediationStatus;
-  } 
+  }
 }

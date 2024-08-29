@@ -8,13 +8,8 @@ import {
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../common/Services/login-service.service';
-import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { NgbdConfirmationModal } from '../common/Modal/dmap-confirmation-dialog/dmap-confirmation-dialog.component';
-import { FileUploadModalComponent } from '../common/Modal/file-upload-modal/file-upload-modal.component';
-import { CommonServices } from '../common/Services/common-services.service';
-import { AnalyticsService } from '../common/Services/analytics.service';
+
 declare var $: any;
 
 @Component({
@@ -50,21 +45,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private router: Router,
-    private commonservice: CommonServices,
-    private loginService: LoginService,
-    private analytics: AnalyticsService,
-    private spinner: NgxSpinnerService,
-  ) {
-   
-  }
+    private loginService: LoginService
+  ) {}
 
-  ngOnInit() {
-    
-  }
-
-  
-
- 
+  ngOnInit() {}
 
   onResetPassword() {
     console.log(this.resetPasswordForm.value);
@@ -101,9 +85,8 @@ export class LoginComponent implements OnInit {
       (error) => {}
     );
   }
-  
+
   onLogin() {
     this.router.navigate(['/dbSetup']);
   }
-  
 }

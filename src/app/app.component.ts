@@ -9,9 +9,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Location } from '@angular/common';
 import { LoginService } from './common/Services/login-service.service';
 import { Router } from '@angular/router';
-import { DatabaseListService } from './common/Services/database-list.service';
-import { CommonServices } from './common/Services/common-services.service';
-import { MenuMappingService } from './common/Services/menu-mapping.service';
+// import { DatabaseListService } from './common/Services/database-list.service';
+// import { CommonServices } from './common/Services/common-services.service';
+// import { MenuMappingService } from './common/Services/menu-mapping.service';
 import introJs from 'intro.js';
 
 @Component({
@@ -36,10 +36,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private location: Location,
     private spinner: NgxSpinnerService,
-    private commonServices: CommonServices,
-    private loginService: LoginService,
-    private databaseListService: DatabaseListService,
-    private menuMapping: MenuMappingService
+    // private commonServices: CommonServices,
+    private loginService: LoginService // private databaseListService: DatabaseListService, // private menuMapping: MenuMappingService
   ) {
     /* Hide Navigation bar if user is on Login or signup page  */
     router.events.subscribe((val) => {
@@ -54,9 +52,8 @@ export class AppComponent implements OnInit {
         // location.path() == '/databaseDetails' ||
         // location.path() == '/askForm' ||
         location.path() == '/resetPassword' ||
-        location.path() == '/license'||
-        location.path() == '/interfaceQuestionnaire' 
-
+        location.path() == '/license' ||
+        location.path() == '/interfaceQuestionnaire'
       ) {
         this.isShowNavBar = false;
       } else {
@@ -66,18 +63,8 @@ export class AppComponent implements OnInit {
       if (
         location.path().includes('login') ||
         location.path().includes('signup') ||
-        location.path().includes('appQuestionnaire') ||
-        location.path().includes('interfaceQuestionnaire') ||
-        location.path().includes('dbScripts') ||
-        location.path().includes('dbQuestionnaire') ||
-        location.path().includes('tcoQuestionnaire') ||
-        location.path().includes('applicationAssessment') ||        
-        location.path().includes('databaseDetails') ||
-        location.path().includes('nodeSelection') ||
-        location.path().includes('askForm') ||
         location.path().includes('license') ||
-        location.path().includes('resetPassword') ||
-        location.path().includes('viewDBAnalyticsStatus')
+        location.path().includes('resetPassword')
       ) {
         document.getElementById('mySidenav').style.cssText = 'display: none;';
         document.getElementById('mySidenav').style.width = '0%';
@@ -92,25 +79,7 @@ export class AppComponent implements OnInit {
         this.sideNavBarArrow = true;
         this.disableToggleButton = true;
       }
-
-      if (
-        location.path().includes('schemaMapping') ||
-        location.path().includes('jreUpgrade') ||
-        location.path().includes('createDecorator')
-      ) {
-        this.isShowNavBarWelcomeSection = false;
-      }
     });
-    //this.loginService.disableLogsInProd();
-    /* Set the License Type (in order to hide some feature for Trial License)*/
-    // this.loginService.getLicenseDetails().subscribe(data => {
-    //   let _data = data['current'];
-    //   for(let i in _data){
-    //     if(_data[i].hasOwnProperty('licenseType')){
-    //       this.commonServices.setLicenseType(_data[i]['licenseType']);
-    //     }
-    //   }
-    // });
   }
 
   ngOnInit() {
@@ -173,7 +142,7 @@ export class AppComponent implements OnInit {
     delete sessionStorage['appRefId'];
     delete sessionStorage['mainRefId'];
     this.loginService.setUserSession(null, undefined);
-    this.databaseListService.removeAllCheckedDBRecords();
+    // this.databaseListService.removeAllCheckedDBRecords();
     this.router.navigate(['/login']);
 
     // document.getElementById('mySidenav').style.cssText = 'transition: all 0s';
