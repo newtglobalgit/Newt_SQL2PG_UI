@@ -1,1 +1,559 @@
-<p>db-setup works!</p>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/intro.js/introjs.css"
+    />
+  </head>
+
+  <body>
+    <script src="https://unpkg.com/intro.js/intro.js"></script>
+  </body>
+</html>
+<span class="pageHeading">Database Setup</span>
+<div class="row adjust body-content-padding">
+  <form name="submitCredentials" #f="ngForm">
+    <div class="row">
+      <div class="row adjust marginTop5">
+        <div class="col-md-6 col-sm-6 col-xs-6 marginBottom12">
+          <div class="row mainSourceSection" style="height: 100%">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12" style="margin-bottom: 10px">
+                  <span class="itemHeading fontWeightBold"
+                    >Source Database Connection Details</span
+                  >
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBType"
+                      >Database Type<span class="requiredField">*</span></label
+                    >
+                    <select
+                      class="form-control"
+                      id="sourceDBType"
+                      [(ngModel)]="sourceDBTypeValue"
+                      name="sourceDBType"
+                      #sourceDBType="ngModel"
+                    >
+                      <option *ngFor="let sourceDb of sourceDbs">
+                        {{ sourceDb }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBHost"
+                      >Database Host URL/IP address<span class="requiredField"
+                        >*</span
+                      ></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="sourceDBHostRef.valid && sourceDBHostRef.touched"
+                      ><i class="fa fa-check"></i
+                    ></span>
+                    <input
+                      type="sourceDBHost"
+                      class="form-control"
+                      id="sourceDBHost"
+                      #sourceDBHostRef="ngModel"
+                      ngModel
+                      [(ngModel)]="sourceDbHostValue"
+                      name="sourceDBHost"
+                      placeholder="Enter source database host URL/IP address"
+                      title="Hint:sample-pgs.cqswlsq35j26.us-east-1.rds.amazonaws.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBName"
+                      >Database Name<span class="requiredField">*</span></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="sourceDBNameRef.valid && sourceDBNameRef.touched"
+                      ><i class="fa fa-check"></i
+                    ></span>
+                    <input
+                      type="sourceDBName"
+                      class="form-control"
+                      id="sourceDBName"
+                      #sourceDBNameRef="ngModel"
+                      [(ngModel)]="sourceDBNameValue"
+                      name="sourceDBName"
+                      placeholder="Enter source database name"
+                      title="Hint: DemoDB"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBSchema">Database Schema</label>
+                    <input
+                      type="sourceDBSchema"
+                      class="form-control"
+                      id="sourceDBSchema"
+                      #sourceDBSchemaRef="ngModel"
+                      [(ngModel)]="sourceDBSchemaValue"
+                      name="sourceDBSchema"
+                      placeholder="Enter source database schema name"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBPort"
+                      >Port<span class="requiredField">*</span></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="sourceDBPortRef.valid && sourceDBPortRef.touched"
+                      ><i class="fa fa-check"></i
+                    ></span>
+                    <input
+                      type="sourceDBPort"
+                      class="form-control"
+                      id="sourceDBPort"
+                      [pattern]="numberOnlyPattern"
+                      #sourceDBPortRef="ngModel"
+                      ngModel
+                      [(ngModel)]="sourceDBPortValue"
+                      name="sourceDBPort"
+                      placeholder="Enter source database port"
+                      title="Hint: 1521"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBSchema">Driver</label>
+                    <input
+                      type="sourceDBSchema"
+                      class="form-control"
+                      id="sourceDBSchema"
+                      #sourceDBSchemaRef="ngModel"
+                      [(ngModel)]="sourceDBSchemaValue"
+                      name="sourceDBSchema"
+                      placeholder="Enter source driver name"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input
+                      class="form-check-input form_radio"
+                      type="radio"
+                      style="margin-left: 0px; margin-right: 5px"
+                      name="inlineRadioOptionss"
+                      [checked]="oracleConnect == 'sid'"
+                      id="inlineRadioo1"
+                      value="sid"
+                      (change)="onRadioButtonSelected($event)"
+                    />
+                    <label
+                      class="form-check-label-align-center fontSize17"
+                      for="inlineRadioo1"
+                      [ngClass]="{ fontWeightBold: oracleConnect == 'sid' }"
+                      >SID<span
+                        *ngIf="oracleConnect == 'sid'"
+                        class="requiredField"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      type="sourceDBSid"
+                      [disabled]="oracleConnect == 'servicename'"
+                      class="form-control"
+                      id="sourceDBSid"
+                      #sourceDBSidRef="ngModel"
+                      ngModel
+                      [(ngModel)]="sourceDBSidValue"
+                      name="sourceDBSid"
+                      placeholder="Enter source database SID"
+                      title="Hint: ORCL"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input
+                      class="form-check-input form_radio"
+                      type="radio"
+                      style="margin-left: 0px; margin-right: 5px"
+                      name="inlineRadioOptionss"
+                      id="inlineRadioo2"
+                      value="servicename"
+                      (change)="onRadioButtonSelected($event)"
+                    />
+                    <label
+                      class="form-check-label-align-center fontSize17"
+                      for="inlineRadioo2"
+                      style="white-space: nowrap"
+                      [ngClass]="{
+                        fontWeightBold: oracleConnect == 'servicename'
+                      }"
+                      >Service Name<span
+                        *ngIf="oracleConnect == 'servicename'"
+                        class="requiredField"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      type="sourceDBServiceName"
+                      [disabled]="oracleConnect == 'sid'"
+                      class="form-control"
+                      id="sourceDBServiceName"
+                      #sourceDBServiceNameRef="ngModel"
+                      ngModel
+                      [(ngModel)]="sourceDBServiceNameValue"
+                      name="sourceDBServiceName"
+                      placeholder="Enter source database Service Name"
+                      title="Hint: xe"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBUserName"
+                      >Username<span class="requiredField">*</span></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="
+                        sourceDBUserNameRef.valid && sourceDBUserNameRef.touched
+                      "
+                      ><i class="fa fa-check"></i
+                    ></span>
+                    <input
+                      type="sourceDBUserName"
+                      class="form-control"
+                      id="sourceDBUserName"
+                      #sourceDBUserNameRef="ngModel"
+                      ngModel
+                      [(ngModel)]="sourceDBUserNameValue"
+                      name="sourceDBUserName"
+                      placeholder="Enter source database username"
+                      title="Hint: reportuser"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sourceDBPassword"
+                      >Password<span class="requiredField">*</span></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="
+                        sourceDBPasswordRef.valid && sourceDBPasswordRef.touched
+                      "
+                      ><i class="fa fa-check"></i
+                    ></span>
+                    <app-show-password
+                      (showPasswordClicked)="toggleSourcePassword($event)"
+                      [password]="sourceDBPasswordValue"
+                      [right]="'43px'"
+                      [top]="'23px'"
+                    ></app-show-password>
+                    <input
+                      type="{{ sourcePasswordType }}"
+                      class="form-control"
+                      id="sourceDBPassword"
+                      #sourceDBPasswordRef="ngModel"
+                      ngModel
+                      [(ngModel)]="sourceDBPasswordValue"
+                      name="sourceDBPassword"
+                      placeholder="Enter source database password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div
+                  class="col-md-12"
+                  style="margin-top: 8px"
+                  data-title="Test Source Connection"
+                  data-intro="Click on this button to confirm successful connection to the Source database."
+                >
+                  <div>
+                    <button
+                      class="btn btn-md btn-primary float-right"
+                      [disabled]="
+                        !sourceDbHostValue ||
+                        !sourceDBPortValue ||
+                        !sourceDBNameValue ||
+                        !sourceDBUserNameValue ||
+                        !sourceDBPasswordValue ||
+                        (!sourceDBServiceNameValue && !sourceDBSidValue) ||
+                        disableSource
+                      "
+                      (click)="testSourceDbConnection(true)"
+                    >
+                      Test Source Connection
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-6 marginBottom12">
+          <div class="row mainSourceSection" style="height: 100%">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12" style="margin-bottom: 10px">
+                  <span class="itemHeading fontWeightBold"
+                    >Target Database Connection Details</span
+                  >
+                </div>
+
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12"></div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="targetDBType"
+                          >Database Type<span class="requiredField"
+                            >*</span
+                          ></label
+                        >
+                        <select
+                          class="form-control"
+                          id="targetDBType"
+                          [(ngModel)]="targetDBTypeValue"
+                          name="targetDBType"
+                          #targetDBType="ngModel"
+                        >
+                          <option *ngFor="let targetDb of targetDbs">
+                            {{ targetDb }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="targetDBHost"
+                          >Database Host URL/IP address<span
+                            class="requiredField invisible"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="targetDBHost"
+                          class="form-control"
+                          id="targetDBHost"
+                          [(ngModel)]="targetDBHostValue"
+                          name="targetDBHost"
+                          placeholder="Enter target database host URL/IP address"
+                          title="Hint: sample.cqswlsq465jl6.us-east-1.rds.amazonaws.co"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="targetDBName"
+                          >Database Name<span class="requiredField invisible"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="targetDBName"
+                          class="form-control"
+                          id="targetDBName"
+                          [(ngModel)]="targetDBNameValue"
+                          name="targetDBName"
+                          placeholder="Enter target database name"
+                          title="Hint: DemoDB"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="targetDBSchema"
+                          >Database Schema<span class="requiredField invisible"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="targetDBSchema"
+                          class="form-control"
+                          id="targetDBSchema"
+                          [(ngModel)]="sourceDBSchemaValue"
+                          name="targetDBSchema"
+                          placeholder="Enter database schema name"
+                          title="Hint: sampleShell"
+                          readonly
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="targetDBPort"
+                          >Port<span class="requiredField invisible"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="targetDBPort"
+                          class="form-control"
+                          id="targetDBPort"
+                          [(ngModel)]="targetDBPortValue"
+                          name="targetDBPort"
+                          placeholder="Enter target database port"
+                          title="Hint: 5432"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="targetDBUserName"
+                          >Username<span class="requiredField invisible"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="targetDBUserName"
+                          class="form-control"
+                          id="targetDBUserName"
+                          [(ngModel)]="targetDBUserNameValue"
+                          name="targetDBUserName"
+                          placeholder="Enter target database username"
+                          title="Hint: reportuser"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="targetDBPassword"
+                          >Password<span class="requiredField invisible"
+                            >*</span
+                          ></label
+                        >
+                        <app-show-password
+                          (showPasswordClicked)="toggleTargetPassword($event)"
+                          [password]="targetDBPasswordValue"
+                          [right]="'43px'"
+                          [top]="'23px'"
+                        ></app-show-password>
+                        <input
+                          type="{{ targetPasswordType }}"
+                          class="form-control"
+                          id="targetDBPassword"
+                          [(ngModel)]="targetDBPasswordValue"
+                          name="targetDBPassword"
+                          placeholder="Enter target database password"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6" *ngIf="targetDBTypeValue == 'Oracle'">
+                      <div class="form-group">
+                        <label for="targetBackupDirectoryName"
+                          >Backup Directory Name</label
+                        >
+                        <input
+                          type="targetBackupDirectoryName"
+                          class="form-control"
+                          id="targetBackupDirectoryName"
+                          #targetBackupDirectoryName="ngModel"
+                          ngModel
+                          name="targetBackupDirectoryName"
+                          placeholder="Enter Backup Directory Name"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6" *ngIf="targetDBTypeValue == 'Oracle'">
+                      <div class="form-group">
+                        <label class="form-check-label" for="targetServiceName"
+                          >Service Name</label
+                        >
+                        <input
+                          type="targetServiceName"
+                          class="form-control"
+                          id="targetServiceName"
+                          #targetServiceName="ngModel"
+                          ngModel
+                          name="targetServiceName"
+                          placeholder="Enter Service Name"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="col-md-12 marginTop10"
+                      data-title="Test Target Connection"
+                      data-intro="Click on this button to confirm successful connection to the Target database."
+                    >
+                      <button
+                        class="btn btn-md btn-primary float-right"
+                        [disabled]="
+                          !targetDBHostValue ||
+                          !targetDBNameValue ||
+                          !targetDBPortValue ||
+                          !targetDBUserNameValue ||
+                          !targetDBPasswordValue ||
+                          disableTarget
+                        "
+                        (click)="testTargetDbConnection()"
+                      >
+                        Test Target Connection
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div>
+          <button
+            class="btn btn-md btn-primary float-right"
+            [disabled]="!f.valid || disableSubmit"
+            (click)="onSubmit()"
+            data-title="Submit Details"
+            data-intro="Click on the Submit button to create a new task for database schema assessment. Once assessment is complete, you can use the same task to convert the schema to target database environment."
+          >
+            Submit
+          </button>
+          <button
+            class="btn btn-md btn-simple float-right marginRight5"
+            (click)="onClear(true)"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
