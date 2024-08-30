@@ -3,6 +3,7 @@ import { LoginService } from '../../Services/login-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import {
   trigger,
@@ -39,6 +40,12 @@ export class FooterComponent implements OnInit {
   nodeType: string;
   showLicenseDetails: any;
   currentYearForCopyRight = new Date().getFullYear();
+
+  // Add showMinWindow$ observable
+  showMinWindow$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  isCollapsed = false;
+
   constructor(
     private loginService: LoginService,
     private modalService: NgbModal,
@@ -48,7 +55,6 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.userLogin = sessionStorage.getItem('user_name');
-
     this.nodeType = sessionStorage.getItem('node_type');
 
     this.loginService.$userLogedInObj.subscribe((userEmail: any) => {
@@ -71,5 +77,11 @@ export class FooterComponent implements OnInit {
     this.nodeType = sessionStorage.getItem('node_type');
   }
 
-  isCollapsed = false;
+  toggleCollapse() {
+    // Toggle the collapse state
+    this.isCollapsed = !this.isCollapsed;
+
+    // Optionally update showMinWindow$ if you want to control its visibility
+    this.showMinWindow$.next(!this.isCollapsed);
+  }
 }
