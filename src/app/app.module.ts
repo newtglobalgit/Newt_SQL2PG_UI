@@ -30,6 +30,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbSetupComponent } from './db-setup/db-setup.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 import { DbAssessmentComponent } from './db-assessment/db-assessment.component';
+import { ChatGptIntegrationComponent } from './chat-gpt-integration/chat-gpt-integration.component';
 
 export function appInit(appConfigService: AppConfigService) {
   return () => appConfigService.load();
@@ -43,6 +44,7 @@ export function appInit(appConfigService: AppConfigService) {
     DbSetupComponent,
     SideNavBarComponent,
     DbAssessmentComponent,
+    ChatGptIntegrationComponent,
   ],
   imports: [
     BrowserModule,
