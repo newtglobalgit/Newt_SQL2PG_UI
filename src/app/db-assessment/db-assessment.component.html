@@ -1,1 +1,584 @@
-<p>db-assessment works!</p>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/intro.js/introjs.css"
+    />
+  </head>
+
+  <body>
+    <script src="https://unpkg.com/intro.js/intro.js"></script>
+  </body>
+</html>
+<span class="pageHeading">Database Assessment</span>
+<div
+  class="row adjust body-content-padding"
+  data-title="DB Assessment"
+  data-intro="This page shows a list of schemas for which discovery or assessment is in progress or complete. You can initiate discovery, assessment, and schema conversion actions from this page. You must assign a worker node, manually or automatically by clicking the 'Assign Worker Node' button, to a schema before initiating any actions."
+>
+  <div class="col-md-12 marginBottom10 paddingTop10 paddingBottom10">
+    <div class="row">
+      <div
+        class="col-md-3 row"
+        data-title="Search Schema"
+        data-intro="Click this button to filter the page content based on the entered search text."
+      >
+        <input
+          type="text"
+          id="searchTable"
+          class="marginLeft15 searchFilter form-control col-md-6"
+          placeholder="Search"
+          #searchInput
+          (keyup.enter)="search(searchInput.value)"
+        />
+        <input
+          *ngIf="searchInput && searchInput.value != ''"
+          type="reset"
+          value=" X "
+          style="height: 31.33px; margin-left: -29px; z-index: 1"
+          (click)="clearSearch(searchInput)"
+        />
+        <button
+          type="button"
+          style="vertical-align: text-top; height: 32px"
+          (click)="search(searchInput.value)"
+          class="btn btn-md btn-simple pointerCursor marginLeft10"
+        >
+          Search
+        </button>
+      </div>
+      <div class="col-md-9" style="margin-left: 18px; padding: 0px">
+        <button
+          type="button"
+          class="btn btn-md btn-primary marginRight5 pull-right marginBottom5"
+          (click)="multipleDelete()"
+        >
+          Delete Schemas
+        </button>
+        <div>
+          <button
+            type="button"
+            data-title="Reports"
+            data-intro="Use this menu option to download the Schema Discovery and Schema Assessment reports in PDF or excel format."
+            [disabled]="
+              schemaStage == 'Discovery' &&
+              (schemaStatus == 'Not Started' ||
+                schemaStatus == 'In Progress' ||
+                schemaStatus == 'Error')
+            "
+            class="btn btn-md btn-primary marginRight5 pull-right marginBottom5"
+            id="drpdownDownloadAs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="true"
+            (click)="reports()"
+          >
+            Reports
+            <i class="fa fa-chevron-down marginLeft5"></i>
+          </button>
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="drpdownDownloadAs"
+            style="min-width: 145px"
+          >
+            <li
+              class="dropdown-item"
+              (click)="viewDiscoveryReport()"
+              style="cursor: pointer"
+              *ngIf="enableDiscoveryReport"
+            >
+              <span>Discovery</span>
+            </li>
+            <li
+              class="dropdown-item"
+              (click)="viewAssessmentReport()"
+              style="cursor: pointer"
+              *ngIf="enableAssessmentReport"
+            >
+              <span>Assessment</span>
+            </li>
+            <li
+              class="dropdown-item"
+              (click)="viewSchemaConversionReport()"
+              style="cursor: pointer"
+              *ngIf="enableSchemaConversionReport"
+            >
+              <span>Schema Conversion</span>
+            </li>
+            <li
+              class="dropdown-item"
+              (click)="viewDataMigrationReport()"
+              style="cursor: pointer"
+              *ngIf="enableDataMigrationReport"
+            >
+              <span>Data Migration</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 table-responsive" style="overflow: inherit">
+    <table
+      id="analyticsTable"
+      class="analyticsTable table table-hover table-sm table-bordered"
+      data-title="Analytics Table"
+      data-intro="This table shows a list of schemas for which discovery or assessment is in progress or complete. You can select schemas and initiate various actions such as schema discovery, assessment, conversion, or delete a schema."
+    >
+      <thead>
+        <tr class="analyticsReports" style="font-size: 12px">
+          <th>
+            <div class="form-check" style="padding: 0px"></div>
+          </th>
+
+          <th>
+            <span class="marginRight5 defaultCursor">Source Schema</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownSourceSchema"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+
+              <ul
+                class="dropdown-menu drpdownSourceSchema"
+                aria-labelledby="drpdownSourceSchema"
+                style="left: -100px !important"
+              >
+                <li class="dropdown-item" *ngFor="let source of sourceSchemas">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="sourceSchemafilter_{{ source.runId }}"
+                        [(ngModel)]="source.isSourceSchemaChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="sourceSchemafilter_{{ source.runId }}"
+                        >{{ source.sourceDBSchema }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th>
+            <span class="marginRight5 defaultCursor">Source DB</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownSourceSchema"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+
+              <ul
+                class="dropdown-menu drpdownSourceDatabase"
+                aria-labelledby="drpdownSourceDatabase"
+                style="left: -100px !important"
+              >
+                <li class="dropdown-item" *ngFor="let db of sourceDbs">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="sourceDbfilter_{{ db.runId }}"
+                        [(ngModel)]="db.isSourceDbChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="sourceDbfilter_{{ db.runId }}"
+                        >{{ db.sourceDBName }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th>
+            <span class="marginRight5 defaultCursor">Target DB</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownTargetDbs"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+
+              <ul
+                class="dropdown-menu drpdownTargetDbs"
+                aria-labelledby="drpdownTargetDbs"
+                style="left: -100px !important"
+              >
+                <li class="dropdown-item" *ngFor="let target of targetDbs">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="targetfilter_{{ target.runId }}"
+                        [(ngModel)]="target.isTargetDbChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="targetfilter_{{ target.runId }}"
+                        >{{ target.targetDBName }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th
+            *ngIf="
+              nodeType == 'analytics_master' &&
+              (licenseType == 'dmap enterprise' || licenseType == 'dmap pro')
+            "
+          >
+            <span class="marginRight5 defaultCursor">Worker Node</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownAssignedVm"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+
+              <ul
+                class="dropdown-menu drpdownAssignedVm"
+                aria-labelledby="drpdownAssignedVm"
+                style="left: -100px !important"
+              >
+                <li
+                  class="dropdown-item"
+                  *ngFor="let assignedVm of assignedVms"
+                >
+                  <div>
+                    <div
+                      class="form-check"
+                      style="padding: 0px"
+                      *ngIf="assignedVm.workerNode !== null"
+                    >
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="assignedVmfilter_{{ assignedVm.runId }}"
+                        [(ngModel)]="assignedVm.isassignedVmChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="assignedVmfilter_{{ assignedVm.runId }}"
+                        >{{ assignedVm.workerNode }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th>
+            <span class="marginRight5 pointerCursor">Run ID</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownRequestId"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+
+              <ul
+                class="dropdown-menu drpdownRequestId"
+                aria-labelledby="drpdownCreatedBy"
+                style="left: -100px !important; min-width: 140px !important"
+              >
+                <li class="dropdown-item" *ngFor="let request of requests">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="reqfilter_{{ request.runId }}"
+                        [(ngModel)]="request.isRequestorChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="reqfilter_{{ request.runId }}"
+                        >{{ request.runId }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th>
+            <span class="marginRight5 pointerCursor">Stage</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownStep"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+              <ul
+                class="dropdown-menu drpdownStep"
+                aria-labelledby="drpdownStep"
+                style="min-width: 153px !important"
+              >
+                <li class="dropdown-item" *ngFor="let step of steps">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="stepfilter_{{ step.runId }}"
+                        [(ngModel)]="step.isStepChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="stepfilter_{{ step.runId }}"
+                        >{{ step.step }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th>
+            <span class="marginRight5 pointerCursor">Status</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownStepStatus"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+              <ul
+                class="dropdown-menu drpdownStepStatus"
+                aria-labelledby="drpdownStepStatus"
+                style="min-width: 136px !important"
+              >
+                <li class="dropdown-item" *ngFor="let status of stepStatuses">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="statusfilter_{{ status.runId }}"
+                        [(ngModel)]="status.isStatusChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="statusfilter_{{ status.runId }}"
+                        >{{ status.stepStatus }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th>
+            <span class="marginRight5 pointerCursor">Last Updated</span>
+            <span>
+              <i
+                class="fa fa-chevron-down pointerCursor dropdown-toggle"
+                id="drpdownLastUpdated"
+                data-toggle="dropdown"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+              </i>
+              <ul
+                class="dropdown-menu drpdownLastUpdated"
+                aria-labelledby="drpdownLastUpdated"
+              >
+                <li class="dropdown-item" *ngFor="let date of lastUpdates">
+                  <div>
+                    <div class="form-check" style="padding: 0px">
+                      <input
+                        type="checkbox"
+                        ngModel
+                        name="lastUpdatefilter_{{ date.runId }}"
+                        [(ngModel)]="date.isDateChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid"
+                        style="vertical-align: text-top"
+                        (change)="onFilterSelected()"
+                      />
+                      <label
+                        class="form-check-label-workerNode marginLeft5"
+                        for="lastUpdatefilter_{{ date.runId }}"
+                        >{{ date.lastUpdated }}</label
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </th>
+
+          <th *ngIf="nodeType != 'analytics_worker'"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="showButtons && tableData.length === 0">
+          <tr>
+            <td colspan="12" style="padding-top: 5px">
+              <p>
+                There are no schemas present that match the applied filters.
+                Please click the 'Reset Filters' button.
+              </p>
+            </td>
+          </tr>
+        </ng-container>
+        <!-- <ng-container
+          *ngFor="
+            let data of tableData
+              | multiFieldFilter : searchDmapTable : false
+              | paginate : { itemsPerPage: 20, currentPage: p };
+            index as i
+          "
+        > -->
+        <ng-container>
+          <tr
+            style="font-size: 12px"
+            [ngClass]="{ highlightedRow: data.runId == radioCheckedValue }"
+          >
+            <td class="textCenter">
+              <div class="">
+                <input
+                  type="radio"
+                  [checked]="data.runId == radioCheckedValue"
+                  name="schema"
+                  value="checkbox_{{ data.runId }}"
+                  class="form_radio textCenter"
+                  style="top: 2px"
+                  #inputE2
+                  (change)="onRadioClicked(data, true)"
+                />
+              </div>
+            </td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+
+            <td>4</td>
+
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td class="textCenter">
+              <span (click)="updatePassword(data)" title="Edit">
+                <svg
+                  class="bi bi-gear"
+                  width="18px"
+                  height="18px"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"
+                  />
+                </svg>
+              </span>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="tableData.length === 0">
+          <tr>
+            <td colspan="12" style="padding-top: 5px">
+              <p>No schema found.</p>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <app-start-assessment-modal> </app-start-assessment-modal>
+  </div>
+  <div class="col-md-12" *ngIf="showButtons">
+    <span
+      *ngIf="tableData.length === 0"
+      style="font-weight: 600; font-size: 13px"
+      >{{ totalCount }}</span
+    >
+    <pagination-controls
+      (pageChange)="p = $event; pChange()"
+      style="font-size: 12px; float: right"
+      directionLinks="true"
+      autoHide="true"
+      responsive="true"
+      previousLabel="PREVIOUS"
+      nextLabel="NEXT"
+      screenReaderPaginationLabel="Pagination"
+      screenReaderPageLabel="page"
+      screenReaderCurrentLabel="You're on page"
+    ></pagination-controls>
+  </div>
+</div>

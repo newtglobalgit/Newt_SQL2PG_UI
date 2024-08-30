@@ -23,7 +23,6 @@ import { AppConfigService } from './common/Services/app-config.service';
 
 import { TitleCasePipe } from '@angular/common';
 import { RetryOnFailedConnectionInterceptor } from './common/Interceptors/FailedConnection';
-import { FormatCamelCaseSpecialCharacterStrPipe } from './common/Pipes/format-camel-case-special-character-str.pipe';
 
 import { ValidateEqualModule } from 'ng-validate-equal';
 
@@ -61,7 +60,6 @@ export function appInit(appConfigService: AppConfigService) {
   ],
   providers: [
     NgbActiveModal,
-    FormatCamelCaseSpecialCharacterStrPipe,
     AppConfigService,
     {
       provide: APP_INITIALIZER,
