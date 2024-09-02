@@ -38,4 +38,14 @@ export class Sql2PgService {
   getLicenseDetails() {
     return this.http.get(this.config.host + '/getLicenseDetails');
   }
+
+  backupDMAP() {
+    return this.http.get(this.config.host + '/dmapBackup', {
+      responseType: 'blob',
+    });
+  }
+
+  checkBackupStatus() {
+    return this.http.get(this.config.host + '/get_backup_status');
+  }
 }

@@ -25,7 +25,7 @@ import { TitleCasePipe } from '@angular/common';
 import { RetryOnFailedConnectionInterceptor } from './common/Interceptors/FailedConnection';
 
 import { ValidateEqualModule } from 'ng-validate-equal';
-
+import { NgbdConfirmationModal } from './common/Modal/dmap-confirmation-dialog/dmap-confirmation-dialog.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbSetupComponent } from './db-setup/db-setup.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
@@ -45,6 +45,7 @@ export function appInit(appConfigService: AppConfigService) {
     DbSetupComponent,
     SideNavBarComponent,
     DbAssessmentComponent,
+    NgbdConfirmationModal,
     DmapVersionDetailsComponent,
     DmapLicenseDetailsComponent,
   ],

@@ -4,12 +4,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { LoginService } from '../common/Services/login-service.service';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
-
-import { Observable } from 'rxjs';
+import { NgbdConfirmationModal } from '../common/Modal/dmap-confirmation-dialog/dmap-confirmation-dialog.component';
+import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { DmapVersionDetailsComponent } from '../dmap-version-details/dmap-version-details.component';
 import { DmapLicenseDetailsComponent } from '../dmap-license-details/dmap-license-details.component';
+import { DmapBackupProgressModalComponent } from '../common/Modal/dmap-backup-progress-modal/dmap-backup-progress-modal.component';
 
 @Component({
   selector: 'app-side-nav-bar',
@@ -226,5 +226,46 @@ export class SideNavBarComponent implements OnInit {
 
     //   modalRef.result.then((result) => {});
     // });
+  }
+
+  dmapBackup() {
+    const modalRef = this.modalService.open(NgbdConfirmationModal);
+    modalRef.componentInstance.data = {
+      msg: 'On completion of backup, please save the downloaded .tar.gz file in a secure location. If you reinstall the DMAP image and create a new container for DMAP, then the downloaded backup file will be required to restore the data of DB schema assessments and migrations done using DMAP.  Data will be restored to the point you previously backed up data.',
+      title: 'Confirmation',
+      okButtonLabel: 'Continue',
+      cancelButtonLabel: 'Cancel',
+      label: 'restoreDmap',
+      // showRadioButtons: true,
+    };
+    modalRef.result.then((result) => {
+      if (result == 'ok') {
+        const progressModalRef = this.modalService.open(
+          DmapBackupProgressModalComponent,
+          { size: 'lg', scrollable: true, backdrop: 'static' }
+        );
+        this.sql2PgService.backupDMAP().subscribe((res) => {
+          if (res.type == 'application/json' || res.type == 'text/html') {
+            progressModalRef.componentInstance.vmBkpStatus = res;
+          } else {
+            let blob = new Blob([res], {});
+            let filename = 'dmap_complete.tar.gz';
+            FileSaver.saveAs(blob, filename);
+            this.openAlert('Backup Downloaded Successfully.', true);
+            // this.commonServices.closeMinimizedWindow();
+          }
+        });
+      }
+    });
+  }
+
+  openAlert(msg, closeAll: boolean) {
+    const modalRef = this.modalService.open(DmapAlertDialogModal);
+    modalRef.componentInstance.data = { msg: msg, title: 'Alert' };
+    modalRef.result.then((result) => {
+      if (result === 'ok' && closeAll) {
+        this.modalService.dismissAll();
+      }
+    });
   }
 }
