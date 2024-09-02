@@ -9,12 +9,10 @@ import { MaterialModule } from '../material-module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HighchartsChartModule } from 'highcharts-angular';
 import { UpdatePasswordComponent } from './Modal/update-password/update-password.component';
 
 @NgModule({
   imports: [
-    HighchartsChartModule,
     CommonModule,
     NgbModule,
     FormsModule,
@@ -24,15 +22,7 @@ import { UpdatePasswordComponent } from './Modal/update-password/update-password
     BrowserAnimationsModule,
   ],
   declarations: [UpdatePasswordComponent],
-  exports: [
-    CommonModule,
-
-    MaterialModule,
-
-    NgxPaginationModule,
-
-    HighchartsChartModule,
-  ],
+  exports: [CommonModule, MaterialModule, NgxPaginationModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
