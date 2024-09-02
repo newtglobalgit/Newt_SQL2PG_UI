@@ -12,6 +12,7 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class DbSetupComponent implements OnInit {
+
   @ViewChild('f', { static: false }) dbCredentialsForm: NgForm;
 
   sourceDBTypeValue: any = 'MsSql';
@@ -23,6 +24,8 @@ export class DbSetupComponent implements OnInit {
 
   disableSubmit: boolean = false;
   disableSource: boolean = false;
+  disableTarget : boolean = false;
+
 
   sourceDBSchemaValue: string | null;
 
@@ -33,6 +36,13 @@ export class DbSetupComponent implements OnInit {
   sourceDBServiceNameValue = '';
   sourceDBUserNameValue = '';
   sourceDBPasswordValue = '';
+
+
+  targetDBPasswordValue = '';
+  targetDBUserNameValue = '';
+  targetDBHostValue = '';
+  targetDBNameValue = '';
+  targetDBPortValue = '';
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -77,6 +87,34 @@ export class DbSetupComponent implements OnInit {
       }
     });
   }
+
+
+  testTargetDbConnection(isTestTargetConBtnClicked) {
+    this.disableTarget = true;
+    this.spinner.show();
+
+    let reqObj = {
+      targetDBType: this.targetDBTypeValue,
+      databaseName: this.targetDBNameValue,
+      targetDBHost: this.targetDBHostValue,
+      targetDBPort: this.targetDBPortValue,
+      targetDBUserName: this.sourceDBUserNameValue,
+      targetDBPassword: this.sourceDBPasswordValue,
+    };
+
+    this.sql2PgService.testTargetDbConnection(reqObj).subscribe((res) => {
+      this.spinner.hide();
+      this.disableSource = false;
+      if (res[0].status === 'SUCCESS') {
+        if (isTestTargetConBtnClicked) {
+          this.openAlert('Connection Successful.');
+        }
+      } else {
+        this.openAlert(res[0].message);
+      }
+    });
+    
+    }
 
   onSubmit() {
     this.disableSubmit = true;
