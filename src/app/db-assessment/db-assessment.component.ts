@@ -8,6 +8,7 @@ import { UpdatePasswordComponent } from '../common/Modal/update-password/update-
   styleUrls: ['./db-assessment.component.css'],
 })
 export class DbAssessmentComponent implements OnInit {
+data: any;
   constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {}

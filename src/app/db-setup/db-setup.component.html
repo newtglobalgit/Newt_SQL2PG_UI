@@ -403,7 +403,7 @@
                           type="targetDBSchema"
                           class="form-control"
                           id="targetDBSchema"
-                          [(ngModel)]="sourceDBSchemaValue"
+                          [(ngModel)]="targetDBSchemaValue"
                           name="targetDBSchema"
                           placeholder="Enter database schema name"
                           title="Hint: sampleShell"
@@ -522,7 +522,7 @@
                           !targetDBPasswordValue ||
                           disableTarget
                         "
-                        (click)="testTargetDbConnection()"
+                        (click)="testTargetDbConnection(true)"
                       >
                         Test Target Connection
                       </button>

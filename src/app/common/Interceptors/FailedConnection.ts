@@ -86,24 +86,6 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
     var analyticsDashboard = req['url']
       .toString()
       .indexOf('analytics_dashboard');
-    //var appAssessment = req['url'].toString().indexOf("upload_tco_questionnaire");
-    if (
-      appMigration_getAppDetails > 0 ||
-      appMigration_getExistingDecorators > 0 ||
-      appMigration_getUploadedAppsInDecorator > 0 ||
-      appMigration_getJreAppDetails > 0 ||
-      appMigration_getAppWorkerNodeDetails > 0 ||
-      appMigration_getDMAPImageDetails > 0
-    ) {
-      if (this.checkAppNode() == 'failed') {
-        return;
-      } else if (this.checkAppNode() == 'app_not_configured') {
-      } else if (this.checkAppNode() == 'success') {
-      } else {
-        this.alertMessage =
-          'An error has occured while submitting the request. Please try again.';
-      }
-    }
 
     if (
       discoveryBatch_index < 0 &&
@@ -173,24 +155,7 @@ export class RetryOnFailedConnectionInterceptor implements HttpInterceptor {
   }
 
   onErrorStatus() {
-    this.loginService.setIsErrorShow(true);
-    this.loginService.setUserSession(null, undefined);
     this.spinner.hide();
     this.router.navigate(['/login']);
-  }
-
-  // openAlert(title, msg) {
-  //   if (!this.modalService.hasOpenModals()) {
-  //     const modalRef = this.modalService.open(DmapAlertDialogModal);
-  //     modalRef.componentInstance.data = { msg: msg, title: title };
-  //     modalRef.result.then((result) => {});
-  //   }
-  // }
-
-  checkAppNode() {
-    this.loginService.checkAppNodeStatus().subscribe((data) => {
-      this.appRemediationStatus = data['status'];
-    });
-    return this.appRemediationStatus;
   }
 }

@@ -8,7 +8,9 @@ import {
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../common/Services/login-service.service';
+import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
 
@@ -17,76 +19,82 @@ declare var $: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
-  @ViewChild('f', { static: false }) signUpForm: NgForm;
-  @ViewChild('l', { static: false }) loginForm: NgForm;
-  @ViewChild('p', { static: false }) resetPasswordForm: NgForm;
+export class LoginComponent {
+  @ViewChild('l', { static: false }) licenseForm: NgForm;
 
-  sideNavBarOpen: boolean = false;
-  userLogin: string;
-  hasAccount: boolean = true;
-  forgotPassword: boolean = false;
-  isConnectionFailed: boolean = true;
-  loginFailedMsg: any;
-  showSignUpLink: boolean = true;
-  userName: string;
-
-  password: string;
-  confirmationPassword: string;
-  passwordType: string = 'password';
-  passwordConfirmationType: string = 'password';
-
-  resetPasswordData: any;
-
-  currentUrl: any;
-  cURL: any;
-  nodeType: any;
+  licenseKey: any;
+  selectedVal: string;
+  htmlSnippet: string;
 
   constructor(
-    private modalService: NgbModal,
+    private loginService: LoginService,
     private router: Router,
-    private loginService: LoginService
+    private spinner: NgxSpinnerService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {}
 
-  onResetPassword() {
-    console.log(this.resetPasswordForm.value);
-    this.loginService
-      .resetPassword(this.resetPasswordForm.value['password'])
-      .subscribe((data) => {
-        this.resetPasswordData = data;
-        if (this.resetPasswordData.status == 'success') {
-          this.resetPasswordForm.reset();
-        }
-      });
+  ngAfterViewInit() {
+    this.initialize();
   }
 
-  onSignUp() {
-    this.loginService.sendsignupDetails(this.signUpForm.value).subscribe(
-      (data) => {
-        if (data.status == 'success') {
-          this.showSignUpLink = false;
-          // this.openAlert('User successfully created');
-          this.router.navigate(['/login']);
-        } else if (data.status == 'password null') {
-          // this.openAlert('Password should not be empty');
-        } else if (data.status == 'email format') {
-          // this.openAlert('Wrong Email format');
-        } else if (data.status == 'Failed') {
-          // this.openAlert('Username already exists');
-        } else if (data.status == 'user_exists') {
-          this.showSignUpLink = false;
-          // this.openAlert(
-          //   'Only one user is allowed to signup, use existing credentials'
-          // );
-        }
-      },
-      (error) => {}
-    );
+  initialize() {
+    const floatContainers = document.querySelectorAll('.float-container');
+
+    floatContainers.forEach((element) => {
+      if (element.querySelector('input').value) {
+        element.classList.add('active');
+      }
+
+      this.bindEvents(element);
+    });
+  }
+  /* register events */
+  bindEvents(element) {
+    const floatField = element.querySelector('input');
+    floatField.addEventListener('focus', this.handleFocus);
+    floatField.addEventListener('blur', this.handleBlur);
   }
 
-  onLogin() {
-    this.router.navigate(['/dbSetup']);
+  /* add active class and placeholder */
+  handleFocus(e) {
+    const target = e.target;
+    target.parentNode.classList.add('active');
+    target.setAttribute('placeholder', target.getAttribute('data-placeholder'));
+  }
+
+  /* remove active class and placeholder */
+  handleBlur(e) {
+    const target = e.target;
+    if (!target.value) {
+      target.parentNode.classList.remove('active');
+    }
+    target.removeAttribute('placeholder');
+  }
+
+  onLicenseActivation() {
+    this.spinner.show();
+    let reqObj = {
+      license_key: this.licenseKey,
+    };
+    this.loginService.activateLicense(reqObj).subscribe((data) => {
+      if (data.status == 'success') {
+        this.router.navigate(['/dbSetup']);
+      } else {
+        this.spinner.hide();
+        this.openAlert(data.message);
+      }
+    });
+  }
+
+  openAlert(msg) {
+    const modalRef = this.modalService.open(DmapAlertDialogModal);
+    modalRef.componentInstance.data = { msg: msg, title: 'Alert' };
+    modalRef.result.then((result) => {});
+  }
+
+  radioChangeHandler(event) {
+    this.selectedVal = event.target.value;
   }
 }

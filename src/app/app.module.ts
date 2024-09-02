@@ -25,12 +25,17 @@ import { TitleCasePipe } from '@angular/common';
 import { RetryOnFailedConnectionInterceptor } from './common/Interceptors/FailedConnection';
 
 import { ValidateEqualModule } from 'ng-validate-equal';
-
+import { NgbdConfirmationModal } from './common/Modal/dmap-confirmation-dialog/dmap-confirmation-dialog.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbSetupComponent } from './db-setup/db-setup.component';
 import { SideNavBarComponent } from './side-nav-bar/side-nav-bar.component';
 import { DbAssessmentComponent } from './db-assessment/db-assessment.component';
+
 import { ChatGptIntegrationComponent } from './chat-gpt-integration/chat-gpt-integration.component';
+
+import { DmapVersionDetailsComponent } from './dmap-version-details/dmap-version-details.component';
+import { DmapLicenseDetailsComponent } from './dmap-license-details/dmap-license-details.component';
+
 
 export function appInit(appConfigService: AppConfigService) {
   return () => appConfigService.load();
@@ -44,7 +49,13 @@ export function appInit(appConfigService: AppConfigService) {
     DbSetupComponent,
     SideNavBarComponent,
     DbAssessmentComponent,
+
     ChatGptIntegrationComponent,
+
+    NgbdConfirmationModal,
+    DmapVersionDetailsComponent,
+    DmapLicenseDetailsComponent,
+
   ],
   imports: [
     BrowserModule,

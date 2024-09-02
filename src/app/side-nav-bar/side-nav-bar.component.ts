@@ -4,9 +4,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { LoginService } from '../common/Services/login-service.service';
-
-import { Observable } from 'rxjs';
+import { Sql2PgService } from '../common/Services/sql2pg.service';
+import { NgbdConfirmationModal } from '../common/Modal/dmap-confirmation-dialog/dmap-confirmation-dialog.component';
+import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
+import { DmapVersionDetailsComponent } from '../dmap-version-details/dmap-version-details.component';
+import { DmapLicenseDetailsComponent } from '../dmap-license-details/dmap-license-details.component';
+import { DmapBackupProgressModalComponent } from '../common/Modal/dmap-backup-progress-modal/dmap-backup-progress-modal.component';
 
 @Component({
   selector: 'app-side-nav-bar',
@@ -43,10 +46,10 @@ export class SideNavBarComponent implements OnInit {
   visibleDataMigration: boolean = false;
 
   constructor(
-    private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private sql2PgService: Sql2PgService
   ) {}
 
   ngOnInit(): void {
@@ -54,19 +57,6 @@ export class SideNavBarComponent implements OnInit {
     this.userLogin = sessionStorage.getItem('user_name');
     this.nodeType = sessionStorage.getItem('nodeType');
     this.licenseType = sessionStorage.getItem('licenseType');
-    this.loginService.$nodeTypeObj.subscribe((nodeTypee: any) => {
-      this.nodeType = nodeTypee;
-    });
-
-    this.loginService.$userLogedInObj.subscribe((userEmail: any) => {
-      let isLogin = sessionStorage.getItem('isLogin');
-
-      if (this.userLogin == null && isLogin != null) {
-        this.userLogin = userEmail;
-      } else if (isLogin == null || isLogin == undefined) {
-        this.userLogin = null;
-      }
-    });
 
     if (
       this.licenseType == 'dmap pro' ||
@@ -127,5 +117,155 @@ export class SideNavBarComponent implements OnInit {
         this.className += ' active';
       });
     }
+  }
+
+  async getDMAPVersionDetails() {
+    this.spinner.show();
+    let res = [{ status: 'failed' }];
+
+    const modalRef = this.modalService.open(DmapVersionDetailsComponent, {
+      size: 'lg',
+      scrollable: true,
+    });
+
+    modalRef.componentInstance.data = {
+      title: 'DMAP Version',
+      imageDetails: '1234',
+      appImageDetails: '5678',
+    };
+    this.spinner.hide();
+    // this.sql2PgService.getDMAPVersionDetails().subscribe((data) => {
+    //   this.spinner.hide();
+    //   const modalRef = this.modalService.open(DmapVersionDetailsComponent, {
+    //     size: 'lg',
+    //     scrollable: true,
+    //   });
+
+    //   modalRef.componentInstance.data = {
+    //     title: 'DMAP Version',
+    //     imageDetails: data[0],
+    //     appImageDetails: res[0],
+    //   };
+    //   modalRef.result.then((result) => {});
+    // });
+  }
+
+  viewLicenseDetails() {
+    let showFeature = sessionStorage.getItem('show_license_details');
+    let headers;
+    let featureDetails;
+    let final_featureDetails = [];
+    this.spinner.show();
+
+    const modalRef = this.modalService.open(DmapLicenseDetailsComponent, {
+      size: 'lg',
+      scrollable: true,
+    });
+
+    headers = [
+      { name: 'Feature', widthStyle: '30%' },
+      { name: 'Allowed', widthStyle: '30%' },
+      { name: 'Used', widthStyle: '30%' },
+    ];
+    modalRef.componentInstance.data = {
+      title: 'License Details',
+      node_type: this.nodeType,
+      show_features: showFeature,
+      historyLicense: 'history',
+      activeLicense: 'current',
+      featureDetails: final_featureDetails,
+      headers: headers,
+    };
+
+    modalRef.result.then((result) => {});
+
+    this.spinner.hide();
+
+    // this.sql2PgService.getLicenseDetails().subscribe((data) => {
+    //   this.spinner.hide();
+    //   const modalRef = this.modalService.open(DmapLicenseDetailsComponent, {
+    //     size: 'lg',
+    //     scrollable: true,
+    //   });
+    //   if (data['current'].length > 0) {
+    //     featureDetails = data['current'][0].featuresDetail;
+    //   } else {
+    //     featureDetails = [];
+    //   }
+
+    //   for (let i in featureDetails) {
+    //     if (this.nodeType == 'analytics_master') {
+    //       if (
+    //         featureDetails[i]['feature'] == 'Analytics schema assessment limit'
+    //       ) {
+    //         final_featureDetails.push(featureDetails[i]);
+    //       }
+    //     } else {
+    //       if (
+    //         featureDetails[i]['feature'] != 'Analytics schema assessment limit'
+    //       ) {
+    //         final_featureDetails.push(featureDetails[i]);
+    //       }
+    //     }
+    //   }
+
+    //   headers = [
+    //     { name: 'Feature', widthStyle: '30%' },
+    //     { name: 'Allowed', widthStyle: '30%' },
+    //     { name: 'Used', widthStyle: '30%' },
+    //   ];
+    //   modalRef.componentInstance.data = {
+    //     title: 'License Details',
+    //     node_type: this.nodeType,
+    //     show_features: showFeature,
+    //     historyLicense: data['history'],
+    //     activeLicense: data['current'],
+    //     featureDetails: final_featureDetails,
+    //     headers: headers,
+    //   };
+
+    //   modalRef.result.then((result) => {});
+    // });
+  }
+
+  dmapBackup() {
+    const modalRef = this.modalService.open(NgbdConfirmationModal);
+    modalRef.componentInstance.data = {
+      msg: 'On completion of backup, please save the downloaded .tar.gz file in a secure location. If you reinstall the DMAP image and create a new container for DMAP, then the downloaded backup file will be required to restore the data of DB schema assessments and migrations done using DMAP.  Data will be restored to the point you previously backed up data.',
+      title: 'Confirmation',
+      okButtonLabel: 'Continue',
+      cancelButtonLabel: 'Cancel',
+      label: 'restoreDmap',
+      // showRadioButtons: true,
+    };
+    modalRef.result.then((result) => {
+      if (result == 'ok') {
+        const progressModalRef = this.modalService.open(
+          DmapBackupProgressModalComponent,
+          { size: 'lg', scrollable: true, backdrop: 'static' }
+        );
+        this.sql2PgService.backupDMAP().subscribe((res) => {
+          if (res.type == 'application/json' || res.type == 'text/html') {
+            progressModalRef.componentInstance.vmBkpStatus = res;
+          } else {
+            let blob = new Blob([res], {});
+            let filename = 'dmap_complete.tar.gz';
+            FileSaver.saveAs(blob, filename);
+            this.openAlert('Backup Downloaded Successfully.', true);
+            // this.commonServices.closeMinimizedWindow();
+          }
+        });
+      }
+    });
+  }
+
+  openAlert(msg, closeAll: boolean) {
+    const modalRef = this.modalService.open(DmapAlertDialogModal);
+    modalRef.componentInstance.data = { msg: msg, title: 'Alert' };
+    modalRef.result.then((result) => {
+      if (result === 'ok' && closeAll) {
+        this.modalService.dismissAll();
+      }
+    });
   }
 }

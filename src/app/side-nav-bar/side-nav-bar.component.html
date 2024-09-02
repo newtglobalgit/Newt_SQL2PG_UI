@@ -29,7 +29,7 @@
             <img
               alt="Complete"
               class="icon-size marginbtm3"
-              src="assets/images/SVG/Database.svg"
+              src="assets/images/SVG/DB Setup.svg"
             />
           </a>
           <a
@@ -45,7 +45,7 @@
             <img
               alt="Complete"
               class="icon-size marginbtm3"
-              src="assets/images/SVG/Application.svg"
+              src="assets/images/SVG/DB Assessment.svg"
             />
           </a>
           <a
@@ -84,7 +84,7 @@
             <img
               alt="Complete"
               class="icon-size marginbtm3"
-              src="assets/images/SVG/Database.svg"
+              src="assets/images/SVG/Database Worker Node Setup.svg"
             />
           </a>
           <a
@@ -123,14 +123,10 @@
             <img
               alt="Complete"
               class="icon-size marginbtm3"
-              src="assets/images/SVG/Database.svg"
+              src="assets/images/SVG/Backup DMAP.svg"
             />
           </a>
-          <a
-            style="padding-left: 3px"
-            (click)="putActiveClass('subMenu-items3')"
-            tabindex="-1"
-            [routerLink]="['/backupDmap']"
+          <a style="padding-left: 3px" tabindex="-1" (click)="dmapBackup()"
             >Backup DMAP</a
           >
         </li>
@@ -139,14 +135,13 @@
             <img
               alt="Complete"
               class="icon-size marginbtm3"
-              src="assets/images/SVG/Application.svg"
+              src="assets/images/SVG/License Details.svg"
             />
           </a>
           <a
             style="padding-left: 3px"
-            (click)="putActiveClass('subMenu-items3', 'appDashboard')"
             tabindex="-1"
-            routerLink="/licenseDetails"
+            (click)="viewLicenseDetails()"
             >License Details</a
           >
         </li>
@@ -156,14 +151,13 @@
             <img
               alt="Complete"
               class="icon-size marginbtm3"
-              src="assets/images/SVG/Application.svg"
+              src="assets/images/SVG/About.svg"
             />
           </a>
           <a
             style="padding-left: 3px"
-            (click)="putActiveClass('subMenu-items3', 'appDashboard')"
             tabindex="-1"
-            routerLink="/dmapVersion"
+            (click)="getDMAPVersionDetails()"
             >DMAP Version</a
           >
         </li>
