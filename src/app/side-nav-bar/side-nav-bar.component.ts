@@ -9,6 +9,7 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
 
 import { Observable } from 'rxjs';
 import { DmapVersionDetailsComponent } from '../dmap-version-details/dmap-version-details.component';
+import { DmapLicenseDetailsComponent } from '../dmap-license-details/dmap-license-details.component';
 
 @Component({
   selector: 'app-side-nav-bar',
@@ -145,6 +146,84 @@ export class SideNavBarComponent implements OnInit {
     //     imageDetails: data[0],
     //     appImageDetails: res[0],
     //   };
+    //   modalRef.result.then((result) => {});
+    // });
+  }
+
+  viewLicenseDetails() {
+    let showFeature = sessionStorage.getItem('show_license_details');
+    let headers;
+    let featureDetails;
+    let final_featureDetails = [];
+    this.spinner.show();
+
+    const modalRef = this.modalService.open(DmapLicenseDetailsComponent, {
+      size: 'lg',
+      scrollable: true,
+    });
+
+    headers = [
+      { name: 'Feature', widthStyle: '30%' },
+      { name: 'Allowed', widthStyle: '30%' },
+      { name: 'Used', widthStyle: '30%' },
+    ];
+    modalRef.componentInstance.data = {
+      title: 'License Details',
+      node_type: this.nodeType,
+      show_features: showFeature,
+      historyLicense: 'history',
+      activeLicense: 'current',
+      featureDetails: final_featureDetails,
+      headers: headers,
+    };
+
+    modalRef.result.then((result) => {});
+
+    this.spinner.hide();
+
+    // this.sql2PgService.getLicenseDetails().subscribe((data) => {
+    //   this.spinner.hide();
+    //   const modalRef = this.modalService.open(DmapLicenseDetailsComponent, {
+    //     size: 'lg',
+    //     scrollable: true,
+    //   });
+    //   if (data['current'].length > 0) {
+    //     featureDetails = data['current'][0].featuresDetail;
+    //   } else {
+    //     featureDetails = [];
+    //   }
+
+    //   for (let i in featureDetails) {
+    //     if (this.nodeType == 'analytics_master') {
+    //       if (
+    //         featureDetails[i]['feature'] == 'Analytics schema assessment limit'
+    //       ) {
+    //         final_featureDetails.push(featureDetails[i]);
+    //       }
+    //     } else {
+    //       if (
+    //         featureDetails[i]['feature'] != 'Analytics schema assessment limit'
+    //       ) {
+    //         final_featureDetails.push(featureDetails[i]);
+    //       }
+    //     }
+    //   }
+
+    //   headers = [
+    //     { name: 'Feature', widthStyle: '30%' },
+    //     { name: 'Allowed', widthStyle: '30%' },
+    //     { name: 'Used', widthStyle: '30%' },
+    //   ];
+    //   modalRef.componentInstance.data = {
+    //     title: 'License Details',
+    //     node_type: this.nodeType,
+    //     show_features: showFeature,
+    //     historyLicense: data['history'],
+    //     activeLicense: data['current'],
+    //     featureDetails: final_featureDetails,
+    //     headers: headers,
+    //   };
+
     //   modalRef.result.then((result) => {});
     // });
   }

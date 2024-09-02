@@ -34,4 +34,8 @@ export class Sql2PgService {
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
   }
+
+  getLicenseDetails() {
+    return this.http.get(this.config.host + '/getLicenseDetails');
+  }
 }
