@@ -1,8 +1,6 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { LoginService } from '../../Services/login-service.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { MatDialog } from '@angular/material/dialog';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 import {
   trigger,
@@ -39,31 +37,12 @@ export class FooterComponent implements OnInit {
   nodeType: string;
   showLicenseDetails: any;
   currentYearForCopyRight = new Date().getFullYear();
-  constructor(
-    private loginService: LoginService,
-    private modalService: NgbModal,
-    public dialog: MatDialog,
-    private spinner: NgxSpinnerService
-  ) {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     this.userLogin = sessionStorage.getItem('user_name');
 
     this.nodeType = sessionStorage.getItem('node_type');
-
-    this.loginService.$userLogedInObj.subscribe((userEmail: any) => {
-      let isLogin = sessionStorage.getItem('isLogin');
-
-      if (this.userLogin == null && isLogin != null) {
-        this.userLogin = userEmail;
-      } else if (isLogin == null || isLogin == undefined) {
-        this.userLogin = null;
-      }
-    });
-
-    this.loginService.$nodeTypeObj.subscribe((nodeTypee: any) => {
-      this.nodeType = nodeTypee;
-    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

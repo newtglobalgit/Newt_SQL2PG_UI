@@ -25,15 +25,6 @@
         >
           <div class="container">
             <div class="float-left">
-              <!-- <span *ngIf="!sideNavBarOpen" class="float-left" style="cursor:pointer;position:relative;top:35px;right:5px;"
-                    (click)="openNav()">
-                    <i *ngIf="sideNavBarArrow" class="fa fa-caret-right headingBullet"></i>
-                  </span>
-
-                  <span *ngIf="sideNavBarOpen" class="float-left" style="cursor:pointer;position:relative;top:35px;right:5px;"
-                    (click)="closeNav()">
-                    <i class="fa fa-caret-left headingBullet"></i>
-                  </span> -->
               <a href="#/dbSetup"
                 ><img
                   class="dMapLogo float-left"
@@ -48,11 +39,7 @@
               >
             </div>
 
-            <div
-              class="float-right"
-              style="position: relative"
-              *ngIf="userLogin && isShowNavBarWelcomeSection"
-            >
+            <div class="float-right" style="position: relative">
               <div
                 class="start-tour btn btn-md btn-primary float-right"
                 (click)="startTour()"
@@ -64,10 +51,7 @@
                 />
                 <span>Self Tour</span>
               </div>
-              <!-- <img class="" src="assets/images/newtglobal_logo_small.png" alt="Newt Global" height="55" /> -->
               <div class="userWelcomeMsg">
-                <!-- <div>{{userLogin}}
-                    </div> -->
                 <a>
                   <div class="logout-circle">
                     <img

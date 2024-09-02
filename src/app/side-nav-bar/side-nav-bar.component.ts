@@ -5,8 +5,10 @@ import FileSaver from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { LoginService } from '../common/Services/login-service.service';
+import { Sql2PgService } from '../common/Services/sql2pg.service';
 
 import { Observable } from 'rxjs';
+import { DmapVersionDetailsComponent } from '../dmap-version-details/dmap-version-details.component';
 
 @Component({
   selector: 'app-side-nav-bar',
@@ -43,10 +45,10 @@ export class SideNavBarComponent implements OnInit {
   visibleDataMigration: boolean = false;
 
   constructor(
-    private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private sql2PgService: Sql2PgService
   ) {}
 
   ngOnInit(): void {
@@ -54,19 +56,6 @@ export class SideNavBarComponent implements OnInit {
     this.userLogin = sessionStorage.getItem('user_name');
     this.nodeType = sessionStorage.getItem('nodeType');
     this.licenseType = sessionStorage.getItem('licenseType');
-    this.loginService.$nodeTypeObj.subscribe((nodeTypee: any) => {
-      this.nodeType = nodeTypee;
-    });
-
-    this.loginService.$userLogedInObj.subscribe((userEmail: any) => {
-      let isLogin = sessionStorage.getItem('isLogin');
-
-      if (this.userLogin == null && isLogin != null) {
-        this.userLogin = userEmail;
-      } else if (isLogin == null || isLogin == undefined) {
-        this.userLogin = null;
-      }
-    });
 
     if (
       this.licenseType == 'dmap pro' ||
@@ -127,5 +116,36 @@ export class SideNavBarComponent implements OnInit {
         this.className += ' active';
       });
     }
+  }
+
+  async getDMAPVersionDetails() {
+    this.spinner.show();
+    let res = [{ status: 'failed' }];
+
+    const modalRef = this.modalService.open(DmapVersionDetailsComponent, {
+      size: 'lg',
+      scrollable: true,
+    });
+
+    modalRef.componentInstance.data = {
+      title: 'DMAP Version',
+      imageDetails: '1234',
+      appImageDetails: '5678',
+    };
+    this.spinner.hide();
+    // this.sql2PgService.getDMAPVersionDetails().subscribe((data) => {
+    //   this.spinner.hide();
+    //   const modalRef = this.modalService.open(DmapVersionDetailsComponent, {
+    //     size: 'lg',
+    //     scrollable: true,
+    //   });
+
+    //   modalRef.componentInstance.data = {
+    //     title: 'DMAP Version',
+    //     imageDetails: data[0],
+    //     appImageDetails: res[0],
+    //   };
+    //   modalRef.result.then((result) => {});
+    // });
   }
 }
