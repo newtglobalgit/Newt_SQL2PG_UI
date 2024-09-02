@@ -9,6 +9,7 @@ import {
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import 'jqueryui';
+import { PopupDraggableService } from '../../Services/popup-draggable.service';
 
 @Component({
   selector: 'ngbd-confirmation-modal',
@@ -21,10 +22,13 @@ export class NgbdConfirmationModal {
 
   constructor(
     private activeModal: NgbActiveModal,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _PopupDraggableService: PopupDraggableService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._PopupDraggableService.enableDraggablePopup();
+  }
 
   ngAfterViewInit() {}
 
