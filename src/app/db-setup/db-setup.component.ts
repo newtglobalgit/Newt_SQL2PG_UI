@@ -12,7 +12,6 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class DbSetupComponent implements OnInit {
-
   @ViewChild('f', { static: false }) dbCredentialsForm: NgForm;
 
   sourceDBTypeValue: any = 'MsSql';
@@ -24,11 +23,10 @@ export class DbSetupComponent implements OnInit {
 
   disableSubmit: boolean = false;
   disableSource: boolean = false;
-  disableTarget : boolean = false;
-
+  disableTarget: boolean = false;
 
   sourceDBSchemaValue: string | null;
-
+  sourceDriverNameValue = '';
   sourceDBNameValue = '';
   sourceDbHostValue = '';
   sourceDBPortValue = '';
@@ -36,7 +34,6 @@ export class DbSetupComponent implements OnInit {
   sourceDBServiceNameValue = '';
   sourceDBUserNameValue = '';
   sourceDBPasswordValue = '';
-
 
   targetDBPasswordValue = '';
   targetDBUserNameValue = '';
@@ -66,6 +63,7 @@ export class DbSetupComponent implements OnInit {
       databaseName: this.sourceDBNameValue,
       sourceDBHost: this.sourceDbHostValue,
       sourceDBPort: this.sourceDBPortValue,
+      sourceDBDriver: this.sourceDriverNameValue,
       sourceDBSid:
         this.oracleConnect == 'sid'
           ? this.sourceDBSidValue
@@ -87,7 +85,6 @@ export class DbSetupComponent implements OnInit {
       }
     });
   }
-
 
   testTargetDbConnection(isTestTargetConBtnClicked) {
     this.disableTarget = true;
@@ -113,8 +110,7 @@ export class DbSetupComponent implements OnInit {
         this.openAlert(res[0].message);
       }
     });
-    
-    }
+  }
 
   onSubmit() {
     this.disableSubmit = true;
