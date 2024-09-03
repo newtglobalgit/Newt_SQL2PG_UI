@@ -20,4 +20,5 @@ describe('ChatGptIntegrationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });

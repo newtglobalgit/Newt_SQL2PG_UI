@@ -35,6 +35,7 @@ import { ChatGptIntegrationComponent } from './chat-gpt-integration/chat-gpt-int
 
 import { DmapVersionDetailsComponent } from './dmap-version-details/dmap-version-details.component';
 import { DmapLicenseDetailsComponent } from './dmap-license-details/dmap-license-details.component';
+import { UploadJsonModalComponent } from './upload-json-modal/upload-json-modal.component';
 
 
 export function appInit(appConfigService: AppConfigService) {
@@ -55,6 +56,7 @@ export function appInit(appConfigService: AppConfigService) {
     NgbdConfirmationModal,
     DmapVersionDetailsComponent,
     DmapLicenseDetailsComponent,
+    UploadJsonModalComponent,
 
   ],
   imports: [
