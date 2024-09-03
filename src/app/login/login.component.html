@@ -29,11 +29,14 @@
               </div>
             </div>
 
-            <!-- <div class="col-md-12 marginBottom10" style="margin-top: -40px">
-              <div class="alert alert-danger padding20">
+            <div *ngIf="showInvalidLicenseMsg" class="col-md-12">
+              <div
+                class="alert alert-danger"
+                style="padding: 0.7rem 0.75rem 0rem 0.75rem !important"
+              >
                 <p [innerHTML]="htmlSnippet"></p>
               </div>
-            </div> -->
+            </div>
 
             <div class="col-md-12 marginBottom10">
               <div id="" class="float-container">

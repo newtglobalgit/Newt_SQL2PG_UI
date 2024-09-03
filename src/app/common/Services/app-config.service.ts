@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppConfigService {
   public host: string;
-  public appRemdHost: string;
 
   constructor(private http: HttpClient) {}
 

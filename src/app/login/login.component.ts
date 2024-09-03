@@ -25,6 +25,7 @@ export class LoginComponent {
   licenseKey: any;
   selectedVal: string;
   htmlSnippet: string;
+  showInvalidLicenseMsg: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -79,12 +80,14 @@ export class LoginComponent {
       license_key: this.licenseKey,
     };
     this.loginService.activateLicense(reqObj).subscribe((data) => {
-      if (data.status == 'success') {
+      if (data.valid == true) {
         this.router.navigate(['/dbSetup']);
       } else {
-        this.spinner.hide();
-        this.openAlert(data.message);
+        this.showInvalidLicenseMsg = true;
+        this.htmlSnippet = data.message;
+        // this.openAlert(data.message);
       }
+      this.spinner.hide();
     });
   }
 

@@ -12,6 +12,6 @@ export class LoginService {
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
   activateLicense(reqObj: any): Observable<any> {
-    return this.http.post(this.config.host + '/activateLicense', reqObj);
+    return this.http.post(this.config.host + '/getLicenseDetails', reqObj);
   }
 }
