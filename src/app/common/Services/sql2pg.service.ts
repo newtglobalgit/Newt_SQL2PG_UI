@@ -45,7 +45,7 @@ export class Sql2PgService {
         headers: this.setHeaders(),
       })
       .pipe((data) => data);
-  }
+  } 
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');

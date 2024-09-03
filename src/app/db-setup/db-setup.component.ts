@@ -98,8 +98,8 @@ export class DbSetupComponent implements OnInit {
       databaseName: this.targetDBNameValue,
       targetDBHost: this.targetDBHostValue,
       targetDBPort: this.targetDBPortValue,
-      targetDBUserName: this.sourceDBUserNameValue,
-      targetDBPassword: this.sourceDBPasswordValue,
+      targetDBUserName: this.targetDBUserNameValue,
+      targetDBPassword: this.targetDBPasswordValue,
     };
 
     this.sql2PgService.testTargetDbConnection(reqObj).subscribe((res) => {
