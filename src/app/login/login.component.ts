@@ -84,7 +84,7 @@ export class LoginComponent {
         this.router.navigate(['/dbSetup']);
       } else {
         this.showInvalidLicenseMsg = true;
-        this.htmlSnippet = data.message;
+        this.htmlSnippet = data.message.message;
         // this.openAlert(data.message);
       }
       this.spinner.hide();

@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadJsonModalComponent } from '../upload-json-modal/upload-json-modal.component';
+import { NgForm } from '@angular/forms';
+import { Sql2PgService } from '../common/Services/sql2pg.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 
 @Component({
   selector: 'app-chat-gpt-integration',
   templateUrl: './chat-gpt-integration.component.html',
-  styleUrls: ['./chat-gpt-integration.component.css']
+  styleUrls: ['./chat-gpt-integration.component.css'],
 })
 export class ChatGptIntegrationComponent implements OnInit {
+  @ViewChild('f', { static: false }) genAiForm: NgForm;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private spinner: NgxSpinnerService,
+    private modalService: NgbModal,
+    private sql2PgService: Sql2PgService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   chatGptEnabled: boolean = false;
   genAIEnabledSuccessfully: boolean = false;
-  
+
   location: string = '';
   modelSelection: string = 'Default';
   maxOutputTokens: string = '';
@@ -26,10 +34,10 @@ export class ChatGptIntegrationComponent implements OnInit {
   retryDelay: string = '';
   maxTokens: string = '';
   maxApiCalls: string = '';
-  
+
   projectId: string = '';
   serviceAccountEmail: string = '';
-  
+
   clearGenAI() {
     this.location = '';
     this.modelSelection = 'Default';
@@ -42,22 +50,41 @@ export class ChatGptIntegrationComponent implements OnInit {
     this.maxTokens = '';
     this.maxApiCalls = '';
   }
-  
-  saveGenAI() {
-        if (this.location && this.modelSelection && this.maxOutputTokens && this.temperature && this.topP && this.apiCallLimit) {
-            this.genAIEnabledSuccessfully = true;
-            alert('GenAI enabled successfully');
-        } else {
-            alert('Please fill all credentials');
-        }
-    }
 
-    openModal() {
-      const modalRef = this.modalService.open(UploadJsonModalComponent, {
-        size: 'lg',
-        scrollable: true,
-      });}
-  
+  saveGenAiDetails() {
+    this.spinner.show();
+    const genAidata: any = this.genAiForm.value;
+    console.log('Gen Ai submit data - ', genAidata);
+    this.sql2PgService.saveGenAiDetails(genAidata).subscribe((res) => {
+      this.spinner.hide();
+      if (res.status === 'Success') {
+        this.openAlert('GenAI enabled successfully');
+      } else {
+        this.openAlert(res[0].message);
+      }
+    });
+    // if (
+    //   this.location &&
+    //   this.modelSelection &&
+    //   this.maxOutputTokens &&
+    //   this.temperature &&
+    //   this.topP &&
+    //   this.apiCallLimit
+    // ) {
+    //   this.genAIEnabledSuccessfully = true;
+    //   alert('GenAI enabled successfully');
+    // } else {
+    //   alert('Please fill all credentials');
+    // }
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(UploadJsonModalComponent, {
+      size: 'lg',
+      scrollable: true,
+    });
+  }
+
   clearServiceAccount() {
     this.projectId = '';
     this.serviceAccountEmail = '';
@@ -71,4 +98,12 @@ export class ChatGptIntegrationComponent implements OnInit {
     }
   }
 
+  openAlert(msg: any, method = false) {
+    const modalRef = this.modalService.open(DmapAlertDialogModal);
+    modalRef.componentInstance.data = { msg: msg, title: 'Alert' };
+    modalRef.result.then((result) => {
+      if (result === 'ok') {
+      }
+    });
+  }
 }

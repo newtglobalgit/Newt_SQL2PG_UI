@@ -7,7 +7,6 @@ import { AppConfigService } from 'src/app/common/Services/app-config.service';
   providedIn: 'root',
 })
 export class Sql2PgService {
-  
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
   private setHeaders(): HttpHeaders {
@@ -21,19 +20,22 @@ export class Sql2PgService {
     );
   }
 
-  testTargetDbConnection(targetDbdetails: any) : Observable<any>{
+  testTargetDbConnection(targetDbdetails: any): Observable<any> {
     return this.postWithHeadersTargetDbdetails(
       this.config.host + '/testTargetDB',
       targetDbdetails
     );
   }
 
-  private postWithHeadersTargetDbdetails(url : string , targetDbdetails: any): Observable<any> {
-    return this.http.post(url, targetDbdetails,
-      {
+  private postWithHeadersTargetDbdetails(
+    url: string,
+    targetDbdetails: any
+  ): Observable<any> {
+    return this.http
+      .post(url, targetDbdetails, {
         headers: this.setHeaders(),
-      }
-    ).pipe((data) => data)
+      })
+      .pipe((data) => data);
   }
 
   private postWithHeadersSourceDbdetails(
@@ -45,7 +47,7 @@ export class Sql2PgService {
         headers: this.setHeaders(),
       })
       .pipe((data) => data);
-  } 
+  }
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
@@ -63,5 +65,12 @@ export class Sql2PgService {
 
   checkBackupStatus() {
     return this.http.get(this.config.host + '/get_backup_status');
+  }
+
+  saveGenAiDetails(genAidata: any): Observable<any> {
+    return this.http.post(
+      this.config.host + '/insert_gen_ai_details',
+      genAidata
+    );
   }
 }
