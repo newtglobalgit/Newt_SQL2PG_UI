@@ -7,6 +7,8 @@ import { AppConfigService } from 'src/app/common/Services/app-config.service';
   providedIn: 'root',
 })
 export class Sql2PgService {
+
+
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
   private setHeaders(): HttpHeaders {
@@ -38,6 +40,7 @@ export class Sql2PgService {
       .pipe((data) => data);
   }
 
+
   private postWithHeadersSourceDbdetails(
     url: string,
     sourceDbdetails: any
@@ -48,6 +51,24 @@ export class Sql2PgService {
       })
       .pipe((data) => data);
   }
+
+  senddbconfigDetails(dbcredentialsdata: any) {
+
+    return this.postWithHeadersDBSetupDetails(
+       this.config.host + '/dbSetup', dbcredentialsdata
+    )
+  }
+
+  private postWithHeadersDBSetupDetails(
+    url: string,
+    DBSetupdetails: any
+  ): Observable<any> {
+    return this.http
+      .post(url, DBSetupdetails, {
+        headers: this.setHeaders(),
+      })
+      .pipe((data) => data);
+  } 
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');

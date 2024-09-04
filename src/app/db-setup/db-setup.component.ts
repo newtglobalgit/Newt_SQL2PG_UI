@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-db-setup',
@@ -40,11 +41,14 @@ export class DbSetupComponent implements OnInit {
   targetDBHostValue = '';
   targetDBNameValue = '';
   targetDBPortValue = '';
+numberOnlyPattern: any;
+  result: any;
 
   constructor(
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
-    private sql2PgService: Sql2PgService
+    private sql2PgService: Sql2PgService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -112,11 +116,30 @@ export class DbSetupComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(isSubmitBtnClicked) {
+    isSubmitBtnClicked = true
     this.disableSubmit = true;
     const dbcredentialsdata: any = this.dbCredentialsForm.value;
     console.log('db setup submit data - ', dbcredentialsdata);
+  
+    this.sql2PgService.senddbconfigDetails(dbcredentialsdata).subscribe((res) => {
+      this.result =res;
+      console.log(res[0].status)
+      console.log(this.result)
+      if (res[0].status === 'SUCCESS') {
+        if (isSubmitBtnClicked) {
+          this.openAlert('Submitted Successfully');
+          // this.openAlert(res[0]?.message);
+          this.router.navigate(['/dbAssessment']);
+          
+        }
+      } else {
+        this.openAlert('fail');
+        // this.openAlert(res[0]?.message || 'An error occurred.');
+      }
+    });
   }
+  
 
   openAlert(msg: any, method = false) {
     const modalRef = this.modalService.open(DmapAlertDialogModal);
