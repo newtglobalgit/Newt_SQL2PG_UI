@@ -41,7 +41,7 @@ export class ChatGptIntegrationComponent implements OnInit {
   existingGenAiDetails: any;
   selectedFile: File | null = null;
   chatGptEnabled: boolean = false;
-  genAIEnabledSuccessfully: boolean = true;
+  genAIEnabledSuccessfully: boolean = false;
   enableServiceAccount: boolean = false;
 
   location: string = '';
@@ -108,15 +108,12 @@ export class ChatGptIntegrationComponent implements OnInit {
       return false;
     }
     this.spinner.show();
-    //------------------------
 
     const formData = new FormData();
 
-    // Append the form fields to FormData
     formData.append('projectId', this.projectId);
     formData.append('serviceAccountEmail', this.serviceAccountEmail);
 
-    // Append the selected file to FormData
     if (this.selectedFile) {
       formData.append(
         'serviceAccountFile',
@@ -127,7 +124,6 @@ export class ChatGptIntegrationComponent implements OnInit {
     formData.forEach((value, key) => {
       console.log(`${key}: ${value}`);
     });
-    //------------------------
     // const serviceAccountdata: any = this.serviceAccountForm.value;
     console.log('Service Account submit data - ', formData);
     this.sql2PgService.saveServiceAccountDetails(formData).subscribe((res) => {
@@ -191,7 +187,10 @@ export class ChatGptIntegrationComponent implements OnInit {
     if (file) {
       this.selectedFile = file;
       console.log('File selected:', file.name);
-      // Further processing can be done here, like sending the file to the server
+      const input = document.getElementById('fileUpload') as HTMLInputElement;
+      const fileName =
+        input.files && input.files.length > 0 ? input.files[0].name : '';
+      document.getElementById('file-upload-filename')!.textContent = fileName;
     }
   }
 }

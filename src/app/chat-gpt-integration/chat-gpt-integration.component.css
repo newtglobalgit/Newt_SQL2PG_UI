@@ -1,4 +1,23 @@
 .disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  border-color: #274584;
+  color: #274584;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+#file-upload-filename {
+  margin-left: 10px;
+  font-style: italic;
 }

@@ -305,14 +305,29 @@
 
           <div class="col-md-6">
             <div class="form-group">
-              <label for="fileUpload">Upload JSON File</label>
+              <label for="fileUpload" class="custom-file-upload">
+                Upload JSON File
+              </label>
+              <input
+                id="fileUpload"
+                type="file"
+                class="form-control"
+                style="display: none"
+                (change)="onFileSelected($event)"
+                [disabled]="!genAIEnabledSuccessfully"
+              />
+              <span id="file-upload-filename"></span>
+
+              <!-- <label for="fileUpload" class="custom-file-upload"
+                >Upload JSON File</label
+              >
               <input
                 type="file"
                 class="form-control"
                 id="fileUpload"
                 (change)="onFileSelected($event)"
                 [disabled]="!genAIEnabledSuccessfully"
-              />
+              /> -->
             </div>
           </div>
         </div>
