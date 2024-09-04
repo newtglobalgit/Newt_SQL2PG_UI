@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-chat-gpt-integration',
@@ -12,17 +13,35 @@ import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-ale
   styleUrls: ['./chat-gpt-integration.component.css'],
 })
 export class ChatGptIntegrationComponent implements OnInit {
+  genAIForm: FormGroup;
   @ViewChild('f', { static: false }) genAiForm: NgForm;
+  @ViewChild('ff', { static: false }) serviceAccountForm: NgForm;
 
   constructor(
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
-    private sql2PgService: Sql2PgService
+    private sql2PgService: Sql2PgService,
+    private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.genAIForm = this.fb.group({
+      location: [''],
+      modelSelection: ['Default'],
+      maxOutputTokens: [''],
+      temperature: [1],
+      topP: [''],
+      apiCallLimit: [''],
+      maxRetries: [''],
+      retryDelay: [''],
+      maxTokens: [''],
+      maxApiCalls: [''],
+    });
+  }
+  existingGenAiDetails: any;
   chatGptEnabled: boolean = false;
   genAIEnabledSuccessfully: boolean = false;
+  enableServiceAccount: boolean = false;
 
   location: string = '';
   modelSelection: string = 'Default';
@@ -52,30 +71,50 @@ export class ChatGptIntegrationComponent implements OnInit {
   }
 
   saveGenAiDetails() {
+    if (
+      this.location &&
+      this.modelSelection &&
+      this.maxOutputTokens &&
+      this.temperature &&
+      this.topP &&
+      this.apiCallLimit &&
+      this.maxRetries &&
+      this.retryDelay &&
+      this.maxTokens &&
+      this.maxApiCalls
+    ) {
+      this.genAIEnabledSuccessfully = true;
+    } else {
+      this.openAlert('Please fill all the mandatory fields');
+      return false;
+    }
     this.spinner.show();
     const genAidata: any = this.genAiForm.value;
     console.log('Gen Ai submit data - ', genAidata);
     this.sql2PgService.saveGenAiDetails(genAidata).subscribe((res) => {
       this.spinner.hide();
-      if (res.status === 'Success') {
-        this.openAlert('GenAI enabled successfully');
-      } else {
-        this.openAlert(res[0].message);
-      }
+      this.openAlert(res.message);
     });
-    // if (
-    //   this.location &&
-    //   this.modelSelection &&
-    //   this.maxOutputTokens &&
-    //   this.temperature &&
-    //   this.topP &&
-    //   this.apiCallLimit
-    // ) {
-    //   this.genAIEnabledSuccessfully = true;
-    //   alert('GenAI enabled successfully');
-    // } else {
-    //   alert('Please fill all credentials');
-    // }
+
+    this.enableServiceAccount = true;
+  }
+
+  activateServiceAccount() {
+    if (this.projectId && this.serviceAccountEmail) {
+      // this.genAIEnabledSuccessfully = true;
+    } else {
+      this.openAlert('Please fill all the mandatory fields');
+      return false;
+    }
+    this.spinner.show();
+    const serviceAccountdata: any = this.serviceAccountForm.value;
+    console.log('Service Account submit data - ', serviceAccountdata);
+    this.sql2PgService
+      .saveServiceAccountDetails(serviceAccountdata)
+      .subscribe((res) => {
+        this.spinner.hide();
+        this.openAlert(res.message);
+      });
   }
 
   openModal() {
@@ -90,14 +129,6 @@ export class ChatGptIntegrationComponent implements OnInit {
     this.serviceAccountEmail = '';
   }
 
-  activateServiceAccount() {
-    if (this.projectId && this.serviceAccountEmail) {
-      alert('Service Account activated successfully');
-    } else {
-      alert('Please fill all required fields');
-    }
-  }
-
   openAlert(msg: any, method = false) {
     const modalRef = this.modalService.open(DmapAlertDialogModal);
     modalRef.componentInstance.data = { msg: msg, title: 'Alert' };
@@ -105,5 +136,34 @@ export class ChatGptIntegrationComponent implements OnInit {
       if (result === 'ok') {
       }
     });
+  }
+
+  onGenAiEnableTick(isChecked: boolean) {
+    if (isChecked) {
+      console.log('Checkbox is checked');
+      this.sql2PgService.fetchGenAiDetails().subscribe((res) => {
+        this.existingGenAiDetails = res;
+        console.log(
+          'Existing Gen AI Details --> ',
+          this.existingGenAiDetails.data
+        );
+        this.genAIForm.patchValue({
+          location: this.existingGenAiDetails.data.location,
+          modelSelection: this.existingGenAiDetails.data.modelSelection,
+          maxOutputTokens: this.existingGenAiDetails.data.maxOutputTokens,
+          temperature: this.existingGenAiDetails.data.temperature,
+          topP: this.existingGenAiDetails.data.topP,
+          apiCallLimit: this.existingGenAiDetails.data.apiCallLimit,
+          maxRetries: this.existingGenAiDetails.data.maxRetries,
+          retryDelay: this.existingGenAiDetails.data.retryDelay,
+          maxTokens: this.existingGenAiDetails.data.maxTokens,
+          maxApiCalls: this.existingGenAiDetails.data.maxApiCalls,
+        });
+        this.spinner.hide();
+      });
+    } else {
+      console.log('Checkbox is unchecked');
+      // Handle the uncheck case here if needed
+    }
   }
 }

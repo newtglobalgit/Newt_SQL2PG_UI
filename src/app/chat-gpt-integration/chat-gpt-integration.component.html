@@ -37,12 +37,13 @@
             class="form-control"
             id="chatGptEnabled"
             [(ngModel)]="chatGptEnabled"
+            (ngModelChange)="onGenAiEnableTick($event)"
             name="chatGptEnabled"
           />
         </div>
       </div>
     </div>
-    <form name="submitCredentials" #f="ngForm">
+    <form [formGroup]="genAIForm" name="submitCredentials" #f="ngForm">
       <div *ngIf="chatGptEnabled">
         <!-- GenAI Fields -->
         <div class="row adjust">
@@ -53,6 +54,7 @@
               >
               <input
                 type="text"
+                formControlName="location"
                 class="form-control"
                 id="location"
                 placeholder="Enter location"
@@ -69,6 +71,7 @@
               <select
                 class="form-control"
                 id="modelSelection"
+                formControlName="modelSelection"
                 [(ngModel)]="modelSelection"
                 name="modelSelection"
               >
@@ -92,6 +95,7 @@
                 type="text"
                 class="form-control"
                 id="maxOutputTokens"
+                formControlName="maxOutputTokens"
                 placeholder="Max token limit 8192"
                 [(ngModel)]="maxOutputTokens"
                 name="maxOutputTokens"
@@ -107,6 +111,7 @@
                 type="number"
                 class="form-control"
                 id="temperature"
+                formControlName="temperature"
                 min="0"
                 max="2"
                 [(ngModel)]="temperature"
@@ -126,6 +131,7 @@
                 type="text"
                 class="form-control"
                 id="topP"
+                formControlName="topP"
                 [(ngModel)]="topP"
                 name="topP"
               />
@@ -140,6 +146,7 @@
                 type="text"
                 class="form-control"
                 id="apiCallLimit"
+                formControlName="apiCallLimit"
                 [(ngModel)]="apiCallLimit"
                 name="apiCallLimit"
               />
@@ -157,6 +164,7 @@
                 type="text"
                 class="form-control"
                 id="maxRetries"
+                formControlName="maxRetries"
                 [(ngModel)]="maxRetries"
                 name="maxRetries"
               />
@@ -171,6 +179,7 @@
                 type="text"
                 class="form-control"
                 id="retryDelay"
+                formControlName="retryDelay"
                 [(ngModel)]="retryDelay"
                 name="retryDelay"
               />
@@ -188,6 +197,7 @@
                 type="text"
                 class="form-control"
                 id="maxTokens"
+                formControlName="maxTokens"
                 [(ngModel)]="maxTokens"
                 name="maxTokens"
               />
@@ -202,6 +212,7 @@
                 type="text"
                 class="form-control"
                 id="maxApiCalls"
+                formControlName="maxApiCalls"
                 [(ngModel)]="maxApiCalls"
                 name="maxApiCalls"
               />
@@ -238,83 +249,84 @@
     class="wizardDiv"
     style="margin: 8px 8px; padding-bottom: 8px"
   >
-    <div *ngIf="chatGptEnabled">
-      <div>
-        <div
-          class="form-group"
-          [ngClass]="{ disabled: !genAIEnabledSuccessfully }"
-          style="margin-left: 14px; margin-top: 10px"
-        >
-          <label for="chatGptEnabled" style="font-weight: bold"
-            >Enable Service Account <span class="requiredField">*</span></label
+    <form name="submitCredentials" #ff="ngForm">
+      <div *ngIf="chatGptEnabled">
+        <div>
+          <div
+            class="form-group"
+            [ngClass]="{ disabled: !genAIEnabledSuccessfully }"
+            style="margin-left: 14px; margin-top: 10px"
           >
-        </div>
-      </div>
-      <div
-        class="row adjust"
-        [ngClass]="{ disabled: !genAIEnabledSuccessfully }"
-      >
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="projectId"
-              >Enter Project ID <span class="requiredField">*</span></label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="projectId"
-              [(ngModel)]="projectId"
-              name="projectId"
-              placeholder="Enter Project ID"
-              [disabled]="!genAIEnabledSuccessfully"
-            />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="serviceAccountEmail"
-              >Enter Service Account Email
+            <label for="chatGptEnabled" style="font-weight: bold"
+              >Enable Service Account
               <span class="requiredField">*</span></label
             >
-            <input
-              type="email"
-              class="form-control"
-              id="serviceAccountEmail"
-              [(ngModel)]="serviceAccountEmail"
-              name="serviceAccountEmail"
-              placeholder="Enter Service Account Email"
+          </div>
+        </div>
+        <div
+          class="row adjust"
+          [ngClass]="{ disabled: !genAIEnabledSuccessfully }"
+        >
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="projectId"
+                >Enter Project ID <span class="requiredField">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="projectId"
+                [(ngModel)]="projectId"
+                name="projectId"
+                placeholder="Enter Project ID"
+                [disabled]="!genAIEnabledSuccessfully"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="serviceAccountEmail"
+                >Enter Service Account Email
+                <span class="requiredField">*</span></label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="serviceAccountEmail"
+                [(ngModel)]="serviceAccountEmail"
+                name="serviceAccountEmail"
+                placeholder="Enter Service Account Email"
+                [disabled]="!genAIEnabledSuccessfully"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="row margin0"
+          style="justify-content: flex-end; width: 98.5%"
+        >
+          <div class="col-md-2;justify-content: flex-end">
+            <button
+              type="button"
+              class="btn btn-md btn-simple"
+              (click)="clearServiceAccount()"
               [disabled]="!genAIEnabledSuccessfully"
-            />
+            >
+              Clear
+            </button>
+            &nbsp;
+            <button
+              type="button"
+              class="btn btn-md btn-primary"
+              (click)="activateServiceAccount()"
+              [disabled]="!genAIEnabledSuccessfully"
+            >
+              Activate
+            </button>
           </div>
         </div>
       </div>
-      <!-- <div style="margin-left: 14px;">
-                <a href="#" (click)="openModal()">Click Here</a>
-                <app-upload-json-model></app-upload-json-model>
-            </div> -->
-
-      <!-- Service Account Save and Clear Buttons -->
-      <div class="row margin0" style="justify-content: flex-end; width: 98.5%">
-        <div class="col-md-2;justify-content: flex-end">
-          <button
-            type="button"
-            class="btn btn-md btn-simple"
-            (click)="clearServiceAccount()"
-            [disabled]="!genAIEnabledSuccessfully"
-          >
-            Clear
-          </button>
-          &nbsp;
-          <button
-            type="button"
-            class="btn btn-md btn-primary"
-            (click)="activateServiceAccount()"
-            [disabled]="!genAIEnabledSuccessfully"
-          >
-            Activate
-          </button>
-        </div>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
