@@ -1,29 +1,44 @@
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { throwError, Observable } from "rxjs";
-import { catchError, filter, take, switchMap } from "rxjs";
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { throwError, Observable } from 'rxjs';
+import { catchError, filter, take, switchMap } from 'rxjs';
 import { DmapAlertDialogModal } from '../Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from '../Services/login-service.service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable()
 export class ReqHeaderAndErrorHandlingInterceptor implements HttpInterceptor {
-  private AUTH_HEADER = "auth-token";
+  private AUTH_HEADER = 'auth-token';
   private RETRY_COUNT = 3;
 
-  constructor(private modalService: NgbModal, private router: Router, 
-    private spinner: NgxSpinnerService, private loginService: LoginService) {
-  }
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(
+    private modalService: NgbModal,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private loginService: LoginService
+  ) {}
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     let customHeaders = req.headers;
     // add token in header if present
     customHeaders = this.addAuthToken(customHeaders);
     // added cache headers
-    customHeaders = customHeaders.set('Cache-Control', 'no-cache').set('Pragma', 'no-cache');
+    customHeaders = customHeaders
+      .set('Cache-Control', 'no-cache')
+      .set('Pragma', 'no-cache');
     req = req.clone({
-      headers: customHeaders
+      headers: customHeaders,
     });
 
     return next.handle(req).pipe(
@@ -32,7 +47,7 @@ export class ReqHeaderAndErrorHandlingInterceptor implements HttpInterceptor {
         //   /* let retryCount = parseInt(this.loginService.getConnectionRetryCount());
         //   if(isNaN(retryCount)){retryCount = 0}
 
-        //   if(retryCount >= this.RETRY_COUNT){   */          
+        //   if(retryCount >= this.RETRY_COUNT){   */
         //  /*    this.onErrorStatus()
         //     this.openAlert('Error', 'Failed to connect to the server. Please try to relogin.');    */
         //   /* }else{
@@ -40,30 +55,31 @@ export class ReqHeaderAndErrorHandlingInterceptor implements HttpInterceptor {
         //   } */
         // }
 
-        // else 
+        // else
         if (error && error.status != 0 && error.status === 403) {
           this.onErrorStatus();
           this.modalService.dismissAll();
-          this.openAlert('Session Expired', 'Your session is expired, Please login again');
-        } 
-        else if(error && error.status != 0 && error.status === 404){
-          this.loginService.setLicenseBuyMessage(error.error.license_message);
-          this.onLicenseError()
-        }
-        else {
+          this.openAlert(
+            'Session Expired',
+            'Your session is expired, Please login again'
+          );
+        } else if (error && error.status != 0 && error.status === 404) {
+          // this.loginService.setLicenseBuyMessage(error.error.license_message);
+          this.onLicenseError();
+        } else {
           return throwError(error);
         }
       })
     );
   }
 
-  onErrorStatus(){
-    this.loginService.setUserSession(null, undefined);
+  onErrorStatus() {
+    // this.loginService.setUserSession(null, undefined);
     this.spinner.hide();
     this.router.navigate(['/login']);
   }
 
-  onLicenseError(){
+  onLicenseError() {
     //this.loginService.setUserSession(null, undefined);
     this.spinner.hide();
     this.router.navigate(['/license']);
@@ -80,7 +96,7 @@ export class ReqHeaderAndErrorHandlingInterceptor implements HttpInterceptor {
   private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
     // If we do not have a token yet then we should not set the header.
     // Here we could first retrieve the token from where we store it.
-    if (!sessionStorage["token"]) {
+    if (!sessionStorage['token']) {
       return request;
     }
     /* If you are calling an outside domain then do not add the token.
@@ -88,16 +104,16 @@ export class ReqHeaderAndErrorHandlingInterceptor implements HttpInterceptor {
       return request;
     }*/
     return request.clone({
-      headers: request.headers.set(this.AUTH_HEADER, sessionStorage["token"])
+      headers: request.headers.set(this.AUTH_HEADER, sessionStorage['token']),
     });
   }
 
   private addAuthToken(headers: HttpHeaders): HttpHeaders {
     // If we do not have a token yet then we should not set the header.
     // Here we could first retrieve the token from where we store it.
-    if (!sessionStorage["token"]) {
+    if (!sessionStorage['token']) {
       return headers;
     }
-    return headers.set(this.AUTH_HEADER, sessionStorage["token"]);
+    return headers.set(this.AUTH_HEADER, sessionStorage['token']);
   }
 }

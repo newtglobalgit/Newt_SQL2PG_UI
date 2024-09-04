@@ -4,15 +4,24 @@ import { LoginComponent } from './login/login.component';
 import { DbSetupComponent } from './db-setup/db-setup.component';
 import { DbAssessmentComponent } from './db-assessment/db-assessment.component';
 import { ChatGptIntegrationComponent } from './chat-gpt-integration/chat-gpt-integration.component';
+import { AuthGuard } from './common/Services/authguard.service';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: LoginComponent },
   { path: 'resetPassword', component: LoginComponent },
-  { path: 'gen-ai', component: ChatGptIntegrationComponent },
-  { path: 'dbSetup', component: DbSetupComponent },
-  { path: 'dbAssessment', component: DbAssessmentComponent },
+  {
+    path: 'gen-ai',
+    component: ChatGptIntegrationComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'dbSetup', component: DbSetupComponent, canActivate: [AuthGuard] },
+  {
+    path: 'dbAssessment',
+    component: DbAssessmentComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
