@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     return this.authService.checkTokenValidity(reqObj).pipe(
       catchError((error) => {
         // Handle 403 (Token expired) error
-        if (error.status === 403) {
+        if (!error.valid) {
           // Redirect to login screen
           this.router.navigate(['/login']);
           return of(false);
