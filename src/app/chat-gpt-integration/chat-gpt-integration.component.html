@@ -247,7 +247,7 @@
   <div
     *ngIf="chatGptEnabled"
     class="wizardDiv"
-    style="margin: 8px 8px; padding-bottom: 8px"
+    style="margin: 8px 14px; padding-bottom: 8px"
   >
     <form name="submitCredentials" #ff="ngForm">
       <div *ngIf="chatGptEnabled">
@@ -302,18 +302,17 @@
           </div>
 
           <!-- New File Upload Field -->
-          <div class="row adjust">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="fileUpload">Upload JSON File</label>
-                <input
-                  type="file"
-                  class="form-control"
-                  id="fileUpload"
-                  (change)="onFileSelected($event)"
-                  [disabled]="!genAIEnabledSuccessfully"
-                />
-              </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="fileUpload">Upload JSON File</label>
+              <input
+                type="file"
+                class="form-control"
+                id="fileUpload"
+                (change)="onFileSelected($event)"
+                [disabled]="!genAIEnabledSuccessfully"
+              />
             </div>
           </div>
         </div>
