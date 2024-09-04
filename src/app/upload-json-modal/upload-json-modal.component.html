@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title">Upload Files</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="row margin0">
+    <div class="row col-md-12 marginTop5 paddingLeft30 paddingRight30">
+        <span class="col-md-9">Please click the icon to browse or drag & drop JSON file</span>
+    </div>
+    <div class="col-md-12 text-center">
+        <!-- Drag and Drop area with an icon -->
+        <div class="drag-drop-area" (drop)="onFileDropped($event)" (dragover)="onDragOver($event)">
+            <img src="assets/upload-icon.png" alt="Upload Icon">
+            <input type="file" class="form-control" id="uploadJson" (change)="onFileSelected($event)" hidden>
+        </div>
+    </div>
+</div>
+<div class="row margin0">
+    <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-primary" (click)="uploadFile()">Upload</button>
+    </div>
+</div>

@@ -103,6 +103,7 @@ export class AppComponent implements OnInit {
   }
 
   logOut() {
+    sessionStorage.removeItem('auth_token');
     this.router.navigate(['/login']);
   }
 

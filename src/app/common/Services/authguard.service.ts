@@ -1,25 +1,42 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { LoginService } from './login-service.service';
+import { Observable, catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
-  constructor(private router: Router,private loginService: LoginService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   canActivate(): Observable<boolean> {
-    return this.loginService.getNodeType().pipe(
-      map(data => {
-        if (data.node_type === "analytics_worker") {
-          return false;
-        } else {          
-          return true;
+    let reqObj = { auth_token: sessionStorage.getItem('auth_token') };
+    return this.authService.checkTokenValidity(reqObj).pipe(
+      catchError((error) => {
+        // Handle 403 (Token expired) error
+        if (!error.valid) {
+          // Redirect to login screen
+          this.router.navigate(['/login']);
+          return of(false);
         }
+        // Continue allowing access for other errors
+        return of(true);
       })
     );
   }
+
+  // canActivate(): Observable<boolean> {
+  //   let reqObj = { auth_token: sessionStorage.getItem('auth_token') };
+  //   return this.authService.checkTokenValidity(reqObj).pipe(
+  //     map((data) => {
+  //       if (data.valid === false) {
+  //         this.router.navigate(['/login']);
+  //         return false;
+  //       } else {
+  //         return true;
+  //       }
+  //     })
+  //   );
+  // }
 }

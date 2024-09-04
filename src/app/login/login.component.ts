@@ -81,10 +81,11 @@ export class LoginComponent {
     };
     this.loginService.activateLicense(reqObj).subscribe((data) => {
       if (data.valid == true) {
+        sessionStorage.setItem('auth_token', data.message.auth_token);
         this.router.navigate(['/dbSetup']);
       } else {
         this.showInvalidLicenseMsg = true;
-        this.htmlSnippet = data.message;
+        this.htmlSnippet = data.message.message;
         // this.openAlert(data.message);
       }
       this.spinner.hide();
