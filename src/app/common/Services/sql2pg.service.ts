@@ -73,4 +73,15 @@ export class Sql2PgService {
       genAidata
     );
   }
+
+  saveServiceAccountDetails(serviceAccountdata: any): Observable<any> {
+    return this.http.post(
+      this.config.host + '/activate_gen_ai_key',
+      serviceAccountdata
+    );
+  }
+
+  fetchGenAiDetails() {
+    return this.http.get(this.config.host + '/fetch_gen_ai_details');
+  }
 }
