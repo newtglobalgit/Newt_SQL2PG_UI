@@ -39,8 +39,9 @@ export class ChatGptIntegrationComponent implements OnInit {
     });
   }
   existingGenAiDetails: any;
+  selectedFile: File | null = null;
   chatGptEnabled: boolean = false;
-  genAIEnabledSuccessfully: boolean = false;
+  genAIEnabledSuccessfully: boolean = true;
   enableServiceAccount: boolean = false;
 
   location: string = '';
@@ -107,14 +108,32 @@ export class ChatGptIntegrationComponent implements OnInit {
       return false;
     }
     this.spinner.show();
-    const serviceAccountdata: any = this.serviceAccountForm.value;
-    console.log('Service Account submit data - ', serviceAccountdata);
-    this.sql2PgService
-      .saveServiceAccountDetails(serviceAccountdata)
-      .subscribe((res) => {
-        this.spinner.hide();
-        this.openAlert(res.message);
-      });
+    //------------------------
+
+    const formData = new FormData();
+
+    // Append the form fields to FormData
+    formData.append('projectId', this.projectId);
+    formData.append('serviceAccountEmail', this.serviceAccountEmail);
+
+    // Append the selected file to FormData
+    if (this.selectedFile) {
+      formData.append(
+        'serviceAccountFile',
+        this.selectedFile,
+        this.selectedFile.name
+      );
+    }
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+    //------------------------
+    // const serviceAccountdata: any = this.serviceAccountForm.value;
+    console.log('Service Account submit data - ', formData);
+    this.sql2PgService.saveServiceAccountDetails(formData).subscribe((res) => {
+      this.spinner.hide();
+      this.openAlert(res.message);
+    });
   }
 
   openModal() {
@@ -164,6 +183,15 @@ export class ChatGptIntegrationComponent implements OnInit {
     } else {
       console.log('Checkbox is unchecked');
       // Handle the uncheck case here if needed
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      console.log('File selected:', file.name);
+      // Further processing can be done here, like sending the file to the server
     }
   }
 }
