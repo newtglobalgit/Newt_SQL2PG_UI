@@ -10,79 +10,6 @@
       <div>Your Active License</div>
     </div>
     <div class="col-md-12 padding10">
-      <div class="table-responsive" *ngIf="data.activeLicense.length > 0">
-        <table class="table table-borderless table-sm">
-          <tbody>
-            <ng-container
-              class="borderBottom"
-              *ngFor="let item of data.activeLicense"
-            >
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">License Key:</td>
-                <td>{{ item.licenseKey }}</td>
-              </tr>
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">License Type:</td>
-                <td>{{ item.licenseType_UI }}</td>
-              </tr>
-
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">License Status:</td>
-                <td>{{ item.licenseStatus }}</td>
-              </tr>
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold"><span>Activated On:</span></td>
-                <td>
-                  <span>{{ item.activatedOn }}</span>
-                </td>
-              </tr>
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">Valid Upto:</td>
-                <td>{{ item.validUpto }}</td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-        <div class="row col-md-12">
-          <div class="table-responsive">
-            <table
-              id="dmapTable"
-              class="table table-bordered table-striped table-sm"
-              style="font-size: 12px"
-            >
-              <thead class="thead_custom">
-                <tr class="tr_custom_14">
-                  <ng-container *ngFor="let header of data.headers">
-                    <th
-                      [ngStyle]="{ width: getWidthStyle(header) }"
-                      [ngClass]="{
-                        textCenter:
-                          header.name == 'Allowed' || header.name == 'Used'
-                      }"
-                    >
-                      {{ header.name }}
-                    </th>
-                  </ng-container>
-                </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngFor="let item of data.featureDetails">
-                  <tr class="tr_custom_14">
-                    <td *ngIf="item.feature != 'Loc conversion limit'">
-                      {{ item.feature | titlecase }}
-                    </td>
-                    <td *ngIf="item.feature == 'Loc conversion limit'">
-                      LOC Conversion Limit
-                    </td>
-                    <td class="textCenter">{{ item.allowed }}</td>
-                    <td class="textCenter">{{ item.used }}</td>
-                  </tr>
-                </ng-container>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
       <div
         class="row"
         style="padding: 10px; padding-top: 5px"
@@ -92,56 +19,32 @@
           No active licenses
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="row adjust wizardDiv marginTop10">
-    <div class="col-md-12 wizardHeader">
-      <div>Your License History</div>
-    </div>
-    <div class="col-md-12 padding10">
-      <div class="table-responsive" *ngIf="data.historyLicense.length > 0">
-        <table class="table table-borderless table-sm">
+      <div class="col-md-12 table-responsive-md marginTop10">
+        <table
+          id="analyticsTable"
+          class="analyticsTable table table-hover table-sm table-bordered"
+        >
+          <thead>
+            <tr class="analyticsReports tr_custom_14">
+              <th style="width: 33%">Status</th>
+              <th style="width: 33%">Month</th>
+              <th style="width: 33%">Valid Upto</th>
+            </tr>
+          </thead>
           <tbody>
-            <ng-container
-              class="borderBottom"
-              *ngFor="let item of data.historyLicense"
-            >
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">License Key:</td>
-                <td>{{ item.licenseKey }}</td>
-              </tr>
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">License Type:</td>
-                <td>{{ item.licenseType }}</td>
-              </tr>
-
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold">License Status:</td>
-                <td>{{ item.licenseStatus }}</td>
-              </tr>
-              <tr class="tr_custom_14">
-                <td style="font-weight: bold"><span>Activated On:</span></td>
-                <td>
-                  <span>{{ item.activatedOn }}</span>
-                </td>
-              </tr>
-              <tr class="tr_custom_14 borderBottom">
-                <td style="font-weight: bold">Valid Upto:</td>
-                <td>{{ item.validUpto }}</td>
+            <ng-container>
+              <tr
+                *ngFor="let existingDecorator of existingDecorators"
+                style="font-size: 12px"
+              >
+                <td>{{ existingDecorator.decoratorname }}</td>
+                <td>{{ existingDecorator.decoratorpurpose }}</td>
+                <td>{{ existingDecorator.decoratortype }}</td>
               </tr>
             </ng-container>
           </tbody>
         </table>
-      </div>
-      <div
-        class="row"
-        style="padding: 10px; padding-top: 5px"
-        *ngIf="data.historyLicense.length == 0"
-      >
-        <div class="col-md-12" style="font-weight: bold; font-size: 12px">
-          No history of licenses
-        </div>
       </div>
     </div>
   </div>

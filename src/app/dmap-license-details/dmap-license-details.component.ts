@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import 'jqueryui';
 import { PopupDraggableService } from 'src/app/common/Services/popup-draggable.service';
+import { Sql2PgService } from '../common/Services/sql2pg.service';
 
 @Component({
   selector: 'app-dmap-license-details',
@@ -14,10 +15,12 @@ export class DmapLicenseDetailsComponent implements OnInit {
   headers: any[];
   constructor(
     private activeModal: NgbActiveModal,
-    private _PopupDraggableService: PopupDraggableService
+    private _PopupDraggableService: PopupDraggableService,
+    private sql2PgService: Sql2PgService
   ) {}
 
   ngOnInit() {
+    this.getLicenseDetails();
     this._PopupDraggableService.enableDraggablePopup();
   }
 
@@ -27,5 +30,11 @@ export class DmapLicenseDetailsComponent implements OnInit {
 
   getWidthStyle(heading) {
     return heading.widthStyle;
+  }
+
+  getLicenseDetails() {
+    this.sql2PgService.getLicenseDetails().subscribe((res) => {
+      console.log('DMAP license details --> ', res);
+    });
   }
 }
