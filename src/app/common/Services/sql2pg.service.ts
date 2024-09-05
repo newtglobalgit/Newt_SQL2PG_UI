@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AppConfigService } from 'src/app/common/Services/app-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Sql2PgService {
-
+ 
 
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
@@ -70,6 +70,24 @@ export class Sql2PgService {
       .pipe((data) => data);
   } 
 
+  
+
+
+  getInsertedData(current_run_id: any) {
+    const url = `${this.config.host}/getdbSetup?run_id=${current_run_id}`;
+  
+    return this.getWithHeadersDBSetupDetails(url);
+  }
+  
+  getWithHeadersDBSetupDetails(url: string) {
+    return this.http.get(url, {
+      headers: this.setHeaders(), 
+    }).pipe(
+      map((response: any) => response) 
+    );
+  }
+
+  
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
   }
