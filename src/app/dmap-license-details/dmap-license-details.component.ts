@@ -11,6 +11,7 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
 })
 export class DmapLicenseDetailsComponent implements OnInit {
   @Input() data: any;
+  tableData: any;
 
   headers: any[];
   constructor(
@@ -34,6 +35,7 @@ export class DmapLicenseDetailsComponent implements OnInit {
 
   getLicenseDetails() {
     this.sql2PgService.getLicenseDetails().subscribe((res) => {
+      this.tableData = res;
       console.log('DMAP license details --> ', res);
     });
   }
