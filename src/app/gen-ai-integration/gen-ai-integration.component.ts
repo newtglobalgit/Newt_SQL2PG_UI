@@ -8,11 +8,11 @@ import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-ale
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-chat-gpt-integration',
-  templateUrl: './chat-gpt-integration.component.html',
-  styleUrls: ['./chat-gpt-integration.component.css'],
+  selector: 'app-gen-ai-integration',
+  templateUrl: './gen-ai-integration.component.html',
+  styleUrls: ['./gen-ai-integration.component.css'],
 })
-export class ChatGptIntegrationComponent implements OnInit {
+export class GenAiIntegrationComponent implements OnInit {
   genAIForm: FormGroup;
   @ViewChild('f', { static: false }) genAiForm: NgForm;
   @ViewChild('ff', { static: false }) serviceAccountForm: NgForm;
