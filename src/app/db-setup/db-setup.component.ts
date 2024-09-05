@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { Router } from '@angular/router';
+import { DBAssessment } from '../common/Services/dbAssessment.service';
 
 @Component({
   selector: 'app-db-setup',
@@ -43,12 +44,14 @@ export class DbSetupComponent implements OnInit {
   targetDBPortValue = '';
 numberOnlyPattern: any;
   result: any;
+  current_run_id: any;
 
   constructor(
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
-    private router: Router
+    private router: Router,
+    private dbAssessment : DBAssessment
   ) {}
 
   ngOnInit(): void {}
@@ -120,22 +123,42 @@ numberOnlyPattern: any;
     isSubmitBtnClicked = true
     this.disableSubmit = true;
     const dbcredentialsdata: any = this.dbCredentialsForm.value;
-    console.log('db setup submit data - ', dbcredentialsdata);
   
     this.sql2PgService.senddbconfigDetails(dbcredentialsdata).subscribe((res) => {
       this.result =res;
-      console.log(res[0].status)
-      console.log(this.result)
       if (res[0].status === 'SUCCESS') {
         if (isSubmitBtnClicked) {
           this.openAlert('Submitted Successfully');
-          // this.openAlert(res[0]?.message);
           this.router.navigate(['/dbAssessment']);
+          this.current_run_id = res[0].run_id
+
+
+          this.sql2PgService.getDBAssessmentData(this.current_run_id).subscribe(
+            (response) => {              
+              if (response && response.length > 0) {
+                 
+                 const table_data = response
+                 
+                if (table_data.length > 0) {
+                  this.dbAssessment.setTableData(table_data); 
+                  this.router.navigate(['/dbAssessment'], {
+                    state: { table_data },
+                  });
+                } else {
+                  console.warn('No valid table data available to navigate.');
+                }
+              } else {
+                console.warn('Response is empty or undefined.');
+              }
+            },
+            (error) => {
+              console.error('Error fetching data:', error);
+            }
+          );
           
         }
       } else {
         this.openAlert('fail');
-        // this.openAlert(res[0]?.message || 'An error occurred.');
       }
     });
   }

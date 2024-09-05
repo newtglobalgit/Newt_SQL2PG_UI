@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AppConfigService } from 'src/app/common/Services/app-config.service';
 
 @Injectable({
@@ -9,62 +9,22 @@ import { AppConfigService } from 'src/app/common/Services/app-config.service';
 export class Sql2PgService {
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
-  private setHeaders(): HttpHeaders {
-    return new HttpHeaders().set('Content-Type', 'application/json');
-  }
-
   testSourceDbConnection(sourceDbdetails: any): Observable<any> {
-    return this.postWithHeadersSourceDbdetails(
-      this.config.host + '/testSourceDB',
-      sourceDbdetails
-    );
+    return this.http.post(this.config.host + '/testSourceDB', sourceDbdetails);
   }
 
   testTargetDbConnection(targetDbdetails: any): Observable<any> {
-    return this.postWithHeadersTargetDbdetails(
-      this.config.host + '/testTargetDB',
-      targetDbdetails
+    return this.http.post(this.config.host + '/testTargetDB', targetDbdetails);
+  }
+
+  senddbconfigDetails(dbcredentialsdata: any): Observable<any> {
+    return this.http.post(this.config.host + '/dbSetup', dbcredentialsdata);
+  }
+
+  getDBAssessmentData(current_run_id: any): Observable<any> {
+    return this.http.get(
+      this.config.host + '/getdbSetup?run_id=' + current_run_id
     );
-  }
-
-  private postWithHeadersTargetDbdetails(
-    url: string,
-    targetDbdetails: any
-  ): Observable<any> {
-    return this.http
-      .post(url, targetDbdetails, {
-        headers: this.setHeaders(),
-      })
-      .pipe((data) => data);
-  }
-
-  private postWithHeadersSourceDbdetails(
-    url: string,
-    sourceDbdetails: any
-  ): Observable<any> {
-    return this.http
-      .post(url, sourceDbdetails, {
-        headers: this.setHeaders(),
-      })
-      .pipe((data) => data);
-  }
-
-  senddbconfigDetails(dbcredentialsdata: any) {
-    return this.postWithHeadersDBSetupDetails(
-      this.config.host + '/dbSetup',
-      dbcredentialsdata
-    );
-  }
-
-  private postWithHeadersDBSetupDetails(
-    url: string,
-    DBSetupdetails: any
-  ): Observable<any> {
-    return this.http
-      .post(url, DBSetupdetails, {
-        headers: this.setHeaders(),
-      })
-      .pipe((data) => data);
   }
 
   getDMAPVersionDetails() {
