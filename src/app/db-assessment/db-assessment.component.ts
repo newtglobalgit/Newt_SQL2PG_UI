@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { UpdatePasswordComponent } from '../common/Modal/update-password/update-password.component';
 import { Router } from '@angular/router';
-import { DataService } from '../common/Services/data.service';
+import { DBAssessment } from '../common/Services/dbAssessment.service';
 
 @Component({
   selector: 'app-db-assessment',
@@ -15,21 +15,17 @@ export class DbAssessmentComponent implements OnInit {
   filteredData: any[] = [];
 
   constructor(private modalService: NgbModal, private router: Router, 
-    private dataService: DataService
+    private dbAssessment: DBAssessment
   ) {}
 
   ngOnInit(): void {
-    this.tableData = this.dataService.getTableData();
+    this.tableData = this.dbAssessment.getTableData();
 
     this.tableData = [this.tableData]
   
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
-      // Handle empty data case
-    } else {
-      console.log('Fetched tableData:', this.tableData);
-      console.log(this.tableData[0])
-    }
+    } 
   }
   
   updatePassword(data) {

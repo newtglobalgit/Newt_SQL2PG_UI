@@ -1,12 +1,9 @@
-// Now you can call methods like this:
-// this.dataService.setTableData(someData);
-// this.dataService.getTableData();
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataService {
+export class DBAssessment {
   private tableData: any[] = [];
 
   setTableData(data: any[]): void {

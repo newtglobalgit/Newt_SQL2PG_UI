@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { Router } from '@angular/router';
-import { DataService } from '../common/Services/data.service';
+import { DBAssessment } from '../common/Services/dbAssessment.service';
 
 @Component({
   selector: 'app-db-setup',
@@ -51,7 +51,7 @@ numberOnlyPattern: any;
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
     private router: Router,
-    private dataService : DataService
+    private dbAssessment : DBAssessment
   ) {}
 
   ngOnInit(): void {}
@@ -123,45 +123,24 @@ numberOnlyPattern: any;
     isSubmitBtnClicked = true
     this.disableSubmit = true;
     const dbcredentialsdata: any = this.dbCredentialsForm.value;
-    console.log('db setup submit data - ', dbcredentialsdata);
   
     this.sql2PgService.senddbconfigDetails(dbcredentialsdata).subscribe((res) => {
       this.result =res;
-      console.log(res[0].status)
-      console.log(this.result)
       if (res[0].status === 'SUCCESS') {
         if (isSubmitBtnClicked) {
           this.openAlert('Submitted Successfully');
           this.router.navigate(['/dbAssessment']);
           this.current_run_id = res[0].run_id
 
-          // this.sql2PgService.getInsertedData(this.current_run_id).subscribe(
-          //   (data) => {
-          //     console.log(data)
-          //     // Navigate to the dbAssessment page and pass the data
-          //     this.router.navigate(['/dbAssessment'], {
-          //       state: { tableData: data },
-          //     });
-          //   },
-          //   (error) => {
-          //     console.error('Error fetching data:', error);
-          //   }
-          // );
 
-          this.sql2PgService.getInsertedData(this.current_run_id).subscribe(
-            (response) => {
-              console.log('Response:', response);
-              
-              // Check if the response exists and contains data
+          this.sql2PgService.getDBAssessmentData(this.current_run_id).subscribe(
+            (response) => {              
               if (response && response.length > 0) {
                  
                  const table_data = response
-
-                 console.log(table_data)
                  
                 if (table_data.length > 0) {
-                  this.dataService.setTableData(table_data); 
-                  // Navigate to the dbAssessment page and pass the formatted data
+                  this.dbAssessment.setTableData(table_data); 
                   this.router.navigate(['/dbAssessment'], {
                     state: { table_data },
                   });
@@ -176,8 +155,6 @@ numberOnlyPattern: any;
               console.error('Error fetching data:', error);
             }
           );
-          
-          
           
         }
       } else {

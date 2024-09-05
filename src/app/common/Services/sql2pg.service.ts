@@ -70,23 +70,14 @@ export class Sql2PgService {
       .pipe((data) => data);
   } 
 
-  
 
-
-  getInsertedData(current_run_id: any) {
-    const url = `${this.config.host}/getdbSetup?run_id=${current_run_id}`;
-  
-    return this.getWithHeadersDBSetupDetails(url);
-  }
-  
-  getWithHeadersDBSetupDetails(url: string) {
-    return this.http.get(url, {
-      headers: this.setHeaders(), 
+  getDBAssessmentData(current_run_id: any): Observable<any> {
+    return this.http.get(`${this.config.host}/getdbSetup?run_id=${current_run_id}`, {
+      headers: this.setHeaders(),
     }).pipe(
-      map((response: any) => response) 
+      map((response: any) => response)
     );
-  }
-
+  }  
   
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
