@@ -14,17 +14,10 @@
       <div>DMAP Database Version Details</div>
     </div>
     <div class="col-md-12 padding10">
-      <div
-        class="table-responsive"
-        *ngIf="data.imageDetails.status == 'success'"
-      >
+      <div class="table-responsive" *ngIf="tableData.length != 0">
         <table class="table table-borderless table-sm">
           <tbody>
             <ng-container class="borderBottom">
-              <tr class="tr_custom_14" *ngIf="data.imageDetails.license_type">
-                <td style="font-weight: bold">License Type:</td>
-                <td>{{ data.imageDetails.license_type }}</td>
-              </tr>
               <tr class="tr_custom_14">
                 <td style="font-weight: bold; width: 30%">
                   DMAP Image Version:
@@ -35,17 +28,6 @@
                 <td style="font-weight: bold">DMAP Binary Version:</td>
                 <td>{{ data.imageDetails.binary_version }}</td>
               </tr>
-              <tr
-                class="tr_custom_14"
-                *ngIf="data.imageDetails.build_release_date"
-              >
-                <td style="font-weight: bold">Build Release Date:</td>
-                <td>{{ data.imageDetails.build_release_date }}</td>
-              </tr>
-              <tr class="tr_custom_14" *ngIf="data.imageDetails.build_type">
-                <td style="font-weight: bold; width: 30%">Build Type:</td>
-                <td>{{ data.imageDetails.build_type }}</td>
-              </tr>
             </ng-container>
           </tbody>
         </table>
@@ -53,7 +35,7 @@
       <div
         class="row"
         style="padding-bottom: 5px; padding-top: 5px"
-        *ngIf="data.imageDetails.status == 'failed'"
+        *ngIf="tableData.length == 0"
       >
         <div class="col-md-12" style="font-weight: bold; font-size: 12px">
           Details not found

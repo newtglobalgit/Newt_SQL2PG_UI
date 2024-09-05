@@ -120,9 +120,6 @@ export class SideNavBarComponent implements OnInit {
   }
 
   async getDMAPVersionDetails() {
-    this.spinner.show();
-    let res = [{ status: 'failed' }];
-
     const modalRef = this.modalService.open(DmapVersionDetailsComponent, {
       size: 'lg',
       scrollable: true,
@@ -130,102 +127,22 @@ export class SideNavBarComponent implements OnInit {
 
     modalRef.componentInstance.data = {
       title: 'DMAP Version',
-      imageDetails: '1234',
-      appImageDetails: '5678',
     };
-    this.spinner.hide();
-    // this.sql2PgService.getDMAPVersionDetails().subscribe((data) => {
-    //   this.spinner.hide();
-    //   const modalRef = this.modalService.open(DmapVersionDetailsComponent, {
-    //     size: 'lg',
-    //     scrollable: true,
-    //   });
-
-    //   modalRef.componentInstance.data = {
-    //     title: 'DMAP Version',
-    //     imageDetails: data[0],
-    //     appImageDetails: res[0],
-    //   };
-    //   modalRef.result.then((result) => {});
-    // });
   }
 
   viewLicenseDetails() {
-    let showFeature = sessionStorage.getItem('show_license_details');
-    let headers;
-    let featureDetails;
-    let final_featureDetails = [];
-    this.spinner.show();
-
     const modalRef = this.modalService.open(DmapLicenseDetailsComponent, {
       size: 'lg',
       scrollable: true,
     });
 
-    headers = [
-      { name: 'Feature', widthStyle: '30%' },
-      { name: 'Allowed', widthStyle: '30%' },
-      { name: 'Used', widthStyle: '30%' },
-    ];
     modalRef.componentInstance.data = {
       title: 'License Details',
-      node_type: this.nodeType,
-      show_features: showFeature,
-      historyLicense: 'history',
-      activeLicense: 'current',
-      featureDetails: final_featureDetails,
-      headers: headers,
     };
 
     modalRef.result.then((result) => {});
 
     this.spinner.hide();
-
-    // this.sql2PgService.getLicenseDetails().subscribe((data) => {
-    //   this.spinner.hide();
-    //   const modalRef = this.modalService.open(DmapLicenseDetailsComponent, {
-    //     size: 'lg',
-    //     scrollable: true,
-    //   });
-    //   if (data['current'].length > 0) {
-    //     featureDetails = data['current'][0].featuresDetail;
-    //   } else {
-    //     featureDetails = [];
-    //   }
-
-    //   for (let i in featureDetails) {
-    //     if (this.nodeType == 'analytics_master') {
-    //       if (
-    //         featureDetails[i]['feature'] == 'Analytics schema assessment limit'
-    //       ) {
-    //         final_featureDetails.push(featureDetails[i]);
-    //       }
-    //     } else {
-    //       if (
-    //         featureDetails[i]['feature'] != 'Analytics schema assessment limit'
-    //       ) {
-    //         final_featureDetails.push(featureDetails[i]);
-    //       }
-    //     }
-    //   }
-
-    //   headers = [
-    //     { name: 'Feature', widthStyle: '30%' },
-    //     { name: 'Allowed', widthStyle: '30%' },
-    //     { name: 'Used', widthStyle: '30%' },
-    //   ];
-    //   modalRef.componentInstance.data = {
-    //     title: 'License Details',
-    //     node_type: this.nodeType,
-    //     show_features: showFeature,
-    //     historyLicense: data['history'],
-    //     activeLicense: data['current'],
-    //     featureDetails: final_featureDetails,
-    //     headers: headers,
-    //   };
-
-    //   modalRef.result.then((result) => {});
-    // });
   }
 
   dmapBackup() {
@@ -236,7 +153,6 @@ export class SideNavBarComponent implements OnInit {
       okButtonLabel: 'Continue',
       cancelButtonLabel: 'Cancel',
       label: 'restoreDmap',
-      // showRadioButtons: true,
     };
     modalRef.result.then((result) => {
       if (result == 'ok') {
@@ -252,7 +168,6 @@ export class SideNavBarComponent implements OnInit {
             let filename = 'dmap_complete.tar.gz';
             FileSaver.saveAs(blob, filename);
             this.openAlert('Backup Downloaded Successfully.', true);
-            // this.commonServices.closeMinimizedWindow();
           }
         });
       }
