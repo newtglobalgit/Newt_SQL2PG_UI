@@ -237,7 +237,11 @@
 
       <!-- GenAI Save and Clear Buttons -->
       <div class="row margin0" style="justify-content: flex-end; width: 98.5%">
-        <div class="col-md-2;">
+        <div
+          class="col-md-2;"
+          data-title="GenAI Action Buttons"
+          data-intro="Action buttons to clear or save the filled form."
+        >
           <button
             type="button"
             class="btn btn-md btn-simple"
@@ -264,7 +268,11 @@
     style="margin: 8px 14px; padding-bottom: 8px"
   >
     <form name="submitCredentials" #ff="ngForm">
-      <div *ngIf="chatGptEnabled">
+      <div
+        *ngIf="chatGptEnabled"
+        data-title="Enable Service Account"
+        data-intro="Form to enable the service account."
+      >
         <div>
           <div
             class="form-group"
@@ -350,7 +358,11 @@
           class="row margin0"
           style="justify-content: flex-end; width: 98.5%"
         >
-          <div class="col-md-2;justify-content: flex-end">
+          <div
+            class="col-md-2;justify-content: flex-end"
+            data-title="Service Account Action Buttons"
+            data-intro="Action buttons to clear the filled form or activate the service account."
+          >
             <button
               type="button"
               class="btn btn-md btn-simple"
