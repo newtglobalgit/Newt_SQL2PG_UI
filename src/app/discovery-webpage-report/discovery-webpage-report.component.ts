@@ -10,7 +10,7 @@ export class DiscoveryWebpageReportComponent implements OnInit {
 appStatus: String = 'Completed';
 appStage: String  = 'Discovery';
 isShowReport: String = 'Discovery';
-RUN_ID: String = "20240828170749";
+RUN_ID: String = "20240906181300";
   showComponent: boolean = false;
   isExpanded: boolean =  false;
   iconTitle: string;

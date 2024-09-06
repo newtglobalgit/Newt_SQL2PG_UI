@@ -484,6 +484,7 @@
                 style="top: 2px"
                 #inputE2
                 (change)="onRadioClicked(row, true)"
+                name="selectedRow" (change)="onSelectRow(row,true)"
               />
             </div>
           </td>
@@ -513,11 +514,47 @@
       </tbody>
     </table>
   </div>
-  <div>
-    <app-discovery-webpage-report></app-discovery-webpage-report>
-  </div>
+ 
+  
   <div>
     <app-start-assessment-modal> </app-start-assessment-modal>
   </div>
 
 </div> 
+<div style="border:1px solid lightgray;">
+  <div class="col-md-12" *ngIf="selectedRow" >
+    <!-- Dynamic Alert Box based on status -->
+    <div role="alert" [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]" style="border: 1px solid #dee2e6; padding: 20px; border-radius: 5px;margin-top: 11px;">
+      <!-- Discovery Status -->
+      <span>
+        <span class="font-weight-bold" style="margin-right: 10px;"></span>
+        <span class="font-weight-bold">{{ discoveryMessage }}</span>
+      </span>
+   
+      <!-- Dynamic Button based on status -->
+      <div style="margin-top: 15px;">
+        <!-- Start Discovery button: only visible if discovery is not completed -->
+        <button
+          class="btn btn-md btn-primary"
+          *ngIf="!isDiscoveryCompleted"
+          [disabled]="isDiscoveryInProgress"
+          (click)="startDiscovery()"
+        >
+          Start Discovery
+        </button>
+   
+        <!-- Start Assessment button: only visible after discovery is completed -->
+        <button
+          class="btn btn-md btn-primary"
+          *ngIf="isDiscoveryCompleted"
+          (click)="startAssessment()"
+        >
+          Start Assessment
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <app-discovery-webpage-report></app-discovery-webpage-report>
+</div>
