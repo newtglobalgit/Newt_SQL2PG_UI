@@ -21,9 +21,9 @@ export class Sql2PgService {
     return this.http.post(this.config.host + '/dbSetup', dbcredentialsdata);
   }
 
-  getDBAssessmentData(current_run_id: any): Observable<any> {
+  getDBAssessmentData(): Observable<any> {
     return this.http.get(
-      this.config.host + '/getdbSetup?run_id=' + current_run_id
+      this.config.host + '/getdbSetup'
     );
   }
 

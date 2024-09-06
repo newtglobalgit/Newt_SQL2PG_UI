@@ -58,29 +58,22 @@
         >
           Delete Schemas
         </button>
-        <div>
+      
+        <div class="dropdown">
           <button
             type="button"
-            data-title="Reports"
-            data-intro="Use this menu option to download the Schema Discovery and Schema Assessment reports in PDF or excel format."
-            [disabled]="
-              schemaStage == 'Discovery' &&
-              (schemaStatus == 'Not Started' ||
-                schemaStatus == 'In Progress' ||
-                schemaStatus == 'Error')
-            "
-            class="btn btn-md btn-primary marginRight5 pull-right marginBottom5"
+            class="btn btn-md btn-primary marginRight5 pull-right marginBottom5 dropdown-toggle"
             id="drpdownDownloadAs"
-            data-toggle="dropdown"
             aria-haspopup="true"
-            aria-expanded="true"
-            (click)="reports()"
+            aria-expanded="false"
+            (click)="toggleDropdown()"
           >
             Reports
             <i class="fa fa-chevron-down marginLeft5"></i>
           </button>
           <ul
             class="dropdown-menu"
+            [ngClass]="{'show': dropdownOpen}"
             aria-labelledby="drpdownDownloadAs"
             style="min-width: 145px"
           >
@@ -93,31 +86,18 @@
               <span>Discovery</span>
             </li>
             <li
-              class="dropdown-item"
-              (click)="viewAssessmentReport()"
-              style="cursor: pointer"
-              *ngIf="enableAssessmentReport"
-            >
-              <span>Assessment</span>
-            </li>
-            <li
-              class="dropdown-item"
-              (click)="viewSchemaConversionReport()"
-              style="cursor: pointer"
-              *ngIf="enableSchemaConversionReport"
-            >
-              <span>Schema Conversion</span>
-            </li>
-            <li
-              class="dropdown-item"
-              (click)="viewDataMigrationReport()"
-              style="cursor: pointer"
-              *ngIf="enableDataMigrationReport"
-            >
-              <span>Data Migration</span>
-            </li>
+            class="dropdown-item"
+            (click)="viewDiscoveryReport()"
+            style="cursor: pointer"
+            *ngIf="enableDiscoveryReport"
+          >
+            <span>Assessment</span>
+          </li>
+            
           </ul>
         </div>
+        
+          
       </div>
     </div>
   </div>
@@ -539,23 +519,5 @@
   <div>
     <app-start-assessment-modal> </app-start-assessment-modal>
   </div>
-  <div class="col-md-12" *ngIf="showButtons">
-    <span
-      *ngIf="tableData.length === 0"
-      style="font-weight: 600; font-size: 13px"
-      >{{ totalCount }}</span
-    >
-    <pagination-controls
-      (pageChange)="p = $event; pChange()"
-      style="font-size: 12px; float: right"
-      directionLinks="true"
-      autoHide="true"
-      responsive="true"
-      previousLabel="PREVIOUS"
-      nextLabel="NEXT"
-      screenReaderPaginationLabel="Pagination"
-      screenReaderPageLabel="page"
-      screenReaderCurrentLabel="You're on page"
-    ></pagination-controls>
-  </div>
+
 </div> 

@@ -5,7 +5,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { Router } from '@angular/router';
-import { DBAssessment } from '../common/Services/dbAssessment.service';
 
 @Component({
   selector: 'app-db-setup',
@@ -51,7 +50,6 @@ numberOnlyPattern: any;
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
     private router: Router,
-    private dbAssessment : DBAssessment
   ) {}
 
   ngOnInit(): void {}
@@ -119,48 +117,18 @@ numberOnlyPattern: any;
     });
   }
 
-  onSubmit(isSubmitBtnClicked) {
-    isSubmitBtnClicked = true
+  onSubmit() {
     this.disableSubmit = true;
     const dbcredentialsdata: any = this.dbCredentialsForm.value;
   
     this.sql2PgService.senddbconfigDetails(dbcredentialsdata).subscribe((res) => {
       this.result =res;
       if (res[0].status === 'SUCCESS') {
-        if (isSubmitBtnClicked) {
           this.openAlert('Submitted Successfully');
           this.router.navigate(['/dbAssessment']);
-          this.current_run_id = res[0].run_id
-
-
-          this.sql2PgService.getDBAssessmentData(this.current_run_id).subscribe(
-            (response) => {              
-              if (response && response.length > 0) {
-                 
-                 const table_data = response
-                 
-                if (table_data.length > 0) {
-                  this.dbAssessment.setTableData(table_data); 
-                  this.router.navigate(['/dbAssessment'], {
-                    state: { table_data },
-                  });
-                } else {
-                  console.warn('No valid table data available to navigate.');
-                }
-              } else {
-                console.warn('Response is empty or undefined.');
-              }
-            },
-            (error) => {
-              console.error('Error fetching data:', error);
-            }
-          );
-          
-        }
-      } else {
-        this.openAlert('fail');
-      }
-    });
+       
+    }
+  });
   }
   
 
