@@ -27,6 +27,16 @@ export class Sql2PgService {
     );
   }
 
+  startDiscovery(RUN_ID: any): Observable<any> {
+    const payload = { RUN_ID: RUN_ID };
+    return this.http.post(this.config.host + '/discovery', payload);
+  }
+
+  getDiscoveryWebPageReport(RUN_ID: any): Observable<any> {
+    const payload = { RUN_ID: RUN_ID };
+    return this.http.post(this.config.host + '/discoveryReport', payload);
+  }
+
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
   }
