@@ -36,7 +36,7 @@ export class Sql2PgService {
   }
 
   backupDMAP() {
-    return this.http.get(this.config.host + '/dmapBackup', {
+    return this.http.get(this.config.host + '/backup_mssql2pg', {
       responseType: 'blob',
     });
   }

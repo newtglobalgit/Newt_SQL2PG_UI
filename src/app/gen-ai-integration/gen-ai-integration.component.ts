@@ -121,9 +121,7 @@ export class GenAiIntegrationComponent implements OnInit {
         this.selectedFile.name
       );
     }
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
+
     // const serviceAccountdata: any = this.serviceAccountForm.value;
     console.log('Service Account submit data - ', formData);
     this.sql2PgService.saveServiceAccountDetails(formData).subscribe((res) => {

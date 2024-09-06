@@ -1,7 +1,12 @@
 <div>
   <span class="pageHeading">GenAI Integration</span>
 </div>
-<div class="adjust body-content-padding" style="margin-top: 14px">
+<div
+  class="adjust body-content-padding"
+  data-title="GenAI Integration"
+  data-intro="DMAP can leverage the capabilities of GenAI to enhance the conversion of database objects that were not automatically converted using DMAP. On this page, you have the option to enable GenAI for additional conversion by providing their credentials."
+  style="margin-top: 14px"
+>
   <span class="dropdown fontWeightBold">
     <label style="margin-left: 12px; margin-top: 3px"
       >Enable/Disable GenAI</label
@@ -22,7 +27,12 @@
 
   <div class="wizardDiv" style="margin: 14px 14px; padding-bottom: 8px">
     <div class="row col-md-12">
-      <div class="row adjust col-md-6" style="padding-top: 1rem">
+      <div
+        class="row adjust col-md-6"
+        data-title="Enabling GenAI"
+        data-intro="Enable GenAI integration with DMAP for improved conversion of database objects that were not automatically converted. Select this checkbox to activate the integration. Provide the API key associated with GenAI and number of days DMAP shall store it."
+        style="padding-top: 1rem"
+      >
         <div>
           <div class="form-group">
             <label for="chatGptEnabled" style="font-weight: bold"
@@ -44,7 +54,11 @@
       </div>
     </div>
     <form [formGroup]="genAIForm" name="submitCredentials" #f="ngForm">
-      <div *ngIf="chatGptEnabled">
+      <div
+        *ngIf="chatGptEnabled"
+        data-title="GenAI Form"
+        data-intro="Fields to fill in to enable GenAI along with Model Selection capability."
+      >
         <!-- GenAI Fields -->
         <div class="row adjust">
           <div class="col-md-6">
