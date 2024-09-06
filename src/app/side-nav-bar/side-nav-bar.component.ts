@@ -156,10 +156,12 @@ export class SideNavBarComponent implements OnInit {
     };
     modalRef.result.then((result) => {
       if (result == 'ok') {
+        this.spinner.show();
         this.sql2PgService.backupDMAP().subscribe((res) => {
           let blob = new Blob([res], {});
           let filename = 'dmap_complete.tar.gz';
           FileSaver.saveAs(blob, filename);
+          this.spinner.hide();
           this.openAlert('Backup Downloaded Successfully.', true);
         });
       }
