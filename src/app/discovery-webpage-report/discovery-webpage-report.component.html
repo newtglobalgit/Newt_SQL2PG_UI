@@ -1,0 +1,285 @@
+<div class="alert alertInterim  text-center " *ngIf="appStatus === 'In Progress' "
+  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
+    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span></div>
+
+<div class="alert alertSuccess text-center " *ngIf="appStage == 'Discovery' && appStatus === 'Completed'"
+  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
+    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span>
+  <div *ngIf="appStage === 'Discovery' ">
+    <button style="margin-left: 1px;" class="btn btn-md btn-primary" (click)="startAssessment(applicationName)">Start
+      Assessment
+    </button>
+  </div>
+</div>
+
+<div class="alert alertSuccess text-center " *ngIf="appStage == 'Migration' && appStatus === 'Completed' "
+  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
+    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span>
+</div>
+
+
+<div class="alert alertSuccess text-center " *ngIf="appStage == 'Assessment' && appStatus === 'Completed' "
+  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
+    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span>
+</div>
+
+
+<div class="row"
+  *ngIf="(appStage == 'Discovery' && appStatus === 'Completed' && appStage != 'Assessment') || isShowReport == 'Discovery'">
+  <div class="col-md-12">
+    <div class="row">
+
+      <div class="col-md-12 " style="margin-bottom: -30px;">
+        <div class="row">
+          <div class="col-md-12 row font-weight-bold reportHeaderLabel" style="margin-left: -20px;">
+            <div class="col-md-5 marginLeft0">
+              <span class="col-md-6" *ngIf="appStage == 'Assessment' || appStage == 'Migration'"
+                style="font-size: 14px;padding-right: 15px;"></span>
+              <span class="col-md-6" *ngIf="appStage == 'Discovery'"></span>
+              <a (click)="loadAccordion() " data-toggle="collapse" class="down-arrow"><i
+                  [attr.aria-expanded]="isExpanded" title="{{ iconTitle }}" class="fa"
+                  [class.fa-chevron-down]="!isExpanded" [class.fa-chevron-up]="isExpanded" role="button"
+                  [class.rotate-icon]="isExpanded"></i></a>
+
+                
+                    
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    
+<div class="row" *ngIf="showComponent">
+    
+    <div class="col-md-12">
+        <div class="row">
+
+            <div class="col-md-12 ">
+                <div class="row">
+                    <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="data">
+                        <div class="col-md-5 marginLeft0">
+                            <span class="col-md-6 fontSize-14">Discovery Report</span>
+                            <a>
+                                <img (click)="downloadPdf(data.runId)" width="25" height="25" alt="PDF"
+                                    src="../../../assets/images/SVG/icon-03.svg" title="Download PDF"
+                                    style="cursor: pointer;">
+                            </a>
+                            <a class="marginLeft10" style="padding-right: 15px;">
+                                <img (click)="downloadExcel(data.runId)" width="25" height="25" alt="Excel"
+                                    src="../../../assets/images/SVG/icon-02.svg" title="Download Excel"
+                                    style="cursor: pointer;">
+                            </a>
+                            <a (click)="discoveryToggleCollapse()" data-toggle="collapse" ><i
+                                [attr.aria-expanded]="isExpanded" title="{{ iconTitle }}" class="fa"
+                                [class.fa-chevron-down]="!isExpanded" [class.fa-chevron-up]="isExpanded"
+                                role="button" [class.rotate-icon]="isExpanded"></i></a>
+                        </div>
+                        <!-- <div class="down-arrow">
+
+                        </div> -->
+
+                        <!-- <span class = "float-right marginRight10">Run Duration:  {{commonObjectReport.run_duration}}</span>
+                        <span class = "float-right marginRight40">End Date & Time: {{commonObjectReport.end_time}}</span>
+                        <span class = "float-right marginRight40">Start Date & Time: {{commonObjectReport.start_time}}</span> -->
+                    </div>
+                </div>
+            </div>
+            <div class="collapse show" id="href_1">
+                <div class="col-md-12 padding0">
+                  <div class="row adjust marginLeft15">
+                    <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="data && data.length > 0">
+                      <!-- Run ID -->
+                      <span class="float-left marginRight40">
+                        <span class="font-weight-bold">Run ID:</span> 
+                        {{data[0]?.runId}}
+                      </span>
+                      
+                      <!-- End Time -->
+                      <span class="float-left marginRight40">
+                        <span class="font-weight-bold">End Time:</span> 
+                        {{data[0]?.end_time}}
+                      </span>
+                      
+                      <!-- Run Duration -->
+                      <span class="float-left marginRight10">
+                        <span class="font-weight-bold">Run Duration:</span> 
+                        {{data[0]?.run_duration}}
+                      </span>
+                    </div>
+
+                    
+
+                    <div class="table-responsive paddingTop15" *ngIf="data && data.length > 0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="tableHeading">
+                                    <th>Database</th>
+                                    <th>Size (MB)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data[0].sourceDBName}}</td>
+                                    <td>{{data[0].sourceDBSize}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    
+                    <div class="row" *ngIf="showComponent">
+                        <div class="col-md-12">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Object Type</th>
+                                <th>Valid Objects</th>
+                                <th>Invalid Objects</th>
+                                <th>Assessed Objects</th>
+                                <th>Lines of Code</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- Storage Objects -->
+                              <tr>
+                                <td colspan="5"><strong>Storage Objects</strong></td>
+                              </tr>
+                              <tr *ngFor="let object of data[0]['Storage Objects']">
+                                <td>{{ object.objectType }}</td>
+                                <td>{{ object.validType }}</td>
+                                <td>{{ object.inValidType }}</td>
+                                <td>{{ object.assessedObjects }}</td>
+                                <td>{{ object.lineOfCode }}</td>
+                              </tr>
+                      
+                              <!-- Code Objects -->
+                              <tr>
+                                <td colspan="5"><strong>Code Objects</strong></td>
+                              </tr>
+                              <tr *ngFor="let object of data[0]['Code Objects']">
+                                <td>{{ object.objectType }}</td>
+                                <td>{{ object.validType }}</td>
+                                <td>{{ object.inValidType }}</td>
+                                <td>{{ object.assessedObjects }}</td>
+                                <td>{{ object.lineOfCode }}</td>
+                              </tr>
+                      
+                              <!-- Special Objects -->
+                              <tr>
+                                <td colspan="5"><strong>Special Objects</strong></td>
+                              </tr>
+                              <tr *ngFor="let object of data[0]['Special Objects']">
+                                <td>{{ object.objectType }}</td>
+                                <td>{{ object.validType }}</td>
+                                <td>{{ object.inValidType }}</td>
+                                <td>{{ object.assessedObjects }}</td>
+                                <td>{{ object.lineOfCode }}</td>
+                              </tr>
+                      
+                              <!-- Grand Total -->
+                              <tr>
+                                <td colspan="5"><strong>Grand Total</strong></td>
+                              </tr>
+                              <tr *ngFor="let object of data[0]['Grand Total']">
+                                <td>{{ object.objectType }}</td>
+                                <td>{{ object.validType }}</td>
+                                <td>{{ object.inValidType }}</td>
+                                <td>{{ object.assessedObjects }}</td>
+                                <td>{{ object.lineOfCode }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+              
+                  
+                        <p class="p-2" *ngIf="grandTotalObjects">DMAP analyzed {{grandTotalObjects}} database objects within the source {{sourceDbType}} database schema. A summary of the analysis is outlined below.</p>
+                    </div>
+                    <div class="col-md-12 reportMainDiv">
+                        <div class="row adjust ">
+                            <div class="dummychartdiv displayNone"></div>
+
+                            <div class="col-md-12 " *ngIf="data.isAccordianExpanded && isService">
+                                <app-dmap-batch-details-table [data]="batchDetailsData" [secondaryData]="batchData"
+                                    [secondaryheading]="'Schemas in Batch'" [heading]="'Batch Details'"
+                                    [chartId]="data.runId" [type]="'batchDetails'" [reportType]="'Discovery'"
+                                    [commonData]="commonObjectReport">
+
+                                </app-dmap-batch-details-table>
+                            </div>
+
+                            <div class="col-md-12 " *ngIf="data.isAccordianExpanded && isService">
+                                <app-dmap-migration-sequence-table [data]="migrationSequenceData"
+                                    [heading]="'Migration Sequence'" [chartId]="data.runId"
+                                    [secondaryText]="migrationSequenceDescription" [type]="'migrationSequence'"
+                                    [reportType]="'Discovery'" [commonData]="commonObjectReport">
+
+                                </app-dmap-migration-sequence-table>
+                            </div>
+
+                            <div class="col-md-12 marginBottom20 " *ngIf="data.isAccordianExpanded && isService">
+                                <div class="row adjust wizardDiv">
+                                    <div class="col-md-12 wizardHeader">
+                                        <div>Database Size</div>
+                                    </div>
+                                    <div class="col-md-12 padding10 ">
+                                        <div class="fontSize15">
+                                            <span>{{commonObjectReport.sourceSchema}}</span> schema is <span
+                                                class="font-weight-bold">{{commonObjectReport.sourceDBSize}}</span> in
+                                            size.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-12 marginBottom20" *ngIf="data.isAccordianExpanded && isService">
+
+                                <app-dmap-static-analysis-objects [data]="objectReport"
+                                    [settings]="objectReportSettings" [chartId]="data.runId"
+                                    [schemaData]="commonObjectReport" [reportType]="'Discovery'"
+                                    [commonData]="commonObjectReport">
+
+                                </app-dmap-static-analysis-objects>
+
+                            </div>
+
+                            <div class="col-md-12 marginBottom20 ">
+                              <app-dmap-simple-table [data]="dependencyReport" [heading]="'Dependencies'"
+                                  [chartId]="data.runId" [secondaryText]="dependencyTableDiscription"
+                                  [type]="'dependency'" [reportType]="'Discovery'" [commonData]="commonObjectReport">
+
+                              </app-dmap-simple-table>
+                            </div>
+
+                            <div class="col-md-12 " *ngIf="data.isAccordianExpanded && isService">
+
+                                <app-dmap-special-data-types-table [data]="discSpaceReport"
+                                    [specialDataTypesdata]="specialDataTypesReport" [settings]="discSpaceReportSettings"
+                                    [chartId]="data.runId" [schemaData]="commonObjectReport" [reportType]="'Discovery'"
+                                    [commonData]="commonObjectReport">
+
+                                </app-dmap-special-data-types-table>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+  </div>
+ 
+
+</div>

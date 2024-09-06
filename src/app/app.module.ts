@@ -37,6 +37,8 @@ import { DmapVersionDetailsComponent } from './dmap-version-details/dmap-version
 import { DmapLicenseDetailsComponent } from './dmap-license-details/dmap-license-details.component';
 import { UploadJsonModalComponent } from './upload-json-modal/upload-json-modal.component';
 import { ReqHeaderAndErrorHandlingInterceptor } from './common/Interceptors/no-chache';
+import { DiscoveryWebpageReportComponent } from './discovery-webpage-report/discovery-webpage-report.component';
+import { DmapDiscoveryReportComponent } from './dmap-discovery-report/dmap-discovery-report.component';
 
 export function appInit(appConfigService: AppConfigService) {
   return () => appConfigService.load();
@@ -57,6 +59,8 @@ export function appInit(appConfigService: AppConfigService) {
     DmapVersionDetailsComponent,
     DmapLicenseDetailsComponent,
     UploadJsonModalComponent,
+    DiscoveryWebpageReportComponent,
+    DmapDiscoveryReportComponent,
   ],
   imports: [
     BrowserModule,
