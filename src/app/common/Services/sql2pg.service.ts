@@ -62,4 +62,9 @@ export class Sql2PgService {
   fetchGenAiDetails() {
     return this.http.get(this.config.host + '/fetch_gen_ai_details');
   }
+
+  startDiscovery(runID: string): Observable<any> {
+    const body = { "RUN_ID": runID };
+    return this.http.post(this.config.host+'/discovery', body);
+  }
 }
