@@ -28,7 +28,7 @@ RUN_ID: String = "20240828170749";
     this.iconTitle = this.isExpanded ? 'Expand the tab' : 'Collapse the tab';
 
 
-          this.sql2PgService.getdiscovery(this.RUN_ID).subscribe(
+          this.sql2PgService.startDiscovery(this.RUN_ID).subscribe(
             (response) => {              
               if (response.status === "success") {
                     console.log(response.status)
@@ -47,7 +47,7 @@ RUN_ID: String = "20240828170749";
 
  
 discoveryReport() {
-  this.sql2PgService.getdiscoveryReport(this.RUN_ID).subscribe(
+  this.sql2PgService.getDiscoveryWebPageReport(this.RUN_ID).subscribe(
     (response) => {               
       this.data = response;  
       console.log(this.data);

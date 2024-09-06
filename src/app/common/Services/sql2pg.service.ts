@@ -27,12 +27,12 @@ export class Sql2PgService {
     );
   }
 
-  getdiscovery(RUN_ID: any): Observable<any> {
+  startDiscovery(RUN_ID: any): Observable<any> {
     const payload = { RUN_ID: RUN_ID };
     return this.http.post(this.config.host + '/discovery', payload);
   }
 
-  getdiscoveryReport(RUN_ID: any): Observable<any> {
+  getDiscoveryWebPageReport(RUN_ID: any): Observable<any> {
     const payload = { RUN_ID: RUN_ID };
     return this.http.post(this.config.host + '/discoveryReport', payload);
   }
