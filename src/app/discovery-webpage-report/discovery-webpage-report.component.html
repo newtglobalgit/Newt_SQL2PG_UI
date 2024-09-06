@@ -1,27 +1,4 @@
-<div class="alert alertInterim  text-center " *ngIf="appStatus === 'In Progress' "
-  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
-    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span></div>
 
-<div class="alert alertSuccess text-center " *ngIf="appStage == 'Discovery' && appStatus === 'Completed'"
-  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
-    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span>
-  <div *ngIf="appStage === 'Discovery' ">
-    <button style="margin-left: 1px;" class="btn btn-md btn-primary" (click)="startAssessment(applicationName)">Start
-      Assessment
-    </button>
-  </div>
-</div>
-
-<div class="alert alertSuccess text-center " *ngIf="appStage == 'Migration' && appStatus === 'Completed' "
-  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
-    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span>
-</div>
-
-
-<div class="alert alertSuccess text-center " *ngIf="appStage == 'Assessment' && appStatus === 'Completed' "
-  style="font-size: 12px;margin-top: 10px;"> <span class="font-weight-bold"
-    style="margin-right: 2px !important;">{{appStage}}</span><span class="font-weight-bold">{{appStatus}}</span>
-</div>
 
 
 <div class="row"
@@ -52,10 +29,13 @@
       </div>
     </div>
 
-
-
+    <div *ngIf="showComponent && !showTable">
+        <p>Loading data...</p>
+    </div>
     
-<div class="row" *ngIf="showComponent">
+  
+    
+<div class="row" *ngIf="showTable">
     
     <div class="col-md-12">
         <div class="row">
@@ -91,22 +71,23 @@
                 </div>
             </div>
             <div class="collapse show" id="href_1">
+               
+                
                 <div class="col-md-12 padding0">
                   <div class="row adjust marginLeft15">
                     <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="data && data.length > 0">
-                      <!-- Run ID -->
                       <span class="float-left marginRight40">
                         <span class="font-weight-bold">Run ID:</span> 
                         {{data[0]?.runId}}
                       </span>
                       
-                      <!-- End Time -->
+
                       <span class="float-left marginRight40">
                         <span class="font-weight-bold">End Time:</span> 
                         {{data[0]?.end_time}}
                       </span>
                       
-                      <!-- Run Duration -->
+
                       <span class="float-left marginRight10">
                         <span class="font-weight-bold">Run Duration:</span> 
                         {{data[0]?.run_duration}}
@@ -116,7 +97,8 @@
                     
 
                     <div class="table-responsive paddingTop15" *ngIf="data && data.length > 0">
-                        <table class="table table-bordered">
+                    <div *ngIf="!showTable && showComponent">
+                        <table class="table table-bordered" >
                             <thead>
                                 <tr class="tableHeading">
                                     <th>Database</th>
@@ -133,7 +115,7 @@
                     </div>
                     
                     
-                    <div class="row" *ngIf="showComponent">
+                    <div class="row" >
                         <div class="col-md-12">
                           <table class="table table-bordered">
                             <thead>
@@ -196,7 +178,10 @@
                             </tbody>
                           </table>
                         </div>
-              
+                    </div>
+
+                        
+                        
                   
                         <p class="p-2" *ngIf="grandTotalObjects">DMAP analyzed {{grandTotalObjects}} database objects within the source {{sourceDbType}} database schema. A summary of the analysis is outlined below.</p>
                     </div>
