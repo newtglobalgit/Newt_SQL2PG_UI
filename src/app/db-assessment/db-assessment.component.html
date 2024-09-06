@@ -482,11 +482,16 @@
           <th *ngIf="nodeType != 'analytics_worker'"></th>
         </tr>
       </thead>
+      
       <tbody>
-        <tr *ngIf="tableData.length === 0">
-          <td colspan="9" class="text-center">No results found</td>
+        <ng-container *ngIf="tableData.length == 0">
+        <tr >
+          <td colspan="9" class="text-center">No Schemas found</td>
         </tr>
-    
+      </ng-container>
+
+        <ng-container *ngIf="tableData.length > 0">
+        
         <tr *ngFor="let row of tableData" style="font-size: 12px" [ngClass]="{ highlightedRow: row.runID == radioCheckedValue }">
           <td class="textCenter">
             <div class="">
@@ -524,6 +529,7 @@
             </span>
           </td>
         </tr>
+      </ng-container>
       </tbody>
     </table>
   </div>

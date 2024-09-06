@@ -16,6 +16,7 @@ RUN_ID: String = "20240828170749";
   iconTitle: string;
   data: any;
   data_runId: any;
+  showTable: boolean;
 
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
 
@@ -56,7 +57,14 @@ discoveryReport() {
       
       this.data_runId = this.data[0].runId;
       if (this.data_runId === this.RUN_ID) {
-        this.showComponent = true;  
+        if (this.data && this.data.length > 0)
+        {
+          this.showComponent = true;  
+
+          setTimeout(() => {
+            this.showTable = true;
+          }, 10000);
+        }
       }
     },
     (error) => {

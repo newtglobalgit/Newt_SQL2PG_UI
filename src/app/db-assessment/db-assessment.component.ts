@@ -14,11 +14,16 @@ export class DbAssessmentComponent implements OnInit {
   tableData: any[] = [];
   filteredData: any[] = [];
 
+  
+
   constructor(private modalService: NgbModal, private router: Router, 
     private dbAssessment: DBAssessment
   ) {}
 
   ngOnInit(): void {
+
+    this.tableData.length =0;
+    console.log(this.tableData.length)
     this.tableData = this.dbAssessment.getTableData();
 
     this.tableData = [this.tableData]
