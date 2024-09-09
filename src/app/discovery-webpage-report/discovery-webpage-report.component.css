@@ -1,1 +1,37 @@
- 
+/* Add margin around the table */
+.table-spacing {
+    margin: 10px;
+    margin-right: auto; /* Adds 10px space around the table */
+}
+
+.table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse; /* Ensures no gap between borders */
+}
+
+.thead_custom th {
+    background-color: #252D76;
+    color: #ffffff;
+    text-align: left;
+    padding: 10px;
+}
+
+.thead_custom {
+    font-size: 13px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Ensure table header and body padding is consistent */
+.analyticsTable th, .analyticsTable td {
+    padding: 8px 10px;
+    text-align: left;
+}
+
+/* Ensure odd rows have a grey background */
+.odd-row {
+    background-color: #f2f2f2;
+}

@@ -1,311 +1,183 @@
-<div
-  class="row"
-  *ngIf="
-    (appStage == 'Discovery' &&
-      appStatus === 'Completed' &&
-      appStage != 'Assessment') ||
-    isShowReport == 'Discovery'
-  "
->
+<div class="row" *ngIf="showTable">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-12" style="margin-bottom: -30px">
+      <div class="col-md-12">
         <div class="row">
-          <div
-            class="col-md-12 row font-weight-bold reportHeaderLabel"
-            style="margin-left: -20px"
-          >
+          <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="tableData">
             <div class="col-md-5 marginLeft0">
-              <span
-                class="col-md-6"
-                *ngIf="appStage == 'Assessment' || appStage == 'Migration'"
-                style="font-size: 14px; padding-right: 15px"
-              ></span>
-              <span class="col-md-6" *ngIf="appStage == 'Discovery'"></span>
-              <!-- <a (click)="loadAccordion() " data-toggle="collapse" class="down-arrow"><i
-                  [attr.aria-expanded]="isExpanded" title="{{ iconTitle }}" class="fa"
-                  [class.fa-chevron-down]="!isExpanded" [class.fa-chevron-up]="isExpanded" role="button"
-                  [class.rotate-icon]="isExpanded"></i></a> -->
+              <span class="col-md-6" style="font-size: 14; font-weight: bold;" >Discovery Report</span>
+              <a>
+                <img (click)="downloadPdf(tableData.runId)" width="25" height="25" alt="PDF"
+                    src="../../../assets/images/SVG/icon-03.svg" title="Download PDF"
+                    style="cursor: pointer;">
+              </a>
+              <a class="marginLeft10" style="padding-right: 15px;">
+                <img (click)="downloadExcel(tableData.runId)" width="25" height="25" alt="Excel"
+                    src="../../../assets/images/SVG/icon-02.svg" title="Download Excel"
+                    style="cursor: pointer;">
+              </a>
+              <a (click)="discoveryToggleCollapse()" tableData-toggle="collapse"><i
+                [attr.aria-expanded]="isExpanded" title="{{ iconTitle }}" class="fa"
+                [class.fa-chevron-down]="!isExpanded" [class.fa-chevron-up]="isExpanded"
+                role="button" [class.rotate-icon]="isExpanded"></i></a>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div *ngIf="showComponent && !showTable">
-    <p>Loading data...</p>
-  </div>
+     
+    
+  
 
-  <div class="row" *ngIf="showTable">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-12">
+      <div class="collapse show" id="href_1">
+        <div class="col-md-12 padding0">
           <div class="row">
-            <div
-              class="col-md-12 row font-weight-bold reportHeaderLabel"
-              *ngIf="data"
-            >
-              <div class="col-md-5 marginLeft0">
-                <span class="col-md-6 fontSize-14">Discovery Report</span>
-                <a>
-                  <img
-                    (click)="downloadPdf(data.runId)"
-                    width="25"
-                    height="25"
-                    alt="PDF"
-                    src="../../../assets/images/SVG/icon-03.svg"
-                    title="Download PDF"
-                    style="cursor: pointer"
-                  />
-                </a>
-                <a class="marginLeft10" style="padding-right: 15px">
-                  <img
-                    (click)="downloadExcel(data.runId)"
-                    width="25"
-                    height="25"
-                    alt="Excel"
-                    src="../../../assets/images/SVG/icon-02.svg"
-                    title="Download Excel"
-                    style="cursor: pointer"
-                  />
-                </a>
-                <!-- <a (click)="discoveryToggleCollapse()" data-toggle="collapse" ><i
-                                [attr.aria-expanded]="isExpanded" title="{{ iconTitle }}" class="fa"
-                                [class.fa-chevron-down]="!isExpanded" [class.fa-chevron-up]="isExpanded"
-                                role="button" [class.rotate-icon]="isExpanded"></i></a> -->
-              </div>
-              <!-- <div class="down-arrow">
-
-                        </div> -->
-
-              <!-- <span class = "float-right marginRight10">Run Duration:  {{commonObjectReport.run_duration}}</span>
-                        <span class = "float-right marginRight40">End Date & Time: {{commonObjectReport.end_time}}</span>
-                        <span class = "float-right marginRight40">Start Date & Time: {{commonObjectReport.start_time}}</span> -->
+            <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="tableData">
+              <span class="float-left marginRight40"><span style="font-weight: bold;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
+              <span class="float-left marginRight40"><span style="font-weight: bold;">End Date & Time: </span>{{tableData[0].end_time}}</span>
+              <span class="float-left marginRight10"><span style="font-weight: bold;" >Run Duration: </span>{{tableData[0].run_duration}}</span>
             </div>
+            <p class="p-2" *ngIf="tableData[0]['Grand Total']">
+              DMAP analyzed {{ tableData[0]['Grand Total'][0].validType }} database objects within the source MSSQL database schema. A summary of the analysis is outlined below.
+            </p>
           </div>
+
+          <div *ngIf="showComponent && !showTable">
+            <p>Loading data...</p>
         </div>
-        <div class="collapse show" id="href_1">
-          <div class="col-md-12 padding0">
-            <div class="row adjust marginLeft15">
-              <div
-                class="col-md-12 reportHeaderLabel fontSize15"
-                *ngIf="data && data.length > 0"
-              >
-                <span class="float-left marginRight40">
-                  <span class="font-weight-bold">Run ID:</span>
-                  {{ data[0]?.runId }}
-                </span>
 
-                <span class="float-left marginRight40">
-                  <span class="font-weight-bold">End Time:</span>
-                  {{ data[0]?.end_time }}
-                </span>
-
-                <span class="float-left marginRight10">
-                  <span class="font-weight-bold">Run Duration:</span>
-                  {{ data[0]?.run_duration }}
-                </span>
+          <div class="col-md-12 marginBottom20" *ngIf="tableData">
+            <div class="row adjust wizardDiv">
+              <div class="col-md-12 wizardHeader">
+                <div>Database Size</div>
               </div>
-
-              <div
-                class="table-responsive paddingTop15"
-                *ngIf="data && data.length > 0"
-              >
-                <div *ngIf="!showTable && showComponent">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr class="tableHeading">
-                        <th>Database</th>
-                        <th>Size (MB)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{{ data[0].sourceDBName }}</td>
-                        <td>{{ data[0].sourceDBSize }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>Object Type</th>
-                          <th>Valid Objects</th>
-                          <th>Invalid Objects</th>
-                          <th>Assessed Objects</th>
-                          <th>Lines of Code</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!-- Storage Objects -->
-                        <tr>
-                          <td colspan="5"><strong>Storage Objects</strong></td>
-                        </tr>
-                        <tr *ngFor="let object of data[0]['Storage Objects']">
-                          <td>{{ object.objectType }}</td>
-                          <td>{{ object.validType }}</td>
-                          <td>{{ object.inValidType }}</td>
-                          <td>{{ object.assessedObjects }}</td>
-                          <td>{{ object.lineOfCode }}</td>
-                        </tr>
-
-                        <!-- Code Objects -->
-                        <tr>
-                          <td colspan="5"><strong>Code Objects</strong></td>
-                        </tr>
-                        <tr *ngFor="let object of data[0]['Code Objects']">
-                          <td>{{ object.objectType }}</td>
-                          <td>{{ object.validType }}</td>
-                          <td>{{ object.inValidType }}</td>
-                          <td>{{ object.assessedObjects }}</td>
-                          <td>{{ object.lineOfCode }}</td>
-                        </tr>
-
-                        <!-- Special Objects -->
-                        <tr>
-                          <td colspan="5"><strong>Special Objects</strong></td>
-                        </tr>
-                        <tr *ngFor="let object of data[0]['Special Objects']">
-                          <td>{{ object.objectType }}</td>
-                          <td>{{ object.validType }}</td>
-                          <td>{{ object.inValidType }}</td>
-                          <td>{{ object.assessedObjects }}</td>
-                          <td>{{ object.lineOfCode }}</td>
-                        </tr>
-
-                        <!-- Grand Total -->
-                        <tr>
-                          <td colspan="5"><strong>Grand Total</strong></td>
-                        </tr>
-                        <tr *ngFor="let object of data[0]['Grand Total']">
-                          <td>{{ object.objectType }}</td>
-                          <td>{{ object.validType }}</td>
-                          <td>{{ object.inValidType }}</td>
-                          <td>{{ object.assessedObjects }}</td>
-                          <td>{{ object.lineOfCode }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <p class="p-2" *ngIf="grandTotalObjects">
-                  DMAP analyzed {{ grandTotalObjects }} database objects within
-                  the source {{ sourceDbType }} database schema. A summary of
-                  the analysis is outlined below.
-                </p>
-              </div>
-              <div class="col-md-12 reportMainDiv">
-                <div class="row adjust">
-                  <div class="dummychartdiv displayNone"></div>
-
-                  <div
-                    class="col-md-12"
-                    *ngIf="data.isAccordianExpanded && isService"
-                  >
-                    <app-dmap-batch-details-table
-                      [data]="batchDetailsData"
-                      [secondaryData]="batchData"
-                      [secondaryheading]="'Schemas in Batch'"
-                      [heading]="'Batch Details'"
-                      [chartId]="data.runId"
-                      [type]="'batchDetails'"
-                      [reportType]="'Discovery'"
-                      [commonData]="commonObjectReport"
-                    >
-                    </app-dmap-batch-details-table>
-                  </div>
-
-                  <div
-                    class="col-md-12"
-                    *ngIf="data.isAccordianExpanded && isService"
-                  >
-                    <app-dmap-migration-sequence-table
-                      [data]="migrationSequenceData"
-                      [heading]="'Migration Sequence'"
-                      [chartId]="data.runId"
-                      [secondaryText]="migrationSequenceDescription"
-                      [type]="'migrationSequence'"
-                      [reportType]="'Discovery'"
-                      [commonData]="commonObjectReport"
-                    >
-                    </app-dmap-migration-sequence-table>
-                  </div>
-
-                  <div
-                    class="col-md-12 marginBottom20"
-                    *ngIf="data.isAccordianExpanded && isService"
-                  >
-                    <div class="row adjust wizardDiv">
-                      <div class="col-md-12 wizardHeader">
-                        <div>Database Size</div>
-                      </div>
-                      <div class="col-md-12 padding10">
-                        <div class="fontSize15">
-                          <span>{{ commonObjectReport.sourceSchema }}</span>
-                          schema is
-                          <span class="font-weight-bold">{{
-                            commonObjectReport.sourceDBSize
-                          }}</span>
-                          in size.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    class="col-md-12 marginBottom20"
-                    *ngIf="data.isAccordianExpanded && isService"
-                  >
-                    <app-dmap-static-analysis-objects
-                      [data]="objectReport"
-                      [settings]="objectReportSettings"
-                      [chartId]="data.runId"
-                      [schemaData]="commonObjectReport"
-                      [reportType]="'Discovery'"
-                      [commonData]="commonObjectReport"
-                    >
-                    </app-dmap-static-analysis-objects>
-                  </div>
-
-                  <div class="col-md-12 marginBottom20">
-                    <app-dmap-simple-table
-                      [data]="dependencyReport"
-                      [heading]="'Dependencies'"
-                      [chartId]="data.runId"
-                      [secondaryText]="dependencyTableDiscription"
-                      [type]="'dependency'"
-                      [reportType]="'Discovery'"
-                      [commonData]="commonObjectReport"
-                    >
-                    </app-dmap-simple-table>
-                  </div>
-
-                  <div
-                    class="col-md-12"
-                    *ngIf="data.isAccordianExpanded && isService"
-                  >
-                    <app-dmap-special-data-types-table
-                      [data]="discSpaceReport"
-                      [specialDataTypesdata]="specialDataTypesReport"
-                      [settings]="discSpaceReportSettings"
-                      [chartId]="data.runId"
-                      [schemaData]="commonObjectReport"
-                      [reportType]="'Discovery'"
-                      [commonData]="commonObjectReport"
-                    >
-                    </app-dmap-special-data-types-table>
-                  </div>
+              <div class="col-md-12 padding10">
+                <div class="fontSize15">
+                  <span>{{tableData[0].sourceSchema}}</span> schema is <span style="font-weight: bold;">{{tableData[0].sourceDBSize}}</span> in size.
                 </div>
               </div>
             </div>
           </div>
+
+          <div  class="row adjust wizardDiv" style="margin-bottom: 20px; width: 100%;">
+            <!-- Existing Database Objects Table -->
+            <div class="col-md-12 wizardHeader">
+                <div>Database Objects</div>
+            </div>
+            <div class="col-md-12" style="padding: 10px;"> 
+            <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered" style="font-size:12px;">
+                <thead class="thead_custom">
+                    <tr class="tr_custom_14">
+                        <th>Object Type</th>
+                        <th>Valid Objects</th>
+                        <th>Invalid Objects</th>
+                        <th>Assessed Objects</th>
+                        <th>Lines of Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5"><strong>Storage Objects</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0]['Storage Objects'];">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{ object.lineOfCode }}</td>
+                    </tr>
+        
+                    <tr>
+                        <td colspan="5"><strong>Code Objects</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0]['Code Objects'];">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{ object.lineOfCode }}</td>
+                    </tr>
+        
+                    <tr>
+                        <td colspan="5"><strong>Special Objects</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0]['Special Objects'];">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{ object.lineOfCode }}</td>
+                    </tr>
+        
+                    <tr>
+                        <td colspan="5"><strong>Grand Total</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0]['Grand Total']; let i = index">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{ object.lineOfCode }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
         </div>
+        
+        <!-- Dependencies Section -->
+        <div  class="row adjust wizardDiv" style="margin-bottom: 20px; width: 100%;">
+            <div class="col-md-12 wizardHeader">
+                <div>Dependencies</div>
+            </div>
+            <div class="col-md-12" style="padding: 10px;"> 
+            <table id="dependenciesTable" class="analyticsTable table table-hover table-sm table-bordered" style="font-size:12px;">
+                <thead class="thead_custom">
+                    <tr class="tr_custom_14">
+                        <th>Referenced Schema</th>
+                        <th>Referenced Object Type</th>
+                        <th>Dependent Object Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dependency of tableData[0]['Dependencies']; let i = index" [ngClass]="{'odd-row': i % 2 !== 0}">
+                        <td>{{ dependency.referencedSchema }}</td>
+                        <td>{{ dependency.referencedObjectType }}</td>
+                        <td>{{ dependency.dependentObjectCount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        
+        <!-- Disk Space Section -->
+        <div class="row adjust wizardDiv" style="margin-bottom: 20px; width: 100%;">
+          <div class="col-md-12 wizardHeader">
+            <div>Disk Space</div>
+          </div>
+          <div class="col-md-12" style="padding: 10px;"> 
+            <div style=" padding: 0px;"> 
+              <table id="diskSpaceTable" class="analyticsTable table table-hover table-sm table-bordered" style="width: 100%;">
+                <thead class="thead_custom">
+                  <tr>
+                    <th>Table Name</th>
+                    <th>Column Name</th>
+                    <th>Data Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let space of tableData[0]['Disc space']">
+                    <td>{{ space.table_name }}</td>
+                    <td>{{ space.column_name }}</td>
+                    <td>{{ space.data_type }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        
+        
       </div>
     </div>
   </div>

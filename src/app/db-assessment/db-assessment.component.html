@@ -87,7 +87,7 @@
             </li>
             <li
               class="dropdown-item"
-              (click)="viewDiscoveryReport()"
+              (click)="viewAssessmentReport()"
               style="cursor: pointer"
               *ngIf="enableDiscoveryReport"
             >
@@ -520,7 +520,8 @@
     </table>
   </div>
   <div>
-    <app-discovery-webpage-report></app-discovery-webpage-report>
+    <app-discovery-webpage-report [Status]="status" [Stage]="stage" [runId]="RUN_ID"
+    [showComponent]="true" [isShowReport]="isShowDataAndGraph"></app-discovery-webpage-report>
   </div>
   <div>
     <app-start-assessment-modal> </app-start-assessment-modal>
