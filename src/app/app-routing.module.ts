@@ -14,11 +14,13 @@ const routes: Routes = [
   {
     path: 'gen-ai',
     component: GenAiIntegrationComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'dbSetup', component: DbSetupComponent },
+  { path: 'dbSetup', component: DbSetupComponent, canActivate: [AuthGuard] },
   {
     path: 'dbAssessment',
     component: DbAssessmentComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
