@@ -15,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FooterComponent } from './common/Footer/footer/footer.component';
-import { LoginComponent } from './login/login.component';
+import { LicenseComponent } from './license/license.component';
 
 import { MaterialModule } from './material-module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -39,6 +39,7 @@ import { UploadJsonModalComponent } from './upload-json-modal/upload-json-modal.
 import { ReqHeaderAndErrorHandlingInterceptor } from './common/Interceptors/no-chache';
 import { DiscoveryWebpageReportComponent } from './discovery-webpage-report/discovery-webpage-report.component';
 import { AssessmentWebpageReportComponent } from './assessment-webpage-report/assessment-webpage-report.component';
+import { LoginComponent } from './login/login.component';
 
 export function appInit(appConfigService: AppConfigService) {
   return () => appConfigService.load();
@@ -48,7 +49,7 @@ export function appInit(appConfigService: AppConfigService) {
   declarations: [
     AppComponent,
     FooterComponent,
-    LoginComponent,
+    LicenseComponent,
     DbSetupComponent,
     SideNavBarComponent,
     DbAssessmentComponent,
@@ -61,6 +62,7 @@ export function appInit(appConfigService: AppConfigService) {
     UploadJsonModalComponent,
     DiscoveryWebpageReportComponent,
     AssessmentWebpageReportComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

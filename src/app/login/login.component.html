@@ -1,5 +1,134 @@
 <div class="row">
-  <form name="licenseForm" #l="ngForm">
+  <form name="signForm" (ngSubmit)="onSignUp()" #f="ngForm" *ngIf="!hasAccount">
+    <div class="container">
+      <div
+        class="col-md-5 loginBodyHeight row justify-content-center align-items-center"
+        style="left: 31%; margin-bottom: 7px"
+      >
+        <div
+          class="row"
+          style="padding: 36px 9px 40px 9px; border: 1px solid lightgrey"
+        >
+          <div class="col-md-12 loginHeading">
+            <h2>Create Account</h2>
+          </div>
+          <div class="col-md-12 loginHint" style="margin-bottom: 20px">
+            Please enter your work email to create the account.
+          </div>
+
+          <div class="col-md-12 marginBottom10">
+            <div id="" class="float-container">
+              <label for="firstName"
+                >First Name<span class="requiredField invisible">*</span></label
+              >
+              <input
+                id="firstName"
+                name="firstName"
+                class="height32"
+                type="text"
+                ngModel
+                data-placeholder=" "
+                required
+                #firstName="ngModel"
+              />
+            </div>
+          </div>
+          <div class="col-md-12 marginBottom10">
+            <div id="" class="float-container">
+              <label for="lasttName"
+                >Last Name<span class="requiredField invisible">*</span></label
+              >
+              <input
+                id="lasttName"
+                name="lasttName"
+                class="height32"
+                type="text"
+                ngModel
+                data-placeholder=" "
+                required
+                #firstName="ngModel"
+              />
+            </div>
+          </div>
+          <div class="col-md-12 marginBottom10">
+            <div id="" class="float-container">
+              <label for="emailAddress"
+                >Email Address<span class="requiredField invisible"
+                  >*</span
+                ></label
+              >
+              <input
+                id="emailAddress"
+                name="emailAddress"
+                class="height32"
+                type="text"
+                ngModel
+                data-placeholder=" "
+                required
+                #emailAddress="ngModel"
+                email
+              />
+            </div>
+          </div>
+          <div class="col-md-12 marginBottom10">
+            <div id="" class="float-container">
+              <label for="password"
+                >Password<span class="requiredField invisible">*</span></label
+              >
+              <app-show-password
+                (showPasswordClicked)="togglePassword($event)"
+                [password]="password"
+                [right]="'23px'"
+                [top]="'6px'"
+              ></app-show-password>
+              <input
+                id="password"
+                name="password"
+                class="height32"
+                minlength="8"
+                type="{{ passwordType }}"
+                ngModel
+                data-placeholder=" "
+                required
+                #password="ngModel"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-12 marginBottom10">
+            <button
+              class="btn btn-default btn-lg form-control loginButton"
+              [disabled]="!f.valid"
+              *ngIf="!f.valid"
+            >
+              Sign Up Now
+            </button>
+            <button
+              class="btn btn-primary btn-lg form-control loginButton"
+              *ngIf="f.valid"
+            >
+              Sign Up Now
+            </button>
+          </div>
+          <div
+            class="col-md-12 textCenter"
+            style="margin-bottom: -22px; margin-top: 5px"
+          >
+            <a routerLink="/login" routerLinkActive="active"
+              >Already have an account</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form
+    name="loginForm"
+    (ngSubmit)="onLogin()"
+    #l="ngForm"
+    *ngIf="hasAccount && !forgotPassword"
+  >
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div
@@ -29,96 +158,278 @@
               </div>
             </div>
 
-            <div *ngIf="showInvalidLicenseMsg" class="col-md-12">
-              <div
-                class="alert alert-danger"
-                style="padding: 0.7rem 0.75rem 0rem 0.75rem !important"
-              >
-                <p [innerHTML]="htmlSnippet"></p>
+            <div class="col-md-12 marginBottom20" *ngIf="isConnectionFailed">
+              <div class="alert alert-danger padding20 textCenter">
+                Failed to connect to the server. Please try again.
+              </div>
+            </div>
+
+            <div
+              class="col-md-12 marginBottom20"
+              *ngIf="loginFailedMsg != undefined"
+            >
+              <div class="alert alert-danger padding20 textCenter">
+                {{ loginFailedMsg }}
               </div>
             </div>
 
             <div class="col-md-12 marginBottom10">
               <div id="" class="float-container">
-                <label for="licenseKey" class="lineHeight11"
-                  >Enter License key<span class="requiredField invisible"
+                <label for="emailAddress" class="lineHeight11"
+                  >Email Address<span class="requiredField invisible"
                     >*</span
                   ></label
                 >
                 <input
-                  id="licenseKey"
-                  style="height: 32px !important; border-radius: 0.3rem"
-                  name="licenseKey"
+                  id="emailAddress"
+                  class="height32"
+                  name="emailAddress"
                   type="text"
+                  ngModel
                   data-placeholder=" "
                   required
-                  [(ngModel)]="licenseKey"
+                  #emailAddress="ngModel"
+                  email
                 />
               </div>
             </div>
 
             <div class="col-md-12 marginBottom10">
-              <div class="col-md-12">
-                <div>
-                  You must accept
-                  <a
-                    href="../../../../assets/licenseAgreement.pdf"
-                    target="_blank"
-                    class="marginRight5"
-                    >DMAP license policy</a
-                  >to use this application
-                </div>
-              </div>
-              <div class="col-md-12 marginTop10">
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input
-                    type="radio"
-                    class="custom-control-input"
-                    id="datayes"
-                    required
-                    name="dataStatus"
-                    value="Y"
-                    [(ngModel)]="dataValue"
-                    (change)="radioChangeHandler($event)"
-                  />
-                  <label class="custom-control-label" for="datayes"
-                    >Accept License Agreement</label
-                  >
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input
-                    type="radio"
-                    class="custom-control-input"
-                    id="dataNo"
-                    required
-                    name="dataStatus"
-                    value="N"
-                    [(ngModel)]="dataValue"
-                    (change)="radioChangeHandler($event)"
-                  />
-                  <label class="custom-control-label" for="dataNo"
-                    >Decline License Agreement</label
-                  >
-                </div>
+              <div id="" class="float-container">
+                <label for="password" class="lineHeight11"
+                  >Password<span class="requiredField invisible">*</span></label
+                >
+                <app-show-password
+                  (showPasswordClicked)="togglePassword($event)"
+                  [password]="password"
+                  [right]="'23px'"
+                  [top]="'6px'"
+                ></app-show-password>
+                <input
+                  id="password"
+                  class="height32"
+                  name="password"
+                  type="{{ passwordType }}"
+                  data-placeholder=" "
+                  required
+                  [(ngModel)]="password"
+                />
               </div>
             </div>
 
-            <div class="col-md-12 marginBottom20">
+            <div class="col-md-12 marginTop2">
               <button
-                class="btn btn-default btn-lg form-control activateLicenseButton"
-                [disabled]="!l.valid || dataValue != 'Y'"
-                *ngIf="!l.valid || dataValue != 'Y'"
+                class="btn btn-default btn-lg form-control loginButton"
+                [disabled]="!l.valid"
+                *ngIf="!l.valid"
               >
-                Activate License
+                Login
               </button>
               <button
-                class="btn btn-primary btn-lg form-control activateLicenseButton"
-                *ngIf="l.valid && dataValue == 'Y'"
-                (click)="onLicenseActivation()"
+                class="btn btn-primary btn-lg form-control loginButton"
+                [disabled]="password.length < 8"
+                *ngIf="l.valid"
               >
-                Activate License
+                Login
               </button>
             </div>
+            <div class="col-md-12 marginTop8">
+              <div class="marginTop8 textCenter">
+                Don't have an Account?
+                <a routerLink="/signup" routerLinkActive="active"
+                  >Create an Account</a
+                >
+              </div>
+            </div>
+
+            <div class="col-md-12 marginTop5">
+              <div class="marginTop5 textCenter">
+                Forgot your Password?
+                <a routerLink="/resetPassword" routerLinkActive="active"
+                  >Reset Password</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form
+    name="resetPasswordForm"
+    (ngSubmit)="onResetPassword()"
+    #p="ngForm"
+    style="width: 100%"
+    id="signUpContainer"
+    *ngIf="hasAccount && forgotPassword"
+  >
+    <div
+      class="col-md-5 loginBodyHeight row justify-content-center align-items-center"
+      style="left: 31%; margin-bottom: 7px"
+    >
+      <div
+        class="row"
+        style="padding: 36px 9px 40px 9px; border: 1px solid lightgrey"
+      >
+        <div class="col-md-12 loginHeading marginBottom10">
+          <h2>Reset Password</h2>
+        </div>
+
+        <ng-container *ngIf="resetPasswordData != undefined">
+          <div
+            class="col-md-12 marginBottom20"
+            style="margin-top: -40px"
+            *ngIf="resetPasswordData.status == 'success'"
+          >
+            <div class="alert alert-success padding20 textCenter">
+              Password has been reset successfully.<br />
+              <span style="font-size: 12px"
+                >Please click
+                <a
+                  routerLink="/login"
+                  routerLinkActive="active"
+                  class="simpleLink"
+                  >here</a
+                >
+                to go back to login page</span
+              >
+            </div>
+          </div>
+          <div
+            class="col-md-12 marginBottom20"
+            style="margin-top: -40px"
+            *ngIf="resetPasswordData.status == 'Failed'"
+          >
+            <div class="alert alert-danger padding20 textCenter">
+              No user found to update the password<br />
+              <span style="font-size: 12px"
+                >Please click
+                <a
+                  routerLink="/signup"
+                  routerLinkActive="active"
+                  class="simpleLink"
+                  >here</a
+                >
+                to create an account</span
+              >
+            </div>
+          </div>
+          <div
+            class="col-md-12 marginBottom20"
+            style="margin-top: -40px"
+            *ngIf="resetPasswordData.status == 'failed'"
+          >
+            <div class="alert alert-danger padding20 textCenter">
+              Something went wrong. Please try again.
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="col-md-12 marginBottom10">
+          <div id="" class="float-container">
+            <label for="emailAddress"
+              >Email Address<span class="requiredField invisible"
+                >*</span
+              ></label
+            >
+            <input
+              id="emailAddress"
+              name="emailAddress"
+              class="height32"
+              type="text"
+              ngModel
+              data-placeholder=" "
+              [(ngModel)]="userName"
+              required
+              readonly
+              #emailAddress="ngModel"
+              email
+            />
+          </div>
+        </div>
+
+        <div class="col-md-12 marginBottom10">
+          <div id="" class="float-container">
+            <label for="password"
+              >Password<span class="requiredField invisible">*</span></label
+            >
+            <input
+              id="password"
+              name="password"
+              class="height32"
+              type="{{ passwordType }}"
+              data-placeholder=" "
+              required
+              [(ngModel)]="password"
+              #passwordRef="ngModel"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-12 marginBottom10">
+          <div id="" class="float-container">
+            <label for="password"
+              >Confirm Password<span class="requiredField invisible"
+                >*</span
+              ></label
+            >
+            <app-show-password
+              (showPasswordClicked)="toggleConfirmationPassword($event)"
+              [password]="confirmationPassword"
+              [right]="'23px'"
+              [top]="'6px'"
+            ></app-show-password>
+            <input
+              id="confirmationPassword"
+              name="confirmationPassword"
+              class="height32"
+              type="{{ passwordConfirmationType }}"
+              data-placeholder=" "
+              required
+              ngValidateEqual="password"
+              #confirmationPasswordRef="ngModel"
+              [(ngModel)]="confirmationPassword"
+            />
+          </div>
+          <div
+            *ngIf="
+              confirmationPasswordRef.dirty || confirmationPasswordRef.touched
+            "
+          >
+            <p
+              class="warning-text"
+              *ngIf="
+                confirmationPasswordRef.hasError('notEqual') &&
+                passwordRef.valid
+              "
+              style="color: red; font-size: 12px"
+            >
+              Passwords don't match
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-12 marginBottom10">
+          <button
+            class="btn btn-default btn-lg form-control loginButton"
+            [disabled]="!p.valid"
+            *ngIf="!p.valid"
+          >
+            Submit
+          </button>
+          <button
+            class="btn btn-primary btn-lg form-control loginButton"
+            *ngIf="p.valid"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-md-12" style="margin-bottom: -22px; margin-top: 5px">
+          <div class="textCenter">
+            <a routerLink="/login" routerLinkActive="active" class="simpleLink"
+              >Cancel</a
+            >
           </div>
         </div>
       </div>
