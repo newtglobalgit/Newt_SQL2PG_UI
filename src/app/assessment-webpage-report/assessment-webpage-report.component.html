@@ -1,0 +1,186 @@
+<!--- GREEN PANEL STARTS --->
+<div class="col-md-12 padding0">
+  <div
+    class="alert alertSuccess text-center"
+    style="font-size: 12px; margin-top: 10px"
+  >
+    <span class="font-weight-bold" style="margin-right: 2px !important">{{
+      appStage
+    }}</span
+    ><span class="font-weight-bold">{{ appStatus }}</span>
+    <div>
+      <button
+        style="margin-left: 1px"
+        class="btn btn-md btn-primary"
+        (click)="startAssessment(appName)"
+        data-title="Start Assessment"
+        data-intro="Click on this button to start the application assessment process, which identifies embedded SQLs within the application codebase for automatic conversion tp PostgreSQL syntax and provides recommendations for manual SQL remediation steps. Additionally, discover the percentage of dead code that remains unexecuted."
+      >
+        Start Assessment
+      </button>
+    </div>
+  </div>
+</div>
+<!--- GREEN PANEL ENDS --->
+
+<!--- REPORT ICON PANEL STARTS --->
+<div class="row col-md-12">
+  <div
+    class="col-md-12 row font-weight-bold reportHeaderLabel"
+    style="margin-left: -20px"
+  >
+    <div class="col-md-5 marginLeft0">
+      <span class="col-md-6" style="font-size: 14px; padding-right: 15px"
+        >Assessment Report</span
+      >
+
+      <a>
+        <img
+          (click)="downloadDiscoveryReport(appName, 'pdf', 'Discovery')"
+          width="25"
+          height="25"
+          alt="PDF"
+          src="../../../assets/images/SVG/icon-03.svg"
+          title="Download PDF"
+          style="cursor: pointer"
+        />
+      </a>
+      <a class="marginLeft10">
+        <img
+          (click)="downloadDiscoveryReport(appName, 'excel', 'Discovery')"
+          width="25"
+          height="25"
+          alt="Excel"
+          src="../../../assets/images/SVG/icon-02.svg"
+          title="Download Excel"
+          style="cursor: pointer"
+        />
+      </a>
+      <a class="marginLeft10" style="padding-right: 15px">
+        <img
+          (click)="downloadDiscoveryReport(appName, 'html', 'Discovery')"
+          width="25"
+          height="25"
+          alt="HTML"
+          src="../../../assets/images/SVG/icon-06.svg"
+          title="Download HTML"
+          style="cursor: pointer"
+        />
+      </a>
+    </div>
+  </div>
+</div>
+<!--- REPORT ICON PANEL ENDS --->
+
+<div class="col-md-12 collapse show">
+  <div class="col-md-12 padding0">
+    <div class="wrapper row adjust">
+      <!--- RUN DURATION  PANEL STARTS --->
+
+      <div
+        class="col-md-12 reportHeaderLabel fontSize15"
+        style="margin-top: 20px; display: inline-block; padding-left: 0px"
+      >
+        <span class="float-left marginRight40"
+          ><span class="font-weight-bold">Start Date & Time: </span
+          >{{ startTime }}</span
+        >
+        <span class="float-left marginRight40"
+          ><span class="font-weight-bold">End Date & Time: </span
+          >{{ endTime }}</span
+        >
+        <span class="float-left marginRight10"
+          ><span class="font-weight-bold">Run Duration: </span
+          >{{ runDuration }}</span
+        >
+      </div>
+      <!--- RUN DURATION  PANEL ENDS --->
+
+      <!--- TABLE  PANEL STARTS --->
+      <div
+        class="row adjust wizardDiv"
+        style="margin-bottom: 20px; margin-top: 20px; width: 100%"
+      >
+        <div class="col-md-12 wizardHeader">
+          <div>Table 1</div>
+        </div>
+        <table
+          id="analyticsTable"
+          class="analyticsTable table table-hover table-sm table-bordered"
+          style="font-size: 12px; margin: 10px"
+        >
+          <thead class="thead_custom">
+            <tr class="tr_custom_14">
+              <th style="width: 11%">Column 1</th>
+              <th style="width: 11%">Column 2</th>
+              <th style="width: 11%">Column 3</th>
+              <th style="width: 11%">Column 4</th>
+              <th style="width: 11%">Column 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container>
+              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
+                <td>Value 1</td>
+                <td>Value 1</td>
+                <td>Value 1</td>
+                <td>Value 1</td>
+                <td>Value 1</td>
+              </tr>
+              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
+                <td>Value 2</td>
+                <td>Value 2</td>
+                <td>Value 2</td>
+                <td>Value 2</td>
+                <td>Value 2</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        class="row adjust wizardDiv"
+        style="margin-bottom: 20px; margin-top: 20px; width: 100%"
+      >
+        <div class="col-md-12 wizardHeader">
+          <div>Table 2</div>
+        </div>
+        <table
+          id="analyticsTable"
+          class="analyticsTable table table-hover table-sm table-bordered"
+          style="font-size: 12px; margin: 10px"
+        >
+          <thead class="thead_custom">
+            <tr class="tr_custom_14">
+              <th style="width: 11%">Column 1</th>
+              <th style="width: 11%">Column 2</th>
+              <th style="width: 11%">Column 3</th>
+              <th style="width: 11%">Column 4</th>
+              <th style="width: 11%">Column 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container>
+              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
+                <td>Value 1</td>
+                <td>Value 1</td>
+                <td>Value 1</td>
+                <td>Value 1</td>
+                <td>Value 1</td>
+              </tr>
+              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
+                <td>Value 2</td>
+                <td>Value 2</td>
+                <td>Value 2</td>
+                <td>Value 2</td>
+                <td>Value 2</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!--- TABLE  PANEL ENDS --->
+    </div>
+  </div>
+</div>
