@@ -126,15 +126,15 @@ export class LoginComponent implements OnInit {
 
   onResetPassword() {
     console.log(this.resetPasswordForm.value);
-    this.loginService
-      .resetPassword(this.resetPasswordForm.value['password'])
-      .subscribe((data) => {
-        this.resetPasswordData = data;
-        if (this.resetPasswordData.status == 'success') {
-          this.resetPasswordForm.reset();
-          this.getUserName();
-        }
-      });
+    let reqObj: any = {};
+    reqObj['password'] = this.resetPasswordForm.value['password'];
+    this.loginService.resetPassword(reqObj).subscribe((data) => {
+      this.resetPasswordData = data;
+      if (this.resetPasswordData.status == 'success') {
+        this.resetPasswordForm.reset();
+        this.getUserName();
+      }
+    });
   }
 
   onSignUp() {

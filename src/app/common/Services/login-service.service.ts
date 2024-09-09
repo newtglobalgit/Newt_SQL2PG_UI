@@ -69,7 +69,7 @@ export class LoginService {
     return this.http.post(this.config.host + '/login', loginDetails);
   }
 
-  resetPassword(password: any): Observable<any> {
-    return this.http.post(this.config.host + '/resetPassword', password);
+  resetPassword(reqObj: any): Observable<any> {
+    return this.http.post(this.config.host + '/resetPassword', reqObj);
   }
 }
