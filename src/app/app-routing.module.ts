@@ -5,12 +5,14 @@ import { DbAssessmentComponent } from './db-assessment/db-assessment.component';
 import { GenAiIntegrationComponent } from './gen-ai-integration/gen-ai-integration.component';
 import { AuthGuard } from './common/Services/authguard.service';
 import { LoginComponent } from './login/login.component';
+import { LicenseComponent } from './license/license.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: LoginComponent },
   { path: 'resetPassword', component: LoginComponent },
+  { path: 'license', component: LicenseComponent },
   {
     path: 'gen-ai',
     component: GenAiIntegrationComponent,
