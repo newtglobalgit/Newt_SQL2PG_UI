@@ -125,16 +125,16 @@ export class LoginComponent implements OnInit {
   }
 
   onResetPassword() {
-    // console.log(this.resetPasswordForm.value);
-    // this.loginService
-    //   .resetPassword(this.resetPasswordForm.value['password'])
-    //   .subscribe((data) => {
-    //     this.resetPasswordData = data;
-    //     if (this.resetPasswordData.status == 'success') {
-    //       this.resetPasswordForm.reset();
-    //       this.getUserName();
-    //     }
-    //   });
+    console.log(this.resetPasswordForm.value);
+    this.loginService
+      .resetPassword(this.resetPasswordForm.value['password'])
+      .subscribe((data) => {
+        this.resetPasswordData = data;
+        if (this.resetPasswordData.status == 'success') {
+          this.resetPasswordForm.reset();
+          this.getUserName();
+        }
+      });
   }
 
   onSignUp() {
@@ -163,6 +163,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    console.log('login details --->', this.loginForm.value);
     this.loginFailedMsg = undefined;
     this.spinner.show();
     this.loginService.sendloginDetails(this.loginForm.value).subscribe(

@@ -68,4 +68,8 @@ export class LoginService {
   sendloginDetails(loginDetails: any): Observable<any> {
     return this.http.post(this.config.host + '/login', loginDetails);
   }
+
+  resetPassword(password: any): Observable<any> {
+    return this.http.post(this.config.host + '/resetPassword', password);
+  }
 }
