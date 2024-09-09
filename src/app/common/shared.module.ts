@@ -10,6 +10,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { UpdatePasswordComponent } from './Modal/update-password/update-password.component';
+import { ShowPasswordComponent } from './directives/show-password/show-password.component';
 
 @NgModule({
   imports: [
@@ -21,8 +22,13 @@ import { UpdatePasswordComponent } from './Modal/update-password/update-password
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  declarations: [UpdatePasswordComponent],
-  exports: [CommonModule, MaterialModule, NgxPaginationModule],
+  declarations: [UpdatePasswordComponent, ShowPasswordComponent],
+  exports: [
+    CommonModule,
+    MaterialModule,
+    NgxPaginationModule,
+    ShowPasswordComponent,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {

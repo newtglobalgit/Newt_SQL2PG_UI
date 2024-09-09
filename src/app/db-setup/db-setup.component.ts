@@ -36,12 +36,15 @@ export class DbSetupComponent implements OnInit {
   sourceDBUserNameValue = '';
   sourceDBPasswordValue = '';
 
+  sourcePasswordType: string = 'password';
+  targetPasswordType: string = 'password';
+
   targetDBPasswordValue = '';
   targetDBUserNameValue = '';
   targetDBHostValue = '';
   targetDBNameValue = '';
   targetDBPortValue = '';
-numberOnlyPattern: any;
+  numberOnlyPattern: any;
   result: any;
   current_run_id: any;
 
@@ -49,13 +52,21 @@ numberOnlyPattern: any;
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   onRadioButtonSelected(event: any) {
     this.oracleConnect = event.target.value;
+  }
+
+  toggleSourcePassword(type: any) {
+    this.sourcePasswordType = type;
+  }
+
+  toggleTargetPassword(type: any) {
+    this.targetPasswordType = type;
   }
 
   testSourceDbConnection(isTestSrcConBtnClicked: any) {
@@ -120,17 +131,17 @@ numberOnlyPattern: any;
   onSubmit() {
     this.disableSubmit = true;
     const dbcredentialsdata: any = this.dbCredentialsForm.value;
-  
-    this.sql2PgService.senddbconfigDetails(dbcredentialsdata).subscribe((res) => {
-      this.result =res;
-      if (res[0].status === 'SUCCESS') {
+
+    this.sql2PgService
+      .senddbconfigDetails(dbcredentialsdata)
+      .subscribe((res) => {
+        this.result = res;
+        if (res[0].status === 'SUCCESS') {
           this.openAlert('Submitted Successfully');
           this.router.navigate(['/dbAssessment']);
-       
-    }
-  });
+        }
+      });
   }
-  
 
   openAlert(msg: any, method = false) {
     const modalRef = this.modalService.open(DmapAlertDialogModal);
