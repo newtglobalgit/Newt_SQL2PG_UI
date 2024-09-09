@@ -11,6 +11,7 @@ export class LoginService {
   userEmail: string = '';
   userName: string = '';
   licenseBuyMessage: string;
+  isErrorShow: boolean = false;
 
   $userLogedIn = new BehaviorSubject<string>(this.userEmail);
   $userLogedInObj = this.$userLogedIn.asObservable();
@@ -52,7 +53,19 @@ export class LoginService {
     this.licenseBuyMessage = licenseBuyMessage;
   }
 
+  getIsErrorShow() {
+    return this.isErrorShow;
+  }
+
   activateLicense(reqObj: any): Observable<any> {
     return this.http.post(this.config.host + '/getLicenseDetails', reqObj);
+  }
+
+  sendsignupDetails(signupDetails: any): Observable<any> {
+    return this.http.post(this.config.host + '/signup', signupDetails);
+  }
+
+  sendloginDetails(loginDetails: any): Observable<any> {
+    return this.http.post(this.config.host + '/login', loginDetails);
   }
 }

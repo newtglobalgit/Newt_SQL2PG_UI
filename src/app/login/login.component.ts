@@ -138,151 +138,87 @@ export class LoginComponent implements OnInit {
   }
 
   onSignUp() {
-    // this.loginService.sendsignupDetails(this.signUpForm.value).subscribe(
-    //   (data) => {
-    //     if (data.status == 'success') {
-    //       this.showSignUpLink = false;
-    //       this.openAlert('User successfully created');
-    //       this.router.navigate(['/login']);
-    //     } else if (data.status == 'password null') {
-    //       this.openAlert('Password should not be empty');
-    //     } else if (data.status == 'email format') {
-    //       this.openAlert('Wrong Email format');
-    //     } else if (data.status == 'Failed') {
-    //       this.openAlert('Username already exists');
-    //     } else if (data.status == 'user_exists') {
-    //       this.showSignUpLink = false;
-    //       this.openAlert(
-    //         'Only one user is allowed to signup, use existing credentials'
-    //       );
-    //     }
-    //   },
-    //   (error) => {}
-    // );
+    console.log('Sign up form values --> ', this.signUpForm.value);
+    this.loginService.sendsignupDetails(this.signUpForm.value).subscribe(
+      (data) => {
+        if (data.status == 'success') {
+          this.showSignUpLink = false;
+          this.openAlert('User successfully created');
+          this.router.navigate(['/login']);
+        } else if (data.status == 'password null') {
+          this.openAlert('Password should not be empty');
+        } else if (data.status == 'email format') {
+          this.openAlert('Wrong Email format');
+        } else if (data.status == 'Failed') {
+          this.openAlert('Username already exists');
+        } else if (data.status == 'user_exists') {
+          this.showSignUpLink = false;
+          this.openAlert(
+            'Only one user is allowed to signup, use existing credentials'
+          );
+        }
+      },
+      (error) => {}
+    );
   }
 
   onLogin() {
-    // this.loginFailedMsg = undefined;
-    // this.spinner.show();
-    // this.loginService.sendloginDetails(this.loginForm.value).subscribe(
-    //   (data) => {
-    //     this.commonservice.setShowLicensePage('show');
-    //     if (data.status == 'failed') {
-    //       this.loginService.setUserSession(null, undefined);
-    //       this.loginFailedMsg = 'Username and Password mismatch';
-    //     } else if (data.status == 'usernotfound') {
-    //       this.loginService.setUserSession(null, undefined);
-    //       this.loginFailedMsg =
-    //         'Unable to find the user, please create a new account';
-    //     } else if (
-    //       data.status == 'success' &&
-    //       (data.license_status == 'license_not_found' ||
-    //         data.license_status == 'license_in_active')
-    //     ) {
-    //       this.loginService.setUserSession(
-    //         this.loginForm.value.emailAddress,
-    //         data
-    //       );
-    //       this.loginService.setLicenseBuyMessage(data.license_message);
-    //       this.router.navigate(['/license']);
-    //       this.loginService.getDMAPImageVersion().subscribe((data) => {
-    //         this.checkLength(data);
-    //       });
-    //     } else if (
-    //       data.status == 'success' &&
-    //       data.license_status == 'license_active'
-    //     ) {
-    //       if (data.license_message) {
-    //         this.spinner.hide();
-    //         this.openAlert(data.license_message);
-    //       }
-    //       this.loginService.setUserSession(
-    //         this.loginForm.value.emailAddress,
-    //         data
-    //       );
-    //       this.loginService.getNodeType().subscribe((data) => {
-    //         this.commonservice.setNodeType(data.node_type);
-    //         this.commonservice.setLicenseType(data.license_type);
-    //         if (data.node_type == 'analytics_worker') {
-    //           this.router.navigate(['/dbAssessment']);
-    //         } else if (
-    //           data.license_type == 'trial' ||
-    //           data.license_type == 'dmap'
-    //         ) {
-    //           this.analytics
-    //             .updateNodeType({ node_type: 'dmap_node' })
-    //             .subscribe((node_res) => {
-    //               this.checkNodeType(node_res);
-    //             });
-    //         } else {
-    //           if (data.node_type == '') {
-    //             this.router.navigate(['/nodeSelection']);
-    //             this.spinner.hide();
-    //           } else {
-    //             this.router.navigate(['/dbSetup']);
-    //             this.spinner.hide();
-    //           }
-    //         }
-    //       });
-    //       this.loginService.getDMAPImageVersion().subscribe((data) => {
-    //         this.checkLength(data);
-    //       });
-    //     } else if (
-    //       data.status == 'success' &&
-    //       data.license_status == 'license_not_required'
-    //     ) {
-    //       this.loginService.setUserSession(
-    //         this.loginForm.value.emailAddress,
-    //         data
-    //       );
-    //       this.loginService.getNodeType().subscribe((data) => {
-    //         this.commonservice.setNodeType(data.node_type);
-    //         this.commonservice.setLicenseType(data.license_type);
-    //         if (data.license_type == 'trial' || data.license_type == 'dmap') {
-    //           this.analytics
-    //             .updateNodeType({ node_type: 'dmap_node' })
-    //             .subscribe((node_res) => {
-    //               this.checkNodeType(node_res);
-    //             });
-    //         } else {
-    //           this.loginService.getNodeType().subscribe((node_data) => {
-    //             if (node_data.node_type == '') {
-    //               this.router.navigate(['/nodeSelection']);
-    //               this.spinner.hide();
-    //             } else {
-    //               if (node_data.node_type == 'analytics_worker') {
-    //                 this.router.navigate(['/dbAssessment']);
-    //                 this.spinner.hide();
-    //               } else {
-    //                 this.router.navigate(['/dbSetup']);
-    //                 this.spinner.hide();
-    //               }
-    //             }
-    //           });
-    //         }
-    //       });
-    //       this.loginService.getDMAPImageVersion().subscribe((data) => {
-    //         this.checkLength(data);
-    //       });
-    //     } else {
-    //       this.loginService.setLicenseBuyMessage(data.license_message);
-    //     }
-    //     setTimeout(() => {
-    //       if (this.loginFailedMsg != 'Username and Password mismatch') {
-    //       }
-    //     }, 1000);
-    //     this.spinner.hide();
-    //   },
-    //   (error) => {
-    //     this.isConnectionFailed = this.loginService.getIsErrorShow();
-    //     this.spinner.hide();
-    //   }
-    // );
-  }
-  checkLength(data: any) {
-    if (data.length > 0 && data[0].status == 'success') {
-      this.openAlert(data[0].message);
-    }
+    this.loginFailedMsg = undefined;
+    this.spinner.show();
+    this.loginService.sendloginDetails(this.loginForm.value).subscribe(
+      (data) => {
+        if (data.status == 'failed') {
+          this.loginService.setUserSession(null, undefined);
+          this.loginFailedMsg = 'Username and Password mismatch';
+        } else if (data.status == 'usernotfound') {
+          this.loginService.setUserSession(null, undefined);
+          this.loginFailedMsg =
+            'Unable to find the user, please create a new account';
+        } else if (
+          data.status == 'success' &&
+          (data.license_status == 'license_not_found' ||
+            data.license_status == 'license_in_active')
+        ) {
+          this.loginService.setUserSession(
+            this.loginForm.value.emailAddress,
+            data
+          );
+          this.loginService.setLicenseBuyMessage(data.license_message);
+          this.router.navigate(['/license']);
+        } else if (
+          data.status == 'success' &&
+          data.license_status == 'license_active'
+        ) {
+          if (data.license_message) {
+            this.spinner.hide();
+            this.openAlert(data.license_message);
+          }
+          this.loginService.setUserSession(
+            this.loginForm.value.emailAddress,
+            data
+          );
+        } else if (
+          data.status == 'success' &&
+          data.license_status == 'license_not_required'
+        ) {
+          this.loginService.setUserSession(
+            this.loginForm.value.emailAddress,
+            data
+          );
+        } else {
+          this.loginService.setLicenseBuyMessage(data.license_message);
+        }
+        setTimeout(() => {
+          if (this.loginFailedMsg != 'Username and Password mismatch') {
+          }
+        }, 1000);
+        this.spinner.hide();
+      },
+      (error) => {
+        this.isConnectionFailed = this.loginService.getIsErrorShow();
+        this.spinner.hide();
+      }
+    );
   }
 
   openAlert(msg) {
