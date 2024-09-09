@@ -32,10 +32,10 @@ export class GenAiIntegrationComponent implements OnInit {
       temperature: [1],
       topP: [''],
       apiCallLimit: [''],
-      maxRetries: [''],
-      retryDelay: [''],
+      maxRetries: ['1'],
+      retryDelay: ['1'],
       maxTokens: [''],
-      maxApiCalls: [''],
+      maxApiCalls: ['1'],
     });
   }
   existingGenAiDetails: any;
@@ -50,10 +50,10 @@ export class GenAiIntegrationComponent implements OnInit {
   temperature: number = 1;
   topP: string = '';
   apiCallLimit: string = '';
-  maxRetries: string = '';
-  retryDelay: string = '';
+  maxRetries: string = '1';
+  retryDelay: string = '1';
   maxTokens: string = '';
-  maxApiCalls: string = '';
+  maxApiCalls: string = '1';
 
   projectId: string = '';
   serviceAccountEmail: string = '';
@@ -65,10 +65,10 @@ export class GenAiIntegrationComponent implements OnInit {
     this.temperature = 1;
     this.topP = '';
     this.apiCallLimit = '';
-    this.maxRetries = '';
-    this.retryDelay = '';
+    this.maxRetries = '1';
+    this.retryDelay = '1';
     this.maxTokens = '';
-    this.maxApiCalls = '';
+    this.maxApiCalls = '1';
   }
 
   saveGenAiDetails() {

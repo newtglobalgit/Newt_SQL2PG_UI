@@ -467,6 +467,14 @@
                             >*</span
                           ></label
                         >
+                        <!-- <span
+                          class="validFormCheck"
+                          *ngIf="
+                            targetDBPasswordRef.valid &&
+                            targetDBPasswordRef.touched
+                          "
+                          ><i class="fa fa-check"></i
+                        ></span> -->
                         <app-show-password
                           (showPasswordClicked)="toggleTargetPassword($event)"
                           [password]="targetDBPasswordValue"

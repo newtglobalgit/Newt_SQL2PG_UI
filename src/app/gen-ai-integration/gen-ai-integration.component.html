@@ -169,7 +169,7 @@
         </div>
 
         <div class="row adjust">
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label for="maxRetries"
                 >Max Retries <span class="requiredField">*</span></label
@@ -183,8 +183,29 @@
                 name="maxRetries"
               />
             </div>
-          </div>
+          </div> -->
           <div class="col-md-6">
+            <div class="form-group">
+              <label for="maxRetries"
+                >Max Retries <span class="requiredField">*</span></label
+              >
+              <select
+                class="form-control"
+                id="maxRetries"
+                formControlName="maxRetries"
+                [(ngModel)]="maxRetries"
+                name="maxRetries"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label for="retryDelay"
                 >Retry Delay <span class="requiredField">*</span></label
@@ -197,6 +218,27 @@
                 [(ngModel)]="retryDelay"
                 name="retryDelay"
               />
+            </div>
+          </div> -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="retryDelay"
+                >Retry Delay <span class="requiredField">*</span></label
+              >
+              <select
+                class="form-control"
+                id="retryDelay"
+                formControlName="retryDelay"
+                [(ngModel)]="retryDelay"
+                name="retryDelay"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
             </div>
           </div>
         </div>
@@ -217,7 +259,7 @@
               />
             </div>
           </div>
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label for="maxApiCalls"
                 >Max API Calls <span class="requiredField">*</span></label
@@ -230,6 +272,27 @@
                 [(ngModel)]="maxApiCalls"
                 name="maxApiCalls"
               />
+            </div>
+          </div> -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="maxApiCalls"
+                >Max API Calls <span class="requiredField">*</span></label
+              >
+              <select
+                class="form-control"
+                id="maxApiCalls"
+                formControlName="maxApiCalls"
+                [(ngModel)]="maxApiCalls"
+                name="maxApiCalls"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
             </div>
           </div>
         </div>
