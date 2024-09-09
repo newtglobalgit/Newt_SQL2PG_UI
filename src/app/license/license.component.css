@@ -48,14 +48,15 @@ span.showPasswordIcon > svg:hover {
   line-height: 11px;
 }
 
+
 @media (min-width: 1280px) {
-  .loginBodyHeight {
+  .loginBodyHeight{
     height: 93vh;
   }
 }
 
 @media (min-width: 1745px) {
-  .loginBodyHeight {
+  .loginBodyHeight{
     height: 95vh;
   }
 }
