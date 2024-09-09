@@ -25,7 +25,7 @@ throw new Error('Method not implemented.');
   showAssessmentButton = false;
   discoveryMessage = 'Discovery Not Started';
 
-  enableDiscoveryReport: boolean = true; // Only Discovery is enabled
+  enableDiscoveryReport: boolean = true; 
   dropdownOpen: boolean = false; 
 
   constructor(private modalService: NgbModal, private router: Router, 
@@ -47,7 +47,7 @@ throw new Error('Method not implemented.');
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
     } else {
-      this.discoveryMessage = this.selectedRow[5] || 'Discovery Not Started';  // Update message based on status
+      this.discoveryMessage = this.selectedRow[5] || 'Discovery Not Started';  
       this.isDiscoveryCompleted = this.selectedRow.discoveryStatus === 'Completed';
     }
   }
@@ -75,33 +75,32 @@ throw new Error('Method not implemented.');
     this.discoveryMessage = 'Discovery in progress...';
     this.selectedRow[5] = 'In Progress';
 
-    await this.sleep(6000);
+    await this.sleep(3000);
  
-    // Make API call to start discovery
+    
     this.sql2PgService.startDiscovery(this.current_run_id).subscribe(
       (response) => {
         console.log(this.current_run_id)
         console.log('Discovery API Response:', response);
         // alert(response.error)
-        // Update the status after the API call completes
+        
           this.selectedRow[5] = 'Completed';
           this.discoveryMessage = 'Discovery completed successfully';
-          this.isDiscoveryInProgress = false;  // Re-enable buttons
-          this.isDiscoveryCompleted = true;    // Mark discovery as completed
-       
+          this.isDiscoveryInProgress = false;  
+          this.isDiscoveryCompleted = true;    
       },
       (error) => {
         console.error('Error starting discovery:', error);
         this.discoveryMessage = 'Error during discovery';
         this.selectedRow.discoveryStatus = 'Error';
-        this.isDiscoveryInProgress = false;  // Re-enable button in case of error
+        this.isDiscoveryInProgress = false;  
       }
     );
   }
  
   startAssessment() {
     console.log('Starting assessment...');
-    // Implement the assessment logic
+    
   }
 
   updatePassword(data) {
@@ -131,7 +130,6 @@ throw new Error('Method not implemented.');
   }
 
   viewDiscoveryReport(): void {
-    // Logic to handle viewing the Discovery report
     console.log('Discovery Report Selected');
   }
 

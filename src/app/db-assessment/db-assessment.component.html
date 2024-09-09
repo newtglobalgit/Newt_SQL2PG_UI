@@ -521,19 +521,19 @@
   </div>
 
 </div> 
-<div style="border:1px solid lightgray;">
+<div style="border:1px solid lightgray;"*ngIf="selectedRow">
   <div class="col-md-12" *ngIf="selectedRow" >
-    <!-- Dynamic Alert Box based on status -->
+    
     <div role="alert" [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]" style="border: 1px solid #dee2e6; padding: 20px; border-radius: 5px;margin-top: 11px;">
-      <!-- Discovery Status -->
+      
       <span>
         <span class="font-weight-bold" style="margin-right: 10px;"></span>
         <span class="font-weight-bold">{{ discoveryMessage }}</span>
       </span>
    
-      <!-- Dynamic Button based on status -->
+      
       <div style="margin-top: 15px;">
-        <!-- Start Discovery button: only visible if discovery is not completed -->
+        
         <button
           class="btn btn-md btn-primary"
           *ngIf="!isDiscoveryCompleted"
@@ -543,7 +543,7 @@
           Start Discovery
         </button>
    
-        <!-- Start Assessment button: only visible after discovery is completed -->
+        
         <button
           class="btn btn-md btn-primary"
           *ngIf="isDiscoveryCompleted"
