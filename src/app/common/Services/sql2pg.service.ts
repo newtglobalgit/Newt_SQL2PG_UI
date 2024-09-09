@@ -37,6 +37,12 @@ export class Sql2PgService {
     return this.http.post(this.config.host + '/discoveryReport', payload);
   }
 
+
+  downloadDiscoveryPdfReport(details: any): Observable<any>{
+    return this.http.post(this.config.host+'/generateDisoveryReport',details)
+  }
+
+
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
   }

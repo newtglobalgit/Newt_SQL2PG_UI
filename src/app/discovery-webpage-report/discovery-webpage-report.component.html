@@ -7,7 +7,7 @@
             <div class="col-md-5 marginLeft0">
               <span class="col-md-6" style="font-size: 14; font-weight: bold;" >Discovery Report</span>
               <a>
-                <img (click)="downloadPdf(tableData.runId)" width="25" height="25" alt="PDF"
+                <img (click)="downloadPdf(tableData.runId, tableData.sourceDBName, tableData.sourceDBSchema)" width="25" height="25" alt="PDF"
                     src="../../../assets/images/SVG/icon-03.svg" title="Download PDF"
                     style="cursor: pointer;">
               </a>

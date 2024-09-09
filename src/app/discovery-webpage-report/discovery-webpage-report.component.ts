@@ -19,6 +19,9 @@ export class DiscoveryWebpageReportComponent implements OnInit ,  OnChanges {
 
 
   showTable: boolean;
+  spinner: any;
+  databaseSelected: any;
+  resp: Object;
 
 
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
@@ -79,7 +82,28 @@ discoveryReport() {
     });
 }
 
-downloadPdf()
-{}
+downloadPdf(runId: string, db_name: string, schema: string) {
+  // Construct the request object with provided parameters
+  console.log("download pdf")
+  let reqObj = {
+    "runId": this.runId,
+    "db_name": "AdventureWorks2019",
+    "schema_name": "DBO"
+  };
+
+  this.sql2PgService.downloadDiscoveryPdfReport(reqObj).subscribe(data => {
+    this.resp = data
+    
+    if (this.resp === "success") {
+      console.log('PDF download was successful');
+    } else {
+      console.error('Failed to download PDF', data);
+    }
+  }, error => {
+    this.spinner.hide();
+    console.error('Error occurred while downloading PDF', error);
+  });
+}
+
 
 }
