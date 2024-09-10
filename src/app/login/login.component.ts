@@ -190,6 +190,7 @@ export class LoginComponent implements OnInit {
           data.status == 'success' &&
           data.license_status == 'license_active'
         ) {
+          sessionStorage.setItem('auth_token', data.auth_token);
           if (data.license_message) {
             this.spinner.hide();
             this.openAlert(data.license_message);
@@ -198,14 +199,17 @@ export class LoginComponent implements OnInit {
             this.loginForm.value.emailAddress,
             data
           );
+          this.router.navigate(['/dbSetup']);
         } else if (
           data.status == 'success' &&
           data.license_status == 'license_not_required'
         ) {
+          sessionStorage.setItem('auth_token', data.auth_token);
           this.loginService.setUserSession(
             this.loginForm.value.emailAddress,
             data
           );
+          this.router.navigate(['/dbSetup']);
         } else {
           this.loginService.setLicenseBuyMessage(data.license_message);
         }
