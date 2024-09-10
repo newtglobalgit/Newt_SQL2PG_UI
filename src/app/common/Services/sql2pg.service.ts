@@ -28,8 +28,14 @@ export class Sql2PgService {
   }
 
   startDiscovery(RUN_ID: any): Observable<any> {
-    const payload = { RUN_ID: RUN_ID };
+    const payload = { RUN_ID: String(RUN_ID) };
     return this.http.post(this.config.host + '/discovery', payload);
+  }
+
+  startAssessment(RUN_ID: any): Observable<any> {
+    const payload = { RUN_ID: String(RUN_ID),"Enable_Genai":"n"      
+     };
+    return this.http.post(this.config.host + '/assessment', payload);
   }
 
   getDiscoveryWebPageReport(RUN_ID: any): Observable<any> {
