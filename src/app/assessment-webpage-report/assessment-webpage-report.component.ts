@@ -10,10 +10,11 @@ export class AssessmentWebpageReportComponent implements OnInit {
 
     
 @Input() runId;
-@Input() showComponent;
 @Input() Status;
 @Input() Stage;
-@Input() isShowReport: string;
+@Input() showComponent;
+@Input() schemaName: string;
+@Input() dbName: string;
 
 
   tableData: any[];
@@ -27,10 +28,6 @@ export class AssessmentWebpageReportComponent implements OnInit {
 
 
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
-
-  ngOnChanges() {
-    this.getAssessmentWebpageSummaryData();
-  }
 
 
 ngOnInit(): void {
@@ -51,13 +48,7 @@ assessmentReport() {
       
       this.tableData = response;  
       this.runId = this.tableData[0].runId;
-      console.log(this.tableData);
-      console.log(this.tableData[0].runId)
-      console.log(this.tableData[0].analyticData['Storage Objects'])
-
-
-     
-
+   
       this.cdr.detectChanges();
       if (this.runId === this.tableData[0].runId) {
         if (this.tableData && this.tableData.length > 0)
@@ -77,14 +68,13 @@ assessmentReport() {
 }
 
 downloadPdf() {
-  console.log("download pdf")
   let reqObj = {
     "runId": this.runId,
-    "db_name": "AdventureWorks2019",
-    "schema_name": "DBO"
+    "db_name": this.dbName,
+    "schema_name": this.schemaName
   };
 
-  this.sql2PgService.downloadDiscoveryPdfReport(reqObj).subscribe(data => {
+  this.sql2PgService.downloadAssessmentPdfReport(reqObj).subscribe(data => {
     this.resp = data
     
     if (this.resp === "success") {

@@ -560,12 +560,12 @@
   
   <div>
     <app-discovery-webpage-report *ngIf = "!showAssessmentComponent"  [Status]="status" [Stage]="stage" [runId]="RUN_ID"
-     [showComponent]="enableDiscoveryReport" [isShowReport]="isShowDataAndGraphForDiscovery"></app-discovery-webpage-report>
+     [showComponent]="enableDiscoveryReport"  [schemaName]="selectedRow[0]" [dbName]="selectedRow[1]"></app-discovery-webpage-report>
   </div>
 </div>
 
     <div>
       <app-assessment-webpage-report *ngIf = "showAssessmentComponent" [Status]="status" [Stage]="stage" [runId]="RUN_ID"
-      [showComponent]="enableAssessmentReport" [isShowReport]="isShowDataAndGraph"> </app-assessment-webpage-report>
+      [showComponent]="enableAssessmentReport"  [schemaName]="selectedRow[0]" [dbName]="selectedRow[1]"> </app-assessment-webpage-report>
     </div>
   

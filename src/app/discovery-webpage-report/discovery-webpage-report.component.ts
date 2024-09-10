@@ -10,11 +10,11 @@ export class DiscoveryWebpageReportComponent implements OnInit ,  OnChanges {
 
 
 @Input() runId;
-@Input() showComponent;
 @Input() Status;
-@Input() overWriteStage;
 @Input() Stage;
-@Input() isShowReport: string;
+@Input() showComponent;
+@Input() schemaName: string;
+@Input() dbName: string;
 
   tableData: any[];
 
@@ -43,11 +43,7 @@ discoveryReport() {
     (response) => {    
       
       this.tableData = response;  
-      this.runId = this.tableData[0].runId;
-      console.log(this.tableData);
-      console.log(this.tableData[0].runId)
-
-     
+      this.runId = this.tableData[0].runId;     
 
       this.cdr.detectChanges();
       if (this.runId === this.tableData[0].runId) {
@@ -67,13 +63,11 @@ discoveryReport() {
     });
 }
 
-downloadPdf(runId: string, db_name: string, schema: string) {
-  // Construct the request object with provided parameters
-  console.log("download pdf")
+downloadPdf() {
   let reqObj = {
     "runId": this.runId,
-    "db_name": "AdventureWorks2019",
-    "schema_name": "DBO"
+    "db_name": this.dbName,
+    "schema_name": this.schemaName
   };
 
   this.sql2PgService.downloadDiscoveryPdfReport(reqObj).subscribe(data => {

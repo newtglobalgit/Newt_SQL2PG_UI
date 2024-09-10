@@ -16,8 +16,8 @@ selectedRow: any;
 
 
 enableAssessmentReport: boolean = false;
-  isShowDataAndGraph: boolean = false; 
-  isShowDataAndGraphForDiscovery: boolean = false; 
+  // isShowDataAndGraph: boolean = false; 
+  // isShowDataAndGraphForDiscovery: boolean = false; 
 
   showAssessmentComponent: boolean;
   current_run_id: any;
@@ -97,7 +97,6 @@ enableAssessmentReport: boolean = false;
       (response) => {
         console.log(this.current_run_id)
         console.log('Discovery API Response:', response);
-        // alert(response.error)
        
           this.selectedRow[5] = 'Completed';
           this.discoveryMessage = 'Discovery completed successfully';
@@ -144,9 +143,7 @@ enableAssessmentReport: boolean = false;
     
     this.enableAssessmentReport = true;
     this.enableDiscoveryReport = true;
-    this.isShowDataAndGraph = true;
     this.showAssessmentComponent =true
-    console.log("Assess ->"+this.enableAssessmentReport)
 
  
   }
@@ -154,8 +151,8 @@ enableAssessmentReport: boolean = false;
     state == 'Discovery' &&
     (this.status == 'Completed' || this.status == 'completed')
   ) {
-    this.isShowDataAndGraphForDiscovery = true;
     this.enableDiscoveryReport = true;
+    this.showAssessmentComponent=false;
     this.enableAssessmentReport =
         this.stage === 'Assessment'
 
