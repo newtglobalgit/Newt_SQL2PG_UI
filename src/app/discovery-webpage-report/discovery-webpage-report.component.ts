@@ -12,6 +12,7 @@ export class DiscoveryWebpageReportComponent implements OnInit ,  OnChanges {
 @Input() runId;
 @Input() showComponent;
 @Input() Status;
+@Input() overWriteStage;
 @Input() Stage;
 @Input() isShowReport: string;
 
@@ -27,29 +28,13 @@ export class DiscoveryWebpageReportComponent implements OnInit ,  OnChanges {
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
 
   ngOnChanges() {
-    this.getDiscoveryWebpageSummaryData(this.runId);
+    this.discoveryReport();
   }
 
 ngOnInit(): void {
-  this.getDiscoveryWebpageSummaryData(this.runId);
+  this.discoveryReport();
 }
 
-getDiscoveryWebpageSummaryData(runId){
-  this.sql2PgService.startDiscovery(runId).subscribe((resp) => {
-    if (resp.status === "success") {
-      console.log(resp.status)
-       this.discoveryReport()
-      } 
-      else {
-        console.warn('Response is empty or undefined.');
-      }
-      },
-      (error) => {
-      console.error('Error fetching data:', error);
-      }
-    );
-
-}
 
 
  

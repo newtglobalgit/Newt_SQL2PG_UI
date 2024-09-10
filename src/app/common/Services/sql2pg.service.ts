@@ -42,6 +42,15 @@ export class Sql2PgService {
     return this.http.post(this.config.host+'/generateDisoveryReport',details)
   }
 
+  startAssessment(details): Observable<any>  {
+    return this.http.post(this.config.host + '/assessment', details);
+  }
+
+  getAssessmentWebPageReport(RUN_ID : any): Observable<any> {
+    const payload = { RUN_ID: RUN_ID };
+    return this.http.post(this.config.host + '/assessmentReport', payload);
+  }
+
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');

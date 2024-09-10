@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdatePasswordComponent } from '../common/Modal/update-password/update-password.component';
 import { Router } from '@angular/router';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
+import { viewport } from '@popperjs/core';
 
 @Component({
   selector: 'app-db-assessment',
@@ -11,16 +12,14 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   styleUrls: ['./db-assessment.component.css'],
 })
 export class DbAssessmentComponent implements OnInit {
-enableAssessmentReport: any;
-  isShowDataAndGraph: string;
+selectedRow: any;
 
 
-reports() {
-throw new Error('Method not implemented.');
-}
-  tableData: any[] = [];
-  filteredData: any[] = [];
-  selectedRow: any = null;
+enableAssessmentReport: boolean = false;
+  isShowDataAndGraph: boolean = false; 
+  isShowDataAndGraphForDiscovery: boolean = false; 
+
+  showAssessmentComponent: boolean;
   current_run_id: any;
 
   isDiscoveryInProgress = false;
@@ -28,13 +27,17 @@ throw new Error('Method not implemented.');
   showAssessmentButton = false;
   discoveryMessage = 'Discovery Not Started';
 
-  enableDiscoveryReport: boolean = true; 
+
+  tableData: any[] = [];
+  filteredData: any[] = [];
+
+  enableDiscoveryReport: boolean = false; 
   dropdownOpen: boolean = false; 
 
-  status: String = 'Completed';
-  stage: String  = 'Discovery';
-  isShowReport: String = 'Discovery';
-  RUN_ID: String = "20240828170749";  
+  status: String = '';
+  stage: String  = '';
+  isShowReport: String = '';
+  RUN_ID: String = "";  
   isExpanded: boolean =  false;
   iconTitle: string;
   data: any;
@@ -50,6 +53,7 @@ throw new Error('Method not implemented.');
 
     this.getStoredSchemaInfo();
 
+    
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
     } else {
@@ -111,6 +115,8 @@ throw new Error('Method not implemented.');
    
   }
 
+    
+  
   updatePassword(data) {
     const modalRef = this.modalService.open(UpdatePasswordComponent, {
       size: 'lg',
@@ -131,30 +137,28 @@ throw new Error('Method not implemented.');
     state == 'Assessment' &&
     (this.status == 'Completed' || this.status == 'completed')
   ) {
+
     
-    this.enableDiscoveryReport = true;
     this.enableAssessmentReport = true;
-    this.isShowDataAndGraph = 'Assessment';
+    this.enableDiscoveryReport = false;
+    this.isShowDataAndGraph = true;
+    this.showAssessmentComponent =true
+    console.log("Assess ->"+this.enableAssessmentReport)
+
  
   }
   if (
     state == 'Discovery' &&
     (this.status == 'Completed' || this.status == 'completed')
   ) {
-    this.isShowDataAndGraph = 'Discovery';
+    this.isShowDataAndGraphForDiscovery = true;
     this.enableDiscoveryReport = true;
     this.enableAssessmentReport =
-      this.stage === 'Assessment' || this.stage === 'Migration';
-    
+        this.stage === 'Assessment'
+
+     
   }
 
-}
-
-onSelectRow(row: any) {
-  this.selectedRow = row;
-  this.current_run_id=row[3]
-  this.discoveryMessage = row[5] || 'Discovery Not Started';  // Update message when selecting a row
-  this.isDiscoveryCompleted = row[5] === 'Completed';  // Update button visibility based on discovery completion
 }
 
 
@@ -173,12 +177,6 @@ onSelectRow(row: any) {
     );
   }
 
-
-  
-  onRadioClicked(row: any): void {
-    console.log('Selected row:', row);
-  }
-  
   editRow(row: any): void {
     console.log('Editing row:', row);
   }
@@ -191,5 +189,24 @@ onSelectRow(row: any) {
     console.log('Discovery Report Selected');
   }
 
+  onSelectRow(row: any) {
+    this.selectedRow = row;
+    this.current_run_id=row[3]
+    this.discoveryMessage = row[5] || 'Discovery Not Started';  // Update message when selecting a row
+    this.isDiscoveryCompleted = row[5] === 'Completed';  // Update button visibility based on discovery completion
+    console.log('Selected row:', row);
+    this.RUN_ID = row[3];
+    this.status = row[5];
+    this.stage = row[4];
+    
+    if(this.status != "Not Started")
+    {
+      this.enableDiscoveryReport=true;
+     
+    }
+  }
+
 
   }
+  
+
