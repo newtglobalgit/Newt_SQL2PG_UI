@@ -89,7 +89,7 @@
               class="dropdown-item"
               (click)="viewReport('Assessment')"
               style="cursor: pointer"
-              *ngIf="enableDiscoveryReport"
+              *ngIf="enableAssessmentReport"
             >
               <span>Assessment</span>
             </li>
@@ -559,13 +559,13 @@
    
   
   <div>
-    <app-discovery-webpage-report *ngIf = "enableDiscoveryReport"  [Status]="status" [Stage]="stage" [runId]="RUN_ID"
+    <app-discovery-webpage-report *ngIf = "!showAssessmentComponent"  [Status]="status" [Stage]="stage" [runId]="RUN_ID"
      [showComponent]="enableDiscoveryReport" [isShowReport]="isShowDataAndGraphForDiscovery"></app-discovery-webpage-report>
   </div>
 </div>
 
     <div>
-      <app-assessment-webpage-report *ngIf = "enableAssessmentReport" [Status]="status" [Stage]="stage" [runId]="RUN_ID"
+      <app-assessment-webpage-report *ngIf = "showAssessmentComponent" [Status]="status" [Stage]="stage" [runId]="RUN_ID"
       [showComponent]="enableAssessmentReport" [isShowReport]="isShowDataAndGraph"> </app-assessment-webpage-report>
     </div>
   

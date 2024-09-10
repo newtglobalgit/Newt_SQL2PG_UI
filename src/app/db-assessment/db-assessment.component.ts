@@ -41,6 +41,8 @@ enableAssessmentReport: boolean = false;
   isExpanded: boolean =  false;
   iconTitle: string;
   data: any;
+  showDiscoveryDropDown: boolean;
+  showAssessmentDropDown: boolean;
 
 
   constructor(private modalService: NgbModal, private router: Router, 
@@ -48,6 +50,7 @@ enableAssessmentReport: boolean = false;
     private cdr: ChangeDetectorRef
   ) {}
 
+ 
   ngOnInit(): void {
 
 
@@ -140,7 +143,7 @@ enableAssessmentReport: boolean = false;
 
     
     this.enableAssessmentReport = true;
-    this.enableDiscoveryReport = false;
+    this.enableDiscoveryReport = true;
     this.isShowDataAndGraph = true;
     this.showAssessmentComponent =true
     console.log("Assess ->"+this.enableAssessmentReport)
@@ -182,7 +185,12 @@ enableAssessmentReport: boolean = false;
   }
   
   toggleDropdown(): void {
+    this.resetView()
     this.dropdownOpen = !this.dropdownOpen;
+  }
+  resetView() {
+    this.showAssessmentComponent = false;
+    
   }
 
   viewDiscoveryReport(): void {
@@ -194,6 +202,8 @@ enableAssessmentReport: boolean = false;
     this.current_run_id=row[3]
     this.discoveryMessage = row[5] || 'Discovery Not Started';  // Update message when selecting a row
     this.isDiscoveryCompleted = row[5] === 'Completed';  // Update button visibility based on discovery completion
+    
+    this.resetView()
     console.log('Selected row:', row);
     this.RUN_ID = row[3];
     this.status = row[5];
@@ -204,6 +214,18 @@ enableAssessmentReport: boolean = false;
       this.enableDiscoveryReport=true;
      
     }
+
+    if (this.stage === 'Discovery' && this.status === 'Completed') {
+      this.enableDiscoveryReport = true;
+      this.enableAssessmentReport = false;
+    } else if (this.stage === 'Assessment' && this.status === 'Completed' || '') {
+      this.enableDiscoveryReport = true;
+      this.enableAssessmentReport = true;
+    } else {
+      this.enableDiscoveryReport = false;
+      this.enableAssessmentReport = false;
+    }
+  
   }
 
 
