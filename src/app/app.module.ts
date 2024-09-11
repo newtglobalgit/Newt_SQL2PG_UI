@@ -18,7 +18,6 @@ import { FooterComponent } from './common/Footer/footer/footer.component';
 import { LicenseComponent } from './license/license.component';
 
 import { MaterialModule } from './material-module';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AppConfigService } from './common/Services/app-config.service';
 
 import { TitleCasePipe } from '@angular/common';
@@ -40,6 +39,7 @@ import { ReqHeaderAndErrorHandlingInterceptor } from './common/Interceptors/no-c
 import { DiscoveryWebpageReportComponent } from './discovery-webpage-report/discovery-webpage-report.component';
 import { AssessmentWebpageReportComponent } from './assessment-webpage-report/assessment-webpage-report.component';
 import { LoginComponent } from './login/login.component';
+import { DmapMultipleSchemaDeleteComponent } from './common/Modal/dmap-multiple-schema-delete/dmap-multiple-schema-delete.component';
 
 export function appInit(appConfigService: AppConfigService) {
   return () => appConfigService.load();
@@ -63,6 +63,7 @@ export function appInit(appConfigService: AppConfigService) {
     DiscoveryWebpageReportComponent,
     AssessmentWebpageReportComponent,
     LoginComponent,
+    DmapMultipleSchemaDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,7 +101,7 @@ export function appInit(appConfigService: AppConfigService) {
     TitleCasePipe,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [],
+  entryComponents: [DmapMultipleSchemaDeleteComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
