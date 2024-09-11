@@ -11,7 +11,6 @@ import { DmapMultipleSchemaDeleteComponent } from '../common/Modal/dmap-multiple
   styleUrls: ['./db-assessment.component.css'],
 })
 export class DbAssessmentComponent implements OnInit {
-  enableAssessmentReport: any;
   isShowDataAndGraph: string;
 
   reports() {
@@ -19,7 +18,12 @@ export class DbAssessmentComponent implements OnInit {
   }
   tableData: any[] = [];
   filteredData: any[] = [];
-  selectedRow: any = null;
+  selectedRow: any;
+  enableAssessmentReport: boolean = false;
+  // isShowDataAndGraph: boolean = false;
+  // isShowDataAndGraphForDiscovery: boolean = false;
+
+  showAssessmentComponent: boolean;
   current_run_id: any;
 
   isDiscoveryInProgress = false;
@@ -27,16 +31,19 @@ export class DbAssessmentComponent implements OnInit {
   showAssessmentButton = false;
   discoveryMessage = 'Discovery Not Started';
 
-  enableDiscoveryReport: boolean = true;
+  enableDiscoveryReport: boolean = false;
   dropdownOpen: boolean = false;
 
-  status: String = 'Completed';
-  stage: String = 'Discovery';
-  isShowReport: String = 'Discovery';
-  RUN_ID: String = '20240828170749';
+  status: String = '';
+  stage: String = '';
+  isShowReport: String = '';
+  RUN_ID: String = '';
   isExpanded: boolean = false;
   iconTitle: string;
   data: any;
+  showDiscoveryDropDown: boolean;
+  showAssessmentDropDown: boolean;
+  showDetails: boolean = true;
 
   constructor(
     private modalService: NgbModal,
@@ -125,26 +132,18 @@ export class DbAssessmentComponent implements OnInit {
       state == 'Assessment' &&
       (this.status == 'Completed' || this.status == 'completed')
     ) {
-      this.enableDiscoveryReport = true;
       this.enableAssessmentReport = true;
-      this.isShowDataAndGraph = 'Assessment';
+      this.enableDiscoveryReport = true;
+      this.showAssessmentComponent = true;
     }
     if (
       state == 'Discovery' &&
       (this.status == 'Completed' || this.status == 'completed')
     ) {
-      this.isShowDataAndGraph = 'Discovery';
       this.enableDiscoveryReport = true;
-      this.enableAssessmentReport =
-        this.stage === 'Assessment' || this.stage === 'Migration';
+      this.showAssessmentComponent = false;
+      this.enableAssessmentReport = this.stage === 'Assessment';
     }
-  }
-
-  onSelectRow(row: any) {
-    this.selectedRow = row;
-    this.current_run_id = row[3];
-    this.discoveryMessage = row[5] || 'Discovery Not Started'; // Update message when selecting a row
-    this.isDiscoveryCompleted = row[5] === 'Completed'; // Update button visibility based on discovery completion
   }
 
   getStoredSchemaInfo() {
@@ -154,20 +153,49 @@ export class DbAssessmentComponent implements OnInit {
     });
   }
 
-  onRadioClicked(row: any): void {
-    console.log('Selected row:', row);
-  }
-
   editRow(row: any): void {
     console.log('Editing row:', row);
   }
 
   toggleDropdown(): void {
+    this.resetView();
     this.dropdownOpen = !this.dropdownOpen;
   }
+  resetView() {
+    this.showDetails = true;
 
-  viewDiscoveryReport(): void {
-    console.log('Discovery Report Selected');
+    this.showAssessmentComponent = false;
+  }
+
+  onSelectRow(row: any, selected: boolean) {
+    if (selected) {
+      this.selectedRow = row;
+      this.current_run_id = row[3];
+      this.discoveryMessage = row[5] || 'Discovery Not Started'; // Update message when selecting a row
+      this.isDiscoveryCompleted = row[5] === 'Completed'; // Update button visibility based on discovery completion
+
+      this.resetView();
+      console.log('Selected row:', row);
+      this.RUN_ID = row[3];
+      this.status = row[5];
+      this.stage = row[4];
+
+      if (
+        (this.stage === 'Discovery' && this.status === 'Completed') ||
+        (this.stage === 'Assessment' && this.status === 'Error')
+      ) {
+        this.enableDiscoveryReport = true;
+        this.enableAssessmentReport = false;
+        this.showAssessmentComponent = false;
+      } else if (this.stage === 'Assessment' && this.status === 'Completed') {
+        this.enableDiscoveryReport = true;
+        this.enableAssessmentReport = true;
+      } else {
+        this.enableDiscoveryReport = false;
+        this.enableAssessmentReport = false;
+        this.showDetails = false;
+      }
+    }
   }
 
   multipleDeleteSchemas() {

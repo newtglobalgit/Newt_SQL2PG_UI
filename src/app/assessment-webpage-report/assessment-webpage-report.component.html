@@ -1,186 +1,165 @@
-<!--- GREEN PANEL STARTS --->
-<div class="col-md-12 padding0">
-  <div
-    class="alert alertSuccess text-center"
-    style="font-size: 12px; margin-top: 10px"
-  >
-    <span class="font-weight-bold" style="margin-right: 2px !important">{{
-      appStage
-    }}</span
-    ><span class="font-weight-bold">{{ appStatus }}</span>
-    <div>
-      <button
-        style="margin-left: 1px"
-        class="btn btn-md btn-primary"
-        (click)="startAssessment(appName)"
-        data-title="Start Assessment"
-        data-intro="Click on this button to start the application assessment process, which identifies embedded SQLs within the application codebase for automatic conversion tp PostgreSQL syntax and provides recommendations for manual SQL remediation steps. Additionally, discover the percentage of dead code that remains unexecuted."
-      >
-        Start Assessment
-      </button>
-    </div>
-  </div>
-</div>
-<!--- GREEN PANEL ENDS --->
-
-<!--- REPORT ICON PANEL STARTS --->
-<div class="row col-md-12">
-  <div
-    class="col-md-12 row font-weight-bold reportHeaderLabel"
-    style="margin-left: -20px"
-  >
-    <div class="col-md-5 marginLeft0">
-      <span class="col-md-6" style="font-size: 14px; padding-right: 15px"
-        >Assessment Report</span
-      >
-
-      <a>
-        <img
-          (click)="downloadDiscoveryReport(appName, 'pdf', 'Discovery')"
-          width="25"
-          height="25"
-          alt="PDF"
-          src="../../../assets/images/SVG/icon-03.svg"
-          title="Download PDF"
-          style="cursor: pointer"
-        />
-      </a>
-      <a class="marginLeft10">
-        <img
-          (click)="downloadDiscoveryReport(appName, 'excel', 'Discovery')"
-          width="25"
-          height="25"
-          alt="Excel"
-          src="../../../assets/images/SVG/icon-02.svg"
-          title="Download Excel"
-          style="cursor: pointer"
-        />
-      </a>
-      <a class="marginLeft10" style="padding-right: 15px">
-        <img
-          (click)="downloadDiscoveryReport(appName, 'html', 'Discovery')"
-          width="25"
-          height="25"
-          alt="HTML"
-          src="../../../assets/images/SVG/icon-06.svg"
-          title="Download HTML"
-          style="cursor: pointer"
-        />
-      </a>
-    </div>
-  </div>
-</div>
-<!--- REPORT ICON PANEL ENDS --->
-
-<div class="col-md-12 collapse show">
-  <div class="col-md-12 padding0">
-    <div class="wrapper row adjust">
-      <!--- RUN DURATION  PANEL STARTS --->
-
-      <div
-        class="col-md-12 reportHeaderLabel fontSize15"
-        style="margin-top: 20px; display: inline-block; padding-left: 0px"
-      >
-        <span class="float-left marginRight40"
-          ><span class="font-weight-bold">Start Date & Time: </span
-          >{{ startTime }}</span
-        >
-        <span class="float-left marginRight40"
-          ><span class="font-weight-bold">End Date & Time: </span
-          >{{ endTime }}</span
-        >
-        <span class="float-left marginRight10"
-          ><span class="font-weight-bold">Run Duration: </span
-          >{{ runDuration }}</span
-        >
-      </div>
-      <!--- RUN DURATION  PANEL ENDS --->
-
-      <!--- TABLE  PANEL STARTS --->
-      <div
-        class="row adjust wizardDiv"
-        style="margin-bottom: 20px; margin-top: 20px; width: 100%"
-      >
-        <div class="col-md-12 wizardHeader">
-          <div>Table 1</div>
+<div class="row" *ngIf="showTable">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="tableData">
+            <div class="col-md-5 marginLeft0">
+              <span class="col-md-6" style="font-size: 14; font-weight: bold;" >Assessment Report</span>
+              <a>
+                <img (click)="downloadPdf()" width="25" height="25" alt="PDF"
+                    src="../../../assets/images/SVG/icon-03.svg" title="Download PDF"
+                    style="cursor: pointer;">
+              </a>
+              <a class="marginLeft10" style="padding-right: 15px;">
+                <img (click)="downloadExcel(tableData.runId)" width="25" height="25" alt="Excel"
+                    src="../../../assets/images/SVG/icon-02.svg" title="Download Excel"
+                    style="cursor: pointer;">
+              </a>
+              <a (click)="discoveryToggleCollapse()" tableData-toggle="collapse"><i
+                [attr.aria-expanded]="isExpanded" title="{{ iconTitle }}" class="fa"
+                [class.fa-chevron-down]="!isExpanded" [class.fa-chevron-up]="isExpanded"
+                role="button" [class.rotate-icon]="isExpanded"></i></a>
+            </div>
+          </div>
         </div>
-        <table
-          id="analyticsTable"
-          class="analyticsTable table table-hover table-sm table-bordered"
-          style="font-size: 12px; margin: 10px"
-        >
-          <thead class="thead_custom">
-            <tr class="tr_custom_14">
-              <th style="width: 11%">Column 1</th>
-              <th style="width: 11%">Column 2</th>
-              <th style="width: 11%">Column 3</th>
-              <th style="width: 11%">Column 4</th>
-              <th style="width: 11%">Column 5</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container>
-              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
-                <td>Value 1</td>
-                <td>Value 1</td>
-                <td>Value 1</td>
-                <td>Value 1</td>
-                <td>Value 1</td>
-              </tr>
-              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
-                <td>Value 2</td>
-                <td>Value 2</td>
-                <td>Value 2</td>
-                <td>Value 2</td>
-                <td>Value 2</td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
       </div>
 
-      <div
-        class="row adjust wizardDiv"
-        style="margin-bottom: 20px; margin-top: 20px; width: 100%"
-      >
-        <div class="col-md-12 wizardHeader">
-          <div>Table 2</div>
+     
+    
+  
+
+      <div class="collapse show" id="href_1">
+        <div class="col-md-12 padding0">
+          <div class="row">
+            <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="tableData">
+              <span class="float-left marginRight40"><span style="font-weight: bold;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
+              <span class="float-left marginRight40"><span style="font-weight: bold;">End Date & Time: </span>{{tableData[0].end_time}}</span>
+              <span class="float-left marginRight10"><span style="font-weight: bold;" >Run Duration: </span>{{tableData[0].run_duration}}</span>
+            </div>
+            <p class="p-2" >
+              {{ tableData[0].headerText }} 
+            </p>
+          </div>
+
+          <div *ngIf="showComponent && !showTable">
+            <p>Loading data...</p>
         </div>
-        <table
-          id="analyticsTable"
-          class="analyticsTable table table-hover table-sm table-bordered"
-          style="font-size: 12px; margin: 10px"
-        >
-          <thead class="thead_custom">
-            <tr class="tr_custom_14">
-              <th style="width: 11%">Column 1</th>
-              <th style="width: 11%">Column 2</th>
-              <th style="width: 11%">Column 3</th>
-              <th style="width: 11%">Column 4</th>
-              <th style="width: 11%">Column 5</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container>
-              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
-                <td>Value 1</td>
-                <td>Value 1</td>
-                <td>Value 1</td>
-                <td>Value 1</td>
-                <td>Value 1</td>
-              </tr>
-              <tr class="tr_custom_14" [ngClass]="{ 'bold-row': last }">
-                <td>Value 2</td>
-                <td>Value 2</td>
-                <td>Value 2</td>
-                <td>Value 2</td>
-                <td>Value 2</td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
+
+
+          <div  class="row adjust wizardDiv" style="margin-bottom: 20px; width: 100%;">
+            <!-- Existing Database Objects Table -->
+            <div class="col-md-12 wizardHeader">
+                <div>Database Objects</div>
+            </div>
+            <div class="col-md-12" style="padding: 10px;"> 
+            <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered" style="font-size:12px;">
+                <thead class="thead_custom">
+                    <tr class="tr_custom_14">
+                        <th>Object Type</th>
+                        <th>Valid Objects</th>
+                        <th>Invalid Objects</th>
+                        <th>Assessed Objects</th>
+                        <th>Manual Conversion Efforts</th>
+                        <th>Simple Objects</th>
+                        <th>Medium Objects</th>
+                        <th>Difficult Objects</th>
+                        <th>Complex Objects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5"><strong>Storage Objects</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of this.tableData[0].analyticData['Storage Objects'];">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{object.manualConversionEfforts}}</td>
+                        <td>{{object.simpleObjects}}</td>
+                        <td>{{object.mediumObjects}}</td>
+                        <td>{{object.difficultObjects}}</td>
+                        <td>{{object.complexObjects}}</td>
+
+                    </tr>
+        
+                    <tr>
+                        <td colspan="5"><strong>Code Objects</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0].analyticData['Code Objects'];">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{object.manualConversionEfforts}}</td>
+                        <td>{{object.simpleObjects}}</td>
+                        <td>{{object.mediumObjects}}</td>
+                        <td>{{object.difficultObjects}}</td>
+                        <td>{{object.complexObjects}}</td>
+
+                    </tr>
+        
+                    <tr>
+                        <td colspan="5"><strong>Special Objects</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0].analyticData['Special Objects'];">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{object.manualConversionEfforts}}</td>
+                        <td>{{object.simpleObjects}}</td>
+                        <td>{{object.mediumObjects}}</td>
+                        <td>{{object.difficultObjects}}</td>
+                        <td>{{object.complexObjects}}</td>
+
+                    </tr>
+        
+                    <tr>
+                        <td colspan="5"><strong>Grand Total</strong></td>
+                    </tr>
+                    <tr *ngFor="let object of tableData[0].analyticData['Grand Total']; ">
+                        <td>{{ object.objectType }}</td>
+                        <td>{{ object.validType }}</td>
+                        <td>{{ object.inValidType }}</td>
+                        <td>{{ object.assessedObjects }}</td>
+                        <td>{{object.simpleObjects}}</td>
+                        <td>{{object.mediumObjects}}</td>
+                        <td>{{object.difficultObjects}}</td>
+                        <td>{{object.complexObjects}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        
+        <!-- Dependencies Section -->
+        <div  class="row adjust wizardDiv" style="margin-bottom: 20px; width: 100%;">
+            <div class="col-md-12 wizardHeader">
+                <div>Dependencies</div>
+            </div>
+            <div class="col-md-12" style="padding: 10px;"> 
+            <table id="dependenciesTable" class="analyticsTable table table-hover table-sm table-bordered" style="font-size:12px;">
+                <thead class="thead_custom">
+                    <tr class="tr_custom_14">
+                        <th>Referenced Schema</th>
+                        <th>Referenced Object Type</th>
+                        <th>Dependent Object Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dependency of tableData[0]['Dependencies']; let i = index" [ngClass]="{'odd-row': i % 2 !== 0}">
+                        <td>{{ dependency.referencedSchema }}</td>
+                        <td>{{ dependency.referencedObjectType }}</td>
+                        <td>{{ dependency.dependentObjectCount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+         
       </div>
-      <!--- TABLE  PANEL ENDS --->
     </div>
   </div>
 </div>

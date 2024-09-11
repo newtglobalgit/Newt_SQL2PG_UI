@@ -6,14 +6,15 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   templateUrl: './discovery-webpage-report.component.html',
   styleUrls: ['./discovery-webpage-report.component.css']
 })
-export class DiscoveryWebpageReportComponent implements OnInit ,  OnChanges {
+export class DiscoveryWebpageReportComponent implements OnInit {
 
 
 @Input() runId;
-@Input() showComponent;
 @Input() Status;
 @Input() Stage;
-@Input() isShowReport: string;
+@Input() showComponent;
+@Input() schemaName: string;
+@Input() dbName: string;
 
   tableData: any[];
 
@@ -26,30 +27,12 @@ export class DiscoveryWebpageReportComponent implements OnInit ,  OnChanges {
 
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
 
-  ngOnChanges() {
-    this.getDiscoveryWebpageSummaryData(this.runId);
-  }
+
 
 ngOnInit(): void {
-  this.getDiscoveryWebpageSummaryData(this.runId);
+  this.discoveryReport();
 }
 
-getDiscoveryWebpageSummaryData(runId){
-  this.sql2PgService.startDiscovery(runId).subscribe((resp) => {
-    if (resp.status === "success") {
-      console.log(resp.status)
-       this.discoveryReport()
-      } 
-      else {
-        console.warn('Response is empty or undefined.');
-      }
-      },
-      (error) => {
-      console.error('Error fetching data:', error);
-      }
-    );
-
-}
 
 
  
@@ -58,11 +41,7 @@ discoveryReport() {
     (response) => {    
       
       this.tableData = response;  
-      this.runId = this.tableData[0].runId;
-      console.log(this.tableData);
-      console.log(this.tableData[0].runId)
-
-     
+      this.runId = this.tableData[0].runId;     
 
       this.cdr.detectChanges();
       if (this.runId === this.tableData[0].runId) {
@@ -82,13 +61,11 @@ discoveryReport() {
     });
 }
 
-downloadPdf(runId: string, db_name: string, schema: string) {
-  // Construct the request object with provided parameters
-  console.log("download pdf")
+downloadPdf() {
   let reqObj = {
     "runId": this.runId,
-    "db_name": "AdventureWorks2019",
-    "schema_name": "DBO"
+    "db_name": this.dbName,
+    "schema_name": this.schemaName
   };
 
   this.sql2PgService.downloadDiscoveryPdfReport(reqObj).subscribe(data => {
