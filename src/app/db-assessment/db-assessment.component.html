@@ -498,7 +498,7 @@
                 completedStatus: row[5] === 'Completed',
                 notStartedStatus: row[5] === 'Not Started',
                 notErrorStatus: row[5] === 'Error',
-                notInProgressStatus: rpw[5] === 'In Progress',
+                notInProgressStatus: row[5] === 'In Progress',
                 completedInterim: row[5] === 'Processing Done'
               }"
             >
@@ -529,16 +529,6 @@
         </ng-container>
       </tbody>
     </table>
-  </div>
-
-  <div>
-    <app-discovery-webpage-report
-      [Status]="status"
-      [Stage]="stage"
-      [runId]="RUN_ID"
-      [showComponent]="true"
-      [isShowReport]="isShowDataAndGraph"
-    ></app-discovery-webpage-report>
   </div>
 </div>
 <div style="border: 1px solid lightgray" *ngIf="selectedRow">
