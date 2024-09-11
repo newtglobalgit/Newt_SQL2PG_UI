@@ -7,6 +7,7 @@ import { AppConfigService } from 'src/app/common/Services/app-config.service';
   providedIn: 'root',
 })
 export class Sql2PgService {
+  genAiActivated: boolean = false;
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
   testSourceDbConnection(sourceDbdetails: any): Observable<any> {
@@ -30,8 +31,8 @@ export class Sql2PgService {
     return this.http.post(this.config.host + '/discovery', payload);
   }
 
-  startAssessment(RUN_ID: any): Observable<any> {
-    const payload = { RUN_ID: String(RUN_ID), Enable_Genai: 'n' };
+  startAssessment(RUN_ID: any,enable_genai: string): Observable<any> {
+    const payload = { RUN_ID: String(RUN_ID), Enable_Genai: enable_genai };
     return this.http.post(this.config.host + '/assessment', payload);
   }
 

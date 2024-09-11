@@ -12,6 +12,7 @@ import { DmapMultipleSchemaDeleteComponent } from '../common/Modal/dmap-multiple
 })
 export class DbAssessmentComponent implements OnInit {
   isShowDataAndGraph: string;
+  showDiscoveryComponent: boolean;
 
   reports() {
     throw new Error('Method not implemented.');
@@ -20,11 +21,11 @@ export class DbAssessmentComponent implements OnInit {
   filteredData: any[] = [];
   selectedRow: any;
   enableAssessmentReport: boolean = false;
-  // isShowDataAndGraph: boolean = false;
-  // isShowDataAndGraphForDiscovery: boolean = false;
+  isAssessmentButtonDisabled: boolean = false;
 
   showAssessmentComponent: boolean;
   current_run_id: any;
+  enable_genai:any;
 
   isAssessmentInProgress = false;
   isAssessmentCompleted = false;
@@ -97,12 +98,15 @@ export class DbAssessmentComponent implements OnInit {
         console.log(this.current_run_id);
         console.log('Discovery API Response:', response);
         // alert(response.error)
-
-        this.selectedRow[5] = 'Completed';
-        this.discoveryMessage = 'Discovery completed successfully';
-        this.isDiscoveryInProgress = false;
-        this.isDiscoveryCompleted = true;
-        this.selectedRow[4] = 'Assessment';
+        if(response.message=='success'){
+          this.showAssessmentComponent =false;
+          this.showDiscoveryComponent = true;
+          this.selectedRow[5] = 'Completed';
+          this.discoveryMessage = 'Discovery completed successfully';
+          this.isDiscoveryInProgress = false;
+          this.isDiscoveryCompleted = true;
+          this.selectedRow[4] = 'Assessment';
+        }
       },
       (error) => {
         console.error('Error starting discovery:', error);
@@ -116,17 +120,26 @@ export class DbAssessmentComponent implements OnInit {
   async startAssessment() {
     console.log('Starting assessment...');
     this.isAssessmentInProgress = true;
+    this.isAssessmentButtonDisabled=!this.isAssessmentButtonDisabled;
     this.discoveryMessage = 'Assessment in progress...';
     this.selectedRow[5] = 'In Progress';
+    if(this.sql2PgService.genAiActivated){
+      this.enable_genai='y'
+    }
+    else{
+      this.enable_genai='n'
+    }
 
-    await this.sleep(3000);
 
-    this.sql2PgService.startAssessment(this.current_run_id).subscribe(
+    this.sql2PgService.startAssessment(this.current_run_id,this.enable_genai).subscribe(
       (response) => {
         console.log(this.current_run_id);
         console.log('Assessment API Response:', response);
         // alert(response.error)
-        // if(response.message=='success'){
+        if(response.message=='success'){
+          this.showAssessmentComponent =true;
+          this.showDiscoveryComponent = false;
+        }
         this.selectedRow[5] = 'Completed';
         this.discoveryMessage = 'Assessment completed successfully';
         this.isAssessmentInProgress = false;

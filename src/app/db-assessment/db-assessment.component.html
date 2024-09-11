@@ -1,5 +1,5 @@
 <!-- <h2>DB Assessment Page</h2> -->
-
+ 
 <html>
   <head>
     <link
@@ -8,7 +8,7 @@
       href="https://unpkg.com/intro.js/introjs.css"
     />
   </head>
-
+ 
   <body>
     <script src="https://unpkg.com/intro.js/intro.js"></script>
   </body>
@@ -58,7 +58,7 @@
         >
           Delete Schemas
         </button>
-
+ 
         <div class="dropdown">
           <button
             type="button"
@@ -98,7 +98,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="col-md-12 table-responsive" style="overflow: inherit">
     <table
       id="analyticsTable"
@@ -111,7 +111,7 @@
           <th>
             <div class="form-check" style="padding: 0px"></div>
           </th>
-
+ 
           <th>
             <span class="marginRight5 defaultCursor">Source Schema</span>
             <span>
@@ -124,7 +124,7 @@
                 aria-expanded="true"
               >
               </i>
-
+ 
               <ul
                 class="dropdown-menu drpdownSourceSchema"
                 aria-labelledby="drpdownSourceSchema"
@@ -153,7 +153,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th>
             <span class="marginRight5 defaultCursor">Source DB</span>
             <span>
@@ -166,7 +166,7 @@
                 aria-expanded="true"
               >
               </i>
-
+ 
               <ul
                 class="dropdown-menu drpdownSourceDatabase"
                 aria-labelledby="drpdownSourceDatabase"
@@ -195,7 +195,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th>
             <span class="marginRight5 defaultCursor">Target DB</span>
             <span>
@@ -208,7 +208,7 @@
                 aria-expanded="true"
               >
               </i>
-
+ 
               <ul
                 class="dropdown-menu drpdownTargetDbs"
                 aria-labelledby="drpdownTargetDbs"
@@ -237,7 +237,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th
             *ngIf="
               nodeType == 'analytics_master' &&
@@ -255,7 +255,7 @@
                 aria-expanded="true"
               >
               </i>
-
+ 
               <ul
                 class="dropdown-menu drpdownAssignedVm"
                 aria-labelledby="drpdownAssignedVm"
@@ -291,7 +291,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th>
             <span class="marginRight5 pointerCursor">Run ID</span>
             <span>
@@ -304,7 +304,7 @@
                 aria-expanded="true"
               >
               </i>
-
+ 
               <ul
                 class="dropdown-menu drpdownRequestId"
                 aria-labelledby="drpdownCreatedBy"
@@ -333,7 +333,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th>
             <span class="marginRight5 pointerCursor">Stage</span>
             <span>
@@ -374,7 +374,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th>
             <span class="marginRight5 pointerCursor">Status</span>
             <span>
@@ -415,7 +415,7 @@
               </ul>
             </span>
           </th>
-
+ 
           <th>
             <span class="marginRight5 pointerCursor">Last Updated</span>
             <span>
@@ -455,18 +455,18 @@
               </ul>
             </span>
           </th>
-
+ 
           <th *ngIf="nodeType != 'analytics_worker'"></th>
         </tr>
       </thead>
-
+ 
       <tbody>
         <ng-container *ngIf="tableData.length == 0">
           <tr>
             <td colspan="9">No Schemas found</td>
           </tr>
         </ng-container>
-
+ 
         <ng-container *ngIf="tableData.length > 0">
           <tr
             *ngFor="let row of tableData"
@@ -484,7 +484,7 @@
                   style="top: 2px"
                   #inputE2
                   name="selectedRow"
-                  (change)="onSelectRow(row, true)"
+                  (click)="onSelectRow(row, true)"
                 />
               </div>
             </td>
@@ -520,7 +520,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <div>
     <app-discovery-webpage-report
       [Status]="status"
@@ -547,7 +547,7 @@
         <span class="font-weight-bold" style="margin-right: 10px"></span>
         <span class="font-weight-bold">{{ discoveryMessage }}</span>
       </span>
-
+ 
       <div style="margin-top: 15px">
         <button
           class="btn btn-md btn-primary"
@@ -557,95 +557,43 @@
         >
           Start Discovery
         </button>
-
+ 
         <button
           class="btn btn-md btn-primary"
           *ngIf="isDiscoveryCompleted"
+          [disabled]="isAssessmentButtonDisabled"
           (click)="startAssessment()"
         >
           Start Assessment
         </button>
-        =======
-        <div style="border: 1px solid lightgray" *ngIf="selectedRow">
-          <div
-            class="col-md-12"
-            *ngIf="selectedRow"
-            style="width: 97%; margin: auto"
-          >
-            <div
-              role="alert"
-              [ngClass]="[
-                'alert',
-                'text-center',
-                getAlertClass(selectedRow[5])
-              ]"
-              style="
-                border: 1px solid #dee2e6;
-                padding: 20px;
-                border-radius: 5px;
-                margin-top: 11px;
-              "
-            >
-              <span>
-                <span
-                  class="font-weight-bold"
-                  style="margin-right: 10px"
-                ></span>
-                <span class="font-weight-bold">{{ discoveryMessage }}</span>
-              </span>
-
-              <div style="margin-top: 15px">
-                <button
-                  class="btn btn-md btn-primary"
-                  *ngIf="!isDiscoveryCompleted"
-                  [disabled]="isDiscoveryInProgress"
-                  (click)="startDiscovery()"
-                >
-                  Start Discovery
-                </button>
-
-                <button
-                  class="btn btn-md btn-primary"
-                  *ngIf="isDiscoveryCompleted"
-                  (click)="startAssessment()"
-                >
-                  Start Assessment
-                </button>
-              </div>
-              >>>>>>> origin/SQL2PG-5
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="showDetails">
-          <div>
-            <app-discovery-webpage-report
-              *ngIf="!showAssessmentComponent"
-              [Status]="status"
-              [Stage]="stage"
-              [runId]="RUN_ID"
-              [showComponent]="enableDiscoveryReport"
-              [schemaName]="selectedRow[0]"
-              [dbName]="selectedRow[1]"
-            ></app-discovery-webpage-report>
-          </div>
-        </div>
-
-        <div>
-          <app-assessment-webpage-report
-            *ngIf="showAssessmentComponent"
-            [Status]="status"
-            [Stage]="stage"
-            [runId]="RUN_ID"
-            [showComponent]="enableAssessmentReport"
-            [schemaName]="selectedRow[0]"
-            [dbName]="selectedRow[1]"
-          >
-          </app-assessment-webpage-report>
-        </div>
       </div>
-      <<<<<<< HEAD
     </div>
-    ======= >>>>>>> origin/SQL2PG-5
+    <div *ngIf="showDetails">
+      <div>
+        <app-discovery-webpage-report
+          *ngIf="showDiscoveryComponent"
+          [Status]="status"
+          [Stage]="stage"
+          [runId]="RUN_ID"
+          [showComponent]="enableDiscoveryReport"
+          [schemaName]="selectedRow[0]"
+          [dbName]="selectedRow[1]"
+        ></app-discovery-webpage-report>
+      </div>
+ 
+      <div>
+        <app-assessment-webpage-report
+          *ngIf="showAssessmentComponent"
+          [Status]="status"
+          [Stage]="stage"
+          [runId]="RUN_ID"
+          [showComponent]="enableAssessmentReport"
+          [schemaName]="selectedRow[0]"
+          [dbName]="selectedRow[1]"
+        >
+        </app-assessment-webpage-report>
+      </div>
+    </div>
   </div>
+ 
 </div>
