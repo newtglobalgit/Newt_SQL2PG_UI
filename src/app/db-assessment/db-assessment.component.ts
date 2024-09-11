@@ -96,7 +96,7 @@ export class DbAssessmentComponent implements OnInit {
         console.log(this.current_run_id);
         console.log('Discovery API Response:', response);
         // alert(response.error)
-        if (response.message == 'success') {
+        if (response.status == 'success') {
           this.showAssessmentComponent = false;
           this.showDiscoveryComponent = true;
           this.selectedRow[5] = 'Completed';
@@ -134,7 +134,7 @@ export class DbAssessmentComponent implements OnInit {
           console.log(this.current_run_id);
           console.log('Assessment API Response:', response);
           // alert(response.error)
-          if (response.message == 'success') {
+          if (response.status == 'success') {
             this.showAssessmentComponent = true;
             this.showDiscoveryComponent = false;
           }
