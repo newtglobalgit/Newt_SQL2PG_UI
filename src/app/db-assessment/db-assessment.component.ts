@@ -26,6 +26,9 @@ export class DbAssessmentComponent implements OnInit {
   showAssessmentComponent: boolean;
   current_run_id: any;
 
+  isAssessmentInProgress = false;
+  isAssessmentCompleted = false;
+
   isDiscoveryInProgress = false;
   isDiscoveryCompleted = false;
   showAssessmentButton = false;
@@ -99,6 +102,7 @@ export class DbAssessmentComponent implements OnInit {
         this.discoveryMessage = 'Discovery completed successfully';
         this.isDiscoveryInProgress = false;
         this.isDiscoveryCompleted = true;
+        this.selectedRow[4] = 'Assessment';
       },
       (error) => {
         console.error('Error starting discovery:', error);
@@ -109,8 +113,34 @@ export class DbAssessmentComponent implements OnInit {
     );
   }
 
-  startAssessment() {
+  async startAssessment() {
     console.log('Starting assessment...');
+    this.isAssessmentInProgress = true;
+    this.discoveryMessage = 'Assessment in progress...';
+    this.selectedRow[5] = 'In Progress';
+
+    await this.sleep(3000);
+
+    this.sql2PgService.startAssessment(this.current_run_id).subscribe(
+      (response) => {
+        console.log(this.current_run_id);
+        console.log('Assessment API Response:', response);
+        // alert(response.error)
+        // if(response.message=='success'){
+        this.selectedRow[5] = 'Completed';
+        this.discoveryMessage = 'Assessment completed successfully';
+        this.isAssessmentInProgress = false;
+        this.isAssessmentCompleted = true;
+
+        // }
+      },
+      (error) => {
+        console.error('Error starting Assessment:', error);
+        this.discoveryMessage = 'Error during Assessment';
+        this.selectedRow.discoveryStatus = 'Error';
+        this.isDiscoveryInProgress = false;
+      }
+    );
   }
 
   updatePassword(data) {
