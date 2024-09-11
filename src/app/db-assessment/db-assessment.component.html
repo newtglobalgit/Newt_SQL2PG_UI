@@ -557,7 +557,7 @@
     </div>
   </div>
    
-  
+  <div *ngIf = 'showDetails'>
   <div>
     <app-discovery-webpage-report *ngIf = "!showAssessmentComponent"  [Status]="status" [Stage]="stage" [runId]="RUN_ID"
      [showComponent]="enableDiscoveryReport"  [schemaName]="selectedRow[0]" [dbName]="selectedRow[1]"></app-discovery-webpage-report>
@@ -568,4 +568,5 @@
       <app-assessment-webpage-report *ngIf = "showAssessmentComponent" [Status]="status" [Stage]="stage" [runId]="RUN_ID"
       [showComponent]="enableAssessmentReport"  [schemaName]="selectedRow[0]" [dbName]="selectedRow[1]"> </app-assessment-webpage-report>
     </div>
+  </div>
   

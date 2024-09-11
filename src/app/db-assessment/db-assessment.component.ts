@@ -5,6 +5,7 @@ import { UpdatePasswordComponent } from '../common/Modal/update-password/update-
 import { Router } from '@angular/router';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { viewport } from '@popperjs/core';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-db-assessment',
@@ -12,6 +13,7 @@ import { viewport } from '@popperjs/core';
   styleUrls: ['./db-assessment.component.css'],
 })
 export class DbAssessmentComponent implements OnInit {
+
 selectedRow: any;
 
 
@@ -43,6 +45,10 @@ enableAssessmentReport: boolean = false;
   data: any;
   showDiscoveryDropDown: boolean;
   showAssessmentDropDown: boolean;
+  showDetails: boolean = true;
+  intervalSubscription: any;
+
+  
 
 
   constructor(private modalService: NgbModal, private router: Router, 
@@ -50,9 +56,12 @@ enableAssessmentReport: boolean = false;
     private cdr: ChangeDetectorRef
   ) {}
 
+
+
  
   ngOnInit(): void {
 
+    this.intervalSubscription = interval(10000).subscribe(() => this.onSelectRow(this.selectedRow, true));
 
     this.getStoredSchemaInfo();
 
@@ -64,6 +73,10 @@ enableAssessmentReport: boolean = false;
       this.isDiscoveryCompleted = this.selectedRow.discoveryStatus === 'Completed';
     }
     
+  }
+
+  ngOnDestroy(): void {
+    this.intervalSubscription.unsubscribe();
   }
 
   getAlertClass(status: string): string {
@@ -161,9 +174,6 @@ enableAssessmentReport: boolean = false;
 
 }
 
-
-
-
   getStoredSchemaInfo(){
     this.sql2PgService.getDBAssessmentData().subscribe(
       (response) => {              
@@ -186,15 +196,17 @@ enableAssessmentReport: boolean = false;
     this.dropdownOpen = !this.dropdownOpen;
   }
   resetView() {
+    this.showDetails =true;
+
     this.showAssessmentComponent = false;
     
   }
 
-  viewDiscoveryReport(): void {
-    console.log('Discovery Report Selected');
-  }
+  onSelectRow(row: any ,  selected: boolean) {
 
-  onSelectRow(row: any) {
+    if(selected)
+    {
+      
     this.selectedRow = row;
     this.current_run_id=row[3]
     this.discoveryMessage = row[5] || 'Discovery Not Started';  // Update message when selecting a row
@@ -205,25 +217,28 @@ enableAssessmentReport: boolean = false;
     this.RUN_ID = row[3];
     this.status = row[5];
     this.stage = row[4];
-    
-    if(this.status != "Not Started")
-    {
-      this.enableDiscoveryReport=true;
-     
-    }
 
-    if (this.stage === 'Discovery' && this.status === 'Completed') {
+    
+  
+    if ((this.stage === 'Discovery' && this.status === 'Completed') || (this.stage === 'Assessment' && this.status === 'Error')) {
       this.enableDiscoveryReport = true;
       this.enableAssessmentReport = false;
-    } else if (this.stage === 'Assessment' && this.status === 'Completed' || '') {
+      this.showAssessmentComponent=false;
+
+    } else if (this.stage === 'Assessment' && this.status === 'Completed') {
       this.enableDiscoveryReport = true;
       this.enableAssessmentReport = true;
-    } else {
+    } 
+    else {
       this.enableDiscoveryReport = false;
       this.enableAssessmentReport = false;
+      this.showDetails =false;
     }
+
+  }
   
   }
+
 
 
   }
