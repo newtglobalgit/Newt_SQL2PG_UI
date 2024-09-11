@@ -5,7 +5,6 @@ import { UpdatePasswordComponent } from '../common/Modal/update-password/update-
 import { Router } from '@angular/router';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { viewport } from '@popperjs/core';
-import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-db-assessment',
@@ -46,9 +45,6 @@ enableAssessmentReport: boolean = false;
   showDiscoveryDropDown: boolean;
   showAssessmentDropDown: boolean;
   showDetails: boolean = true;
-  intervalSubscription: any;
-
-  
 
 
   constructor(private modalService: NgbModal, private router: Router, 
@@ -56,12 +52,9 @@ enableAssessmentReport: boolean = false;
     private cdr: ChangeDetectorRef
   ) {}
 
-
-
  
   ngOnInit(): void {
 
-    this.intervalSubscription = interval(10000).subscribe(() => this.onSelectRow(this.selectedRow, true));
 
     this.getStoredSchemaInfo();
 
@@ -73,10 +66,6 @@ enableAssessmentReport: boolean = false;
       this.isDiscoveryCompleted = this.selectedRow.discoveryStatus === 'Completed';
     }
     
-  }
-
-  ngOnDestroy(): void {
-    this.intervalSubscription.unsubscribe();
   }
 
   getAlertClass(status: string): string {
@@ -206,7 +195,6 @@ enableAssessmentReport: boolean = false;
 
     if(selected)
     {
-      
     this.selectedRow = row;
     this.current_run_id=row[3]
     this.discoveryMessage = row[5] || 'Discovery Not Started';  // Update message when selecting a row
