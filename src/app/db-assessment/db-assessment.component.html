@@ -54,7 +54,7 @@
         <button
           type="button"
           class="btn btn-md btn-primary marginRight5 pull-right marginBottom5"
-          (click)="multipleDelete()"
+          (click)="multipleDeleteSchemas()"
         >
           Delete Schemas
         </button>
@@ -484,7 +484,8 @@
                   style="top: 2px"
                   #inputE2
                   (change)="onRadioClicked(row, true)"
-                  name="selectedRow" (change)="onSelectRow(row,true)"
+                  name="selectedRow"
+                  (change)="onSelectRow(row, true)"
                 />
               </div>
             </td>
@@ -520,25 +521,35 @@
       </tbody>
     </table>
   </div>
-  
+
   <div>
-    <app-discovery-webpage-report [Status]="status" [Stage]="stage" [runId]="RUN_ID"
-    [showComponent]="true" [isShowReport]="isShowDataAndGraph"></app-discovery-webpage-report>
+    <app-discovery-webpage-report
+      [Status]="status"
+      [Stage]="stage"
+      [runId]="RUN_ID"
+      [showComponent]="true"
+      [isShowReport]="isShowDataAndGraph"
+    ></app-discovery-webpage-report>
   </div>
 </div>
-<div style="border:1px solid lightgray;"*ngIf="selectedRow">
-  <div class="col-md-12" *ngIf="selectedRow" style="width: 97%;margin: auto;">
-   
-    <div role="alert" [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]" style="border: 1px solid #dee2e6; padding: 20px; border-radius: 5px;margin-top: 11px;">
-     
+<div style="border: 1px solid lightgray" *ngIf="selectedRow">
+  <div class="col-md-12" *ngIf="selectedRow" style="width: 97%; margin: auto">
+    <div
+      role="alert"
+      [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]"
+      style="
+        border: 1px solid #dee2e6;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 11px;
+      "
+    >
       <span>
-        <span class="font-weight-bold" style="margin-right: 10px;"></span>
+        <span class="font-weight-bold" style="margin-right: 10px"></span>
         <span class="font-weight-bold">{{ discoveryMessage }}</span>
       </span>
-   
-     
-      <div style="margin-top: 15px;">
-       
+
+      <div style="margin-top: 15px">
         <button
           class="btn btn-md btn-primary"
           *ngIf="!isDiscoveryCompleted"
@@ -547,8 +558,7 @@
         >
           Start Discovery
         </button>
-   
-       
+
         <button
           class="btn btn-md btn-primary"
           *ngIf="isDiscoveryCompleted"

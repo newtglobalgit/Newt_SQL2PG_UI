@@ -22,9 +22,7 @@ export class Sql2PgService {
   }
 
   getDBAssessmentData(): Observable<any> {
-    return this.http.get(
-      this.config.host + '/getdbSetup'
-    );
+    return this.http.get(this.config.host + '/getdbSetup');
   }
 
   startDiscovery(RUN_ID: any): Observable<any> {
@@ -37,11 +35,12 @@ export class Sql2PgService {
     return this.http.post(this.config.host + '/discoveryReport', payload);
   }
 
-
-  downloadDiscoveryPdfReport(details: any): Observable<any>{
-    return this.http.post(this.config.host+'/generateDisoveryReport',details)
+  downloadDiscoveryPdfReport(details: any): Observable<any> {
+    return this.http.post(
+      this.config.host + '/generateDisoveryReport',
+      details
+    );
   }
-
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
@@ -77,5 +76,17 @@ export class Sql2PgService {
 
   fetchGenAiDetails() {
     return this.http.get(this.config.host + '/fetch_gen_ai_details');
+  }
+
+  getMultipleSchemasToDelete(): Observable<any> {
+    return this.http.get(this.config.host + '/get_schemas_to_delete');
+  }
+
+  mutiple_schema_delete(reqObj: any): Promise<any> {
+    return this.http
+      .post(this.config.host + '/mutiple_schema_delete', reqObj, {
+        headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      })
+      .toPromise();
   }
 }
