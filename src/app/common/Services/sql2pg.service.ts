@@ -31,8 +31,7 @@ export class Sql2PgService {
   }
 
   startAssessment(RUN_ID: any): Observable<any> {
-    const payload = { RUN_ID: String(RUN_ID),"Enable_Genai":"n"      
-     };
+    const payload = { RUN_ID: String(RUN_ID), Enable_Genai: 'n' };
     return this.http.post(this.config.host + '/assessment', payload);
   }
 
@@ -46,10 +45,6 @@ export class Sql2PgService {
       this.config.host + '/generateDisoveryReport',
       details
     );
-  }
-
-  startAssessment(details): Observable<any> {
-    return this.http.post(this.config.host + '/assessment', details);
   }
 
   getAssessmentWebPageReport(RUN_ID: any): Observable<any> {
