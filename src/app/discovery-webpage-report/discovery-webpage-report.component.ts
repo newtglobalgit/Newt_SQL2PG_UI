@@ -1,5 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
+import { NgxSpinnerService } from 'ngx-spinner'; // Make sure this is imported
+
+import saveAs from 'file-saver';
 
 @Component({
   selector: 'app-discovery-webpage-report',
@@ -20,12 +23,14 @@ export class DiscoveryWebpageReportComponent implements OnInit , OnChanges{
 
 
   showTable: boolean;
-  spinner: any;
   databaseSelected: any;
   resp: Object;
 
 
-  constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
+  constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
+
+  ) { }
 
   ngOnChanges() {
     this.discoveryReport();
@@ -63,25 +68,24 @@ discoveryReport() {
     });
 }
 
-downloadPdf() {
-  let reqObj = {
-    "runId": this.runId,
-    "db_name": this.dbName,
-    "schema_name": this.schemaName
-  };
 
-  this.sql2PgService.downloadDiscoveryPdfReport(reqObj).subscribe(data => {
-    this.resp = data
-    
-    if (this.resp === "success") {
-      console.log('PDF download was successful');
-    } else {
-      console.error('Failed to download PDF', data);
-    }
-  }, error => {
+
+downloadPdf(){
+  this.spinner.show();
+  this.sql2PgService.downloadDiscoveryPdfReport(this.runId,'Discovery').subscribe(data=>{
     this.spinner.hide();
-    console.error('Error occurred while downloading PDF', error);
+    let blob = new Blob([data],{});
+    let filename = 'SchemaDiscoveryReport_' +this.tableData[0].sourceDBName+'_'+this.tableData[0].sourceDBSchema+'_' + this.runId +'.pdf';
+    saveAs.saveAs(blob,filename);
   });
+}
+
+ downloadExcel(){
+     this.sql2PgService.downloadDiscoveryExcelReport(this.runId).subscribe(data=>{
+     let blob = new Blob([data],{});
+     let filename = 'SchemaDiscoveryReport_'+this.tableData[0].sourceDatabase+'_'+this.tableData[0].sourceSchema+'_' + this.runId +'.xlsx';
+     saveAs.saveAs(blob,filename);
+   });
 }
 
 
