@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UpdatePasswordComponent } from '../common/Modal/update-password/update-password.component';
 import { Router } from '@angular/router';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
+import { DmapMultipleSchemaDeleteComponent } from '../common/Modal/dmap-multiple-schema-delete/dmap-multiple-schema-delete.component';
 
 @Component({
   selector: 'app-db-assessment',
@@ -11,13 +12,11 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   styleUrls: ['./db-assessment.component.css'],
 })
 export class DbAssessmentComponent implements OnInit {
+  selectedRow: any;
 
-selectedRow: any;
-
-
-enableAssessmentReport: boolean = false;
-  // isShowDataAndGraph: boolean = false; 
-  // isShowDataAndGraphForDiscovery: boolean = false; 
+  enableAssessmentReport: boolean = false;
+  // isShowDataAndGraph: boolean = false;
+  // isShowDataAndGraphForDiscovery: boolean = false;
 
   showAssessmentComponent: boolean = false;
   current_run_id: any;
@@ -27,18 +26,17 @@ enableAssessmentReport: boolean = false;
   showAssessmentButton = false;
   discoveryMessage = 'Discovery Not Started';
 
-
   tableData: any[] = [];
   filteredData: any[] = [];
 
-  enableDiscoveryReport: boolean = false; 
-  dropdownOpen: boolean = false; 
+  enableDiscoveryReport: boolean = false;
+  dropdownOpen: boolean = false;
 
   status: String = '';
-  stage: String  = '';
+  stage: String = '';
   isShowReport: String = '';
-  RUN_ID: String = "";  
-  isExpanded: boolean =  false;
+  RUN_ID: String = '';
+  isExpanded: boolean = false;
   iconTitle: string;
   data: any;
   showDiscoveryDropDown: boolean;
@@ -46,26 +44,22 @@ enableAssessmentReport: boolean = false;
   showDetails: boolean = true;
   showDiscoveryComponent: boolean = true;
 
-
-  constructor(private modalService: NgbModal, private router: Router, 
-    private sql2PgService: Sql2PgService ,
-    private cdr: ChangeDetectorRef
+  constructor(
+    private modalService: NgbModal,
+    private sql2PgService: Sql2PgService,
+    private spinner: NgxSpinnerService
   ) {}
 
- 
   ngOnInit(): void {
-
-
     this.getStoredSchemaInfo();
 
-    
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
     } else {
-      this.discoveryMessage = this.selectedRow[5] || 'Discovery Not Started';  
-      this.isDiscoveryCompleted = this.selectedRow.discoveryStatus === 'Completed';
+      this.discoveryMessage = this.selectedRow[5] || 'Discovery Not Started';
+      this.isDiscoveryCompleted =
+        this.selectedRow.discoveryStatus === 'Completed';
     }
-    
   }
 
   getAlertClass(status: string): string {
@@ -84,43 +78,39 @@ enableAssessmentReport: boolean = false;
   }
 
   sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
- 
+
   async startDiscovery() {
     this.isDiscoveryInProgress = true;
     this.discoveryMessage = 'Discovery in progress...';
     this.selectedRow[5] = 'In Progress';
- 
+
     await this.sleep(3000);
- 
-   
+
     this.sql2PgService.startDiscovery(this.current_run_id).subscribe(
       (response) => {
-        console.log(this.current_run_id)
+        console.log(this.current_run_id);
         console.log('Discovery API Response:', response);
-       
-          this.selectedRow[5] = 'Completed';
-          this.discoveryMessage = 'Discovery completed successfully';
-          this.isDiscoveryInProgress = false;  
-          this.isDiscoveryCompleted = true;    
+
+        this.selectedRow[5] = 'Completed';
+        this.discoveryMessage = 'Discovery completed successfully';
+        this.isDiscoveryInProgress = false;
+        this.isDiscoveryCompleted = true;
       },
       (error) => {
         console.error('Error starting discovery:', error);
         this.discoveryMessage = 'Error during discovery';
         this.selectedRow.discoveryStatus = 'Error';
-        this.isDiscoveryInProgress = false;  
+        this.isDiscoveryInProgress = false;
       }
     );
   }
 
   startAssessment() {
     console.log('Starting assessment...');
-   
   }
 
-    
-  
   updatePassword(data) {
     const modalRef = this.modalService.open(UpdatePasswordComponent, {
       size: 'lg',
@@ -135,14 +125,14 @@ enableAssessmentReport: boolean = false;
     modalRef.result.then((result) => {});
   }
 
-  viewReport(state){
+  viewReport(state) {
     if (
       state == 'Assessment' &&
       (this.status == 'Completed' || this.status == 'completed')
     ) {
       this.enableAssessmentReport = true;
       this.enableDiscoveryReport = true;
-      this.showDiscoveryComponent=false;
+      this.showDiscoveryComponent = false;
       this.showAssessmentComponent = true;
     }
     if (
@@ -152,41 +142,32 @@ enableAssessmentReport: boolean = false;
       this.enableDiscoveryReport = true;
       this.showAssessmentComponent = false;
       this.enableAssessmentReport = this.stage === 'Assessment';
-      this.showDiscoveryComponent=true;
+      this.showDiscoveryComponent = true;
     }
+  }
 
-}
-
-  getStoredSchemaInfo(){
-    this.sql2PgService.getDBAssessmentData().subscribe(
-      (response) => {              
-        
-           
-            this.tableData = response
-            console.log(this.tableData)
-
-      }
-      
-    );
+  getStoredSchemaInfo() {
+    this.sql2PgService.getDBAssessmentData().subscribe((response) => {
+      this.tableData = response;
+      console.log(this.tableData);
+    });
   }
 
   editRow(row: any): void {
     console.log('Editing row:', row);
   }
-  
+
   toggleDropdown(): void {
-    this.resetView()
+    this.resetView();
     this.dropdownOpen = !this.dropdownOpen;
   }
   resetView() {
-    this.showDetails =true;
+    this.showDetails = true;
     this.showDiscoveryComponent = true;
-    this.showAssessmentComponent=false;
-    
+    this.showAssessmentComponent = false;
   }
 
-  onSelectRow(row: any ,  selected: boolean) {
-
+  onSelectRow(row: any, selected: boolean) {
     if (selected) {
       this.selectedRow = row;
       this.current_run_id = row[3];
@@ -206,24 +187,59 @@ enableAssessmentReport: boolean = false;
         this.enableDiscoveryReport = true;
         this.enableAssessmentReport = false;
         this.showAssessmentComponent = false;
-        this.showDiscoveryComponent=true;
+        this.showDiscoveryComponent = true;
       } else if (this.stage === 'Assessment' && this.status === 'Completed') {
         this.enableDiscoveryReport = true;
         this.enableAssessmentReport = true;
-        this.showDiscoveryComponent=true;
-
-
+        this.showDiscoveryComponent = true;
       } else {
         this.enableDiscoveryReport = false;
         this.enableAssessmentReport = false;
         this.showDetails = false;
-        this.showDiscoveryComponent=false
-      }  
+        this.showDiscoveryComponent = false;
+      }
+    }
   }
 
+  multipleDeleteSchemas() {
+    this.spinner.show();
+    // let checkedScemaEntry = this.databaseListService.getSavedCheckedDBRecords();
+    let checkedScemaEntry = [];
+    let selectedSchema = {};
+    if (checkedScemaEntry.length == 0) {
+      selectedSchema['runId'] = '';
+      selectedSchema['sourceDBSchema'] = '';
+    } else {
+      selectedSchema = checkedScemaEntry[0];
+    }
 
+    let schemasToDelete;
+    this.sql2PgService.getMultipleSchemasToDelete().subscribe(
+      (data) => {
+        schemasToDelete = data;
+        for (let i in schemasToDelete) {
+          if (schemasToDelete[i].runId == selectedSchema['runId']) {
+            schemasToDelete[i]['defaultSelection'] = true;
+          } else {
+            schemasToDelete[i]['defaultSelection'] = false;
+          }
+        }
 
+        const modalRef = this.modalService.open(
+          DmapMultipleSchemaDeleteComponent,
+          { size: 'lg', scrollable: true }
+        );
+        modalRef.componentInstance.data = {
+          title: 'Delete Multiple Schemas',
+          data: schemasToDelete,
+          selectedSchema: selectedSchema,
+        };
+        modalRef.result.then((result) => {
+          // if (result == 'ok') {
+          // }
+        });
+      },
+      (error) => {}
+    );
   }
 }
-  
-
