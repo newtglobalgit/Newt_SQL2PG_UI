@@ -91,9 +91,10 @@ export class DbSetupComponent implements OnInit {
 
     this.sql2PgService.testSourceDbConnection(reqObj).subscribe((res) => {
       this.spinner.hide();
-      this.disableSource = false;
+     
       if (res[0].status === 'SUCCESS') {
         if (isTestSrcConBtnClicked) {
+          this.disableSource = true;
           this.openAlert('Connection Successful.');
         }
       } else {
@@ -117,9 +118,10 @@ export class DbSetupComponent implements OnInit {
 
     this.sql2PgService.testTargetDbConnection(reqObj).subscribe((res) => {
       this.spinner.hide();
-      this.disableSource = false;
+     
       if (res[0].status === 'SUCCESS') {
         if (isTestTargetConBtnClicked) {
+          this.disableTarget = true;
           this.openAlert('Connection Successful.');
         }
       } else {

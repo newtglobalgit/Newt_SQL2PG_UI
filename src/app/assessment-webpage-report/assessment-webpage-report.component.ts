@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   templateUrl: './assessment-webpage-report.component.html',
   styleUrls: ['./assessment-webpage-report.component.css']
 })
-export class AssessmentWebpageReportComponent implements OnInit {
+export class AssessmentWebpageReportComponent implements OnInit , OnChanges{
 
     
 @Input() runId;
@@ -24,11 +24,16 @@ export class AssessmentWebpageReportComponent implements OnInit {
   spinner: any;
   databaseSelected: any;
   resp: Object;
-  Enable_Genai= 'n'
 
 
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
+  ngOnChanges(): void {
+    this.getAssessmentWebpageSummaryData()
 
+   
+  }
+  
+ 
 
 ngOnInit(): void {
   this.getAssessmentWebpageSummaryData();
@@ -57,7 +62,7 @@ assessmentReport() {
 
           setTimeout(() => {
             this.showTable = true;
-          }, 10000);
+          }, 5000);
         }
       }
     

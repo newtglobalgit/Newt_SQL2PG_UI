@@ -6,7 +6,7 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
   templateUrl: './discovery-webpage-report.component.html',
   styleUrls: ['./discovery-webpage-report.component.css']
 })
-export class DiscoveryWebpageReportComponent implements OnInit {
+export class DiscoveryWebpageReportComponent implements OnInit , OnChanges{
 
 
 @Input() runId;
@@ -27,7 +27,9 @@ export class DiscoveryWebpageReportComponent implements OnInit {
 
   constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
 
-
+  ngOnChanges() {
+    this.discoveryReport();
+  }
 
 ngOnInit(): void {
   this.discoveryReport();
@@ -51,7 +53,7 @@ discoveryReport() {
 
           setTimeout(() => {
             this.showTable = true;
-          }, 10000);
+          }, 5000);
         }
       }
     
