@@ -50,25 +50,34 @@
           Search
         </button>
       </div>
-      <div class="col-md-9 text-right" style="display: flex; justify-content: flex-end; align-items: center;">
+      <div
+        class="col-md-9 text-right"
+        style="
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          margin-left: 30px;
+        "
+      >
         <!-- Reports Dropdown -->
-        <div class="dropdown" style="margin-right: 15px;">
+        <div class="dropdown" style="margin-right: 15px">
           <button
             type="button"
-            class="btn btn-md btn-primary dropdown-toggle"
+            class="btn btn-md btn-primary"
             id="drpdownDownloadAs"
             aria-haspopup="true"
             aria-expanded="dropdownOpen"
             (click)="toggleDropdown()"
           >
             Reports
+            <i class="fa fa-chevron-down marginLeft5"></i>
           </button>
-          
+
           <ul
             class="dropdown-menu"
             [ngClass]="{ show: dropdownOpen }"
             aria-labelledby="drpdownDownloadAs"
-            style="min-width: 145px;"
+            style="min-width: 145px"
           >
             <li
               class="dropdown-item"
@@ -88,18 +97,16 @@
             </li>
           </ul>
         </div>
-        
+
         <!-- Delete Schemas Button -->
         <button
           type="button"
-          class="btn btn-md btn-primary marginRight5"
+          class="btn btn-md btn-primary"
           (click)="multipleDeleteSchemas()"
         >
           Delete Schemas
         </button>
       </div>
-      
-    
     </div>
   </div>
 
@@ -497,12 +504,16 @@
             <td>{{ row[2] }}</td>
             <td>{{ row[3] }}</td>
             <td>{{ row[4] }}</td>
-            <td [ngClass]="{completedStatus: row[5] === 'Completed',
-            notStartedStatus: row[5] === 'Not Started',
-            notErrorStatus: row[5] === 'Error',
-            notInProgressStatus: row[5]=== 'In Progress',
-            completedInterim: row[5]=== 'Processing Done'}">
-            {{ row[5] }}
+            <td
+              [ngClass]="{
+                completedStatus: row[5] === 'Completed',
+                notStartedStatus: row[5] === 'Not Started',
+                notErrorStatus: row[5] === 'Error',
+                notInProgressStatus: row[5] === 'In Progress',
+                completedInterim: row[5] === 'Processing Done'
+              }"
+            >
+              {{ row[5] }}
             </td>
             <td>{{ row.lastUpdated }}</td>
             <td class="textCenter">
@@ -530,7 +541,6 @@
       </tbody>
     </table>
   </div>
-
 </div>
 <div style="border: 1px solid lightgray" *ngIf="selectedRow">
   <div class="col-md-12" *ngIf="selectedRow" style="width: 97%; margin: auto">
@@ -580,7 +590,7 @@
           [dbName]="selectedRow[1]"
         ></app-discovery-webpage-report>
       </div>
-  
+
       <div>
         <app-assessment-webpage-report
           *ngIf="showAssessmentComponent"
@@ -595,5 +605,4 @@
       </div>
     </div>
   </div>
-  
 </div>
