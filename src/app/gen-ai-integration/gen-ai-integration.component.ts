@@ -102,7 +102,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
   activateServiceAccount() {
     if (this.projectId && this.serviceAccountEmail) {
-      // this.genAIEnabledSuccessfully = true;
+      this.genAIEnabledSuccessfully = true;
     } else {
       this.openAlert('Please fill all the mandatory fields');
       return false;
@@ -128,6 +128,7 @@ export class GenAiIntegrationComponent implements OnInit {
       this.spinner.hide();
       this.openAlert(res.message);
     });
+    this.sql2PgService.genAiActivated = true;
   }
 
   openModal() {

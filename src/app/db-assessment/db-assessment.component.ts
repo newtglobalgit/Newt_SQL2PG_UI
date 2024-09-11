@@ -12,22 +12,25 @@ import { DmapMultipleSchemaDeleteComponent } from '../common/Modal/dmap-multiple
   styleUrls: ['./db-assessment.component.css'],
 })
 export class DbAssessmentComponent implements OnInit {
+  isShowDataAndGraph: string;
+
+  tableData: any[] = [];
+  filteredData: any[] = [];
   selectedRow: any;
 
   enableAssessmentReport: boolean = false;
-  // isShowDataAndGraph: boolean = false;
-  // isShowDataAndGraphForDiscovery: boolean = false;
+  isAssessmentButtonDisabled: boolean = false;
 
   showAssessmentComponent: boolean = false;
   current_run_id: any;
+  enable_genai: any;
 
+  isAssessmentInProgress = false;
+  isAssessmentCompleted = false;
   isDiscoveryInProgress = false;
   isDiscoveryCompleted = false;
   showAssessmentButton = false;
   discoveryMessage = 'Discovery Not Started';
-
-  tableData: any[] = [];
-  filteredData: any[] = [];
 
   enableDiscoveryReport: boolean = false;
   dropdownOpen: boolean = false;
@@ -92,11 +95,16 @@ export class DbAssessmentComponent implements OnInit {
       (response) => {
         console.log(this.current_run_id);
         console.log('Discovery API Response:', response);
-
-        this.selectedRow[5] = 'Completed';
-        this.discoveryMessage = 'Discovery completed successfully';
-        this.isDiscoveryInProgress = false;
-        this.isDiscoveryCompleted = true;
+        // alert(response.error)
+        if (response.message == 'success') {
+          this.showAssessmentComponent = false;
+          this.showDiscoveryComponent = true;
+          this.selectedRow[5] = 'Completed';
+          this.discoveryMessage = 'Discovery completed successfully';
+          this.isDiscoveryInProgress = false;
+          this.isDiscoveryCompleted = true;
+          this.selectedRow[4] = 'Assessment';
+        }
       },
       (error) => {
         console.error('Error starting discovery:', error);
@@ -109,6 +117,41 @@ export class DbAssessmentComponent implements OnInit {
 
   startAssessment() {
     console.log('Starting assessment...');
+    this.isAssessmentInProgress = true;
+    this.isAssessmentButtonDisabled = !this.isAssessmentButtonDisabled;
+    this.discoveryMessage = 'Assessment in progress...';
+    this.selectedRow[5] = 'In Progress';
+    if (this.sql2PgService.genAiActivated) {
+      this.enable_genai = 'y';
+    } else {
+      this.enable_genai = 'n';
+    }
+
+    this.sql2PgService
+      .startAssessment(this.current_run_id, this.enable_genai)
+      .subscribe(
+        (response) => {
+          console.log(this.current_run_id);
+          console.log('Assessment API Response:', response);
+          // alert(response.error)
+          if (response.message == 'success') {
+            this.showAssessmentComponent = true;
+            this.showDiscoveryComponent = false;
+          }
+          this.selectedRow[5] = 'Completed';
+          this.discoveryMessage = 'Assessment completed successfully';
+          this.isAssessmentInProgress = false;
+          this.isAssessmentCompleted = true;
+
+          // }
+        },
+        (error) => {
+          console.error('Error starting Assessment:', error);
+          this.discoveryMessage = 'Error during Assessment';
+          this.selectedRow.discoveryStatus = 'Error';
+          this.isDiscoveryInProgress = false;
+        }
+      );
   }
 
   updatePassword(data) {
