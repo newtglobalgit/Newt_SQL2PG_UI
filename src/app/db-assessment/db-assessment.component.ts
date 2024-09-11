@@ -19,7 +19,7 @@ enableAssessmentReport: boolean = false;
   // isShowDataAndGraph: boolean = false; 
   // isShowDataAndGraphForDiscovery: boolean = false; 
 
-  showAssessmentComponent: boolean;
+  showAssessmentComponent: boolean = false;
   current_run_id: any;
 
   isDiscoveryInProgress = false;
@@ -44,7 +44,7 @@ enableAssessmentReport: boolean = false;
   showDiscoveryDropDown: boolean;
   showAssessmentDropDown: boolean;
   showDetails: boolean = true;
-  showDiscoveryComponent: boolean;
+  showDiscoveryComponent: boolean = true;
 
 
   constructor(private modalService: NgbModal, private router: Router, 
@@ -103,12 +103,7 @@ enableAssessmentReport: boolean = false;
           this.selectedRow[5] = 'Completed';
           this.discoveryMessage = 'Discovery completed successfully';
           this.isDiscoveryInProgress = false;  
-          this.isDiscoveryCompleted = true;  
-          
-          if (response.status === 'success')
-          {
-            this.showDiscoveryComponent=true;
-          }
+          this.isDiscoveryCompleted = true;    
       },
       (error) => {
         console.error('Error starting discovery:', error);
@@ -141,32 +136,24 @@ enableAssessmentReport: boolean = false;
   }
 
   viewReport(state){
-
-  if (
-    state == 'Assessment' &&
-    (this.status == 'Completed' || this.status == 'completed')
-  ) {
-
-    
-    this.enableAssessmentReport = true;
-    this.enableDiscoveryReport = true;
-    this.showAssessmentComponent =true
-    this.showAssessmentComponent=true;
-
- 
-  }
-  if (
-    state == 'Discovery' &&
-    (this.status == 'Completed' || this.status == 'completed')
-  ) {
-    this.enableDiscoveryReport = true;
-    this.showAssessmentComponent=false;
-    this.enableAssessmentReport =
-        this.stage === 'Assessment'
-    this.showDiscoveryComponent = true
-
-     
-  }
+    if (
+      state == 'Assessment' &&
+      (this.status == 'Completed' || this.status == 'completed')
+    ) {
+      this.enableAssessmentReport = true;
+      this.enableDiscoveryReport = true;
+      this.showDiscoveryComponent=false;
+      this.showAssessmentComponent = true;
+    }
+    if (
+      state == 'Discovery' &&
+      (this.status == 'Completed' || this.status == 'completed')
+    ) {
+      this.enableDiscoveryReport = true;
+      this.showAssessmentComponent = false;
+      this.enableAssessmentReport = this.stage === 'Assessment';
+      this.showDiscoveryComponent=true;
+    }
 
 }
 
@@ -193,49 +180,50 @@ enableAssessmentReport: boolean = false;
   }
   resetView() {
     this.showDetails =true;
-
-    this.showAssessmentComponent = false;
+    this.showDiscoveryComponent = true;
+    this.showAssessmentComponent=false;
     
   }
 
   onSelectRow(row: any ,  selected: boolean) {
 
-    if(selected)
-    {
-    this.selectedRow = row;
-    this.current_run_id=row[3]
-    this.discoveryMessage = row[5] || 'Discovery Not Started';  // Update message when selecting a row
-    this.isDiscoveryCompleted = row[5] === 'Completed';  // Update button visibility based on discovery completion
-    
-    this.resetView()
-    console.log('Selected row:', row);
-    this.RUN_ID = row[3];
-    this.status = row[5];
-    this.stage = row[4];
+    if (selected) {
+      this.selectedRow = row;
+      this.current_run_id = row[3];
+      this.discoveryMessage = row[5] || 'Discovery Not Started'; // Update message when selecting a row
+      this.isDiscoveryCompleted = row[5] === 'Completed'; // Update button visibility based on discovery completion
 
-    
-  
-    if ((this.stage === 'Discovery' && this.status === 'Completed') || (this.stage === 'Assessment' && this.status === 'Error')) {
-      this.enableDiscoveryReport = true;
-      this.enableAssessmentReport = false;
-      this.showDiscoveryComponent=true;
+      this.resetView();
+      console.log('Selected row:', row);
+      this.RUN_ID = row[3];
+      this.status = row[5];
+      this.stage = row[4];
 
-    } else if (this.stage === 'Assessment' && this.status === 'Completed') {
-      this.enableDiscoveryReport = true;
-      this.enableAssessmentReport = true;
-    } 
-    else {
-      this.enableDiscoveryReport = false;
-      this.enableAssessmentReport = false;
-      this.showDetails =false;
-    }
+      if (
+        (this.stage === 'Discovery' && this.status === 'Completed') ||
+        (this.stage === 'Assessment' && this.status === 'Error')
+      ) {
+        this.enableDiscoveryReport = true;
+        this.enableAssessmentReport = false;
+        this.showAssessmentComponent = false;
+        this.showDiscoveryComponent=true;
+      } else if (this.stage === 'Assessment' && this.status === 'Completed') {
+        this.enableDiscoveryReport = true;
+        this.enableAssessmentReport = true;
+        this.showDiscoveryComponent=true;
+
+
+      } else {
+        this.enableDiscoveryReport = false;
+        this.enableAssessmentReport = false;
+        this.showDetails = false;
+        this.showDiscoveryComponent=false
+      }  
+  }
+
+
 
   }
-  
-  }
-
-
-
-  }
+}
   
 
