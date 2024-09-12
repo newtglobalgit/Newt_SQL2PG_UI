@@ -1,96 +1,57 @@
 <!-- <h2>DB Assessment Page</h2> -->
 
 <html>
-  <head>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/intro.js/introjs.css"
-    />
-  </head>
 
-  <body>
-    <script src="https://unpkg.com/intro.js/intro.js"></script>
-  </body>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/intro.js/introjs.css" />
+</head>
+
+<body>
+  <script src="https://unpkg.com/intro.js/intro.js"></script>
+</body>
+
 </html>
 <span class="pageHeading">Database Assessment</span>
-<div
-  class="row adjust body-content-padding"
-  data-title="DB Assessment"
-  data-intro="This page shows a list of schemas for which discovery or assessment is in progress or complete. You can initiate discovery, assessment, and schema conversion actions from this page. You must assign a worker node, manually or automatically by clicking the 'Assign Worker Node' button, to a schema before initiating any actions."
->
+<div class="row adjust body-content-padding" data-title="DB Assessment"
+  data-intro="This page shows a list of schemas for which discovery or assessment is in progress or complete. You can initiate discovery, assessment, and schema conversion actions from this page. You must assign a worker node, manually or automatically by clicking the 'Assign Worker Node' button, to a schema before initiating any actions.">
   <div class="col-md-12 marginBottom10 paddingTop10 paddingBottom10">
     <div class="row">
-      <div
-        class="col-md-3 row"
-        data-title="Search Schema"
-        data-intro="Click this button to filter the page content based on the entered search text."
-      >
-        <input
-          type="text"
-          id="searchTable"
-          class="marginLeft15 searchFilter form-control col-md-6"
-          placeholder="Search"
-          #searchInput
-          (keyup.enter)="search(searchInput.value)"
-        />
-        <input
-          *ngIf="searchInput && searchInput.value != ''"
-          type="reset"
-          value=" X "
-          style="height: 31.33px; margin-left: -29px; z-index: 1"
-          (click)="clearSearch(searchInput)"
-        />
-        <button
-          type="button"
-          style="vertical-align: text-top; height: 32px"
-          (click)="search(searchInput.value)"
-          class="btn btn-md btn-simple pointerCursor marginLeft10"
-        >
+      <div class="col-md-3 row" data-title="Search Schema"
+        data-intro="Click this button to filter the page content based on the entered search text.">
+        <input type="text" id="searchTable" class="marginLeft15 searchFilter form-control col-md-6" placeholder="Search"
+          #searchInput (keyup.enter)="search(searchInput.value)" />
+        <input *ngIf="searchInput && searchInput.value != ''" type="reset" value=" X "
+          style="height: 31.33px; margin-left: -29px; z-index: 1" (click)="clearSearch(searchInput)" />
+        <button type="button" style="vertical-align: text-top; height: 32px" (click)="search(searchInput.value)"
+          class="btn btn-md btn-simple pointerCursor marginLeft10">
           Search
         </button>
       </div>
       <div class="col-md-9" style="margin-left: 18px; padding: 0px">
-        <button
-          type="button"
-          class="btn btn-md btn-primary marginRight5 pull-right marginBottom5"
-          (click)="multipleDeleteSchemas()"
-        >
+        <button type="button" class="btn btn-md btn-primary marginRight5 pull-right marginBottom5"
+          (click)="multipleDeleteSchemas()">
           Delete Schemas
         </button>
+        
+          <button type="button" class="btn btn-md btn-primary marginRight5 marginBottom5 float-right"
+            (click)="resetFilters()">Reset
+            Filters</button>
+        
 
         <div class="dropdown">
-          <button
-            type="button"
-            class="btn btn-md btn-primary marginRight5 pull-right marginBottom5 dropdown-toggle"
-            id="drpdownDownloadAs"
-            aria-haspopup="true"
-            aria-expanded="dropdownOpen"
-            (click)="toggleDropdown()"
-          >
+          <button type="button" class="btn btn-md btn-primary marginRight5 pull-right marginBottom5 dropdown-toggle"
+            id="drpdownDownloadAs" aria-haspopup="true" aria-expanded="dropdownOpen" (click)="toggleDropdown()">
             Reports
             <i class="fa fa-chevron-down marginLeft5"></i>
           </button>
-          <ul
-            class="dropdown-menu"
-            [ngClass]="{ show: dropdownOpen }"
-            aria-labelledby="drpdownDownloadAs"
-            style="min-width: 145px; position: absolute; top: 100%; left: 0"
-          >
-            <li
-              class="dropdown-item"
-              (click)="viewReport('Discovery')"
-              style="cursor: pointer"
-              *ngIf="enableDiscoveryReport"
-            >
+          <ul class="dropdown-menu" [ngClass]="{ show: dropdownOpen }" aria-labelledby="drpdownDownloadAs"
+            style="min-width: 145px; position: absolute; top: 100%; left: 0">
+            <li class="dropdown-item" (click)="viewReport('Discovery')" style="cursor: pointer"
+              *ngIf="enableDiscoveryReport">
               <span>Discovery</span>
             </li>
-            <li
-              class="dropdown-item"
-              (click)="viewReport('Assessment')"
-              style="cursor: pointer"
-              *ngIf="enableAssessmentReport"
-            >
+            <li class="dropdown-item" (click)="viewReport('Assessment')" style="cursor: pointer"
+              *ngIf="enableAssessmentReport">
               <span>Assessment</span>
             </li>
           </ul>
@@ -100,12 +61,9 @@
   </div>
 
   <div class="col-md-12 table-responsive" style="overflow: inherit">
-    <table
-      id="analyticsTable"
-      class="analyticsTable table table-hover table-sm table-bordered"
+    <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered"
       data-title="Analytics Table"
-      data-intro="This table shows a list of schemas for which discovery or assessment is in progress or complete. You can select schemas and initiate various actions such as schema discovery, assessment, conversion, or delete a schema."
-    >
+      data-intro="This table shows a list of schemas for which discovery or assessment is in progress or complete. You can select schemas and initiate various actions such as schema discovery, assessment, conversion, or delete a schema.">
       <thead>
         <tr class="analyticsReports" style="font-size: 12px">
           <th>
@@ -115,38 +73,21 @@
           <th>
             <span class="marginRight5 defaultCursor">Source Schema</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownSourceSchema"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                type="button" aria-haspopup="true">
+
               </i>
 
-              <ul
-                class="dropdown-menu drpdownSourceSchema"
-                aria-labelledby="drpdownSourceSchema"
-                style="left: -100px !important"
-              >
-                <li class="dropdown-item" *ngFor="let source of sourceSchemas">
+              <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
+                style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
+                <li class="dropdown-item" *ngFor="let data of arrayOfSourceShema">
                   <div>
-                    <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="sourceSchemafilter_{{ source.runId }}"
-                        [(ngModel)]="source.isSourceSchemaChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="sourceSchemafilter_{{ source.runId }}"
-                        >{{ source.sourceDBSchema }}</label
-                      >
+                    <div class="form-check" style="padding:0px;">
+                      <input type="checkbox" ngModel name="applicationNamefilter_{{data.applicationName}}"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                        value="{{data}}" />
+                      <label class="form-check-label-workerNode marginLeft5"
+                        for="applicationNamefilter_{{data.applicationName}}">{{data}}</label>
                     </div>
                   </div>
                 </li>
@@ -157,38 +98,21 @@
           <th>
             <span class="marginRight5 defaultCursor">Source DB</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownSourceSchema"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                type="button" aria-haspopup="true">
+
               </i>
 
-              <ul
-                class="dropdown-menu drpdownSourceDatabase"
-                aria-labelledby="drpdownSourceDatabase"
-                style="left: -100px !important"
-              >
-                <li class="dropdown-item" *ngFor="let db of sourceDbs">
+              <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
+                style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
+                <li class="dropdown-item" *ngFor="let data of arrayOfSourceDB">
                   <div>
-                    <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="sourceDbfilter_{{ db.runId }}"
-                        [(ngModel)]="db.isSourceDbChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="sourceDbfilter_{{ db.runId }}"
-                        >{{ db.sourceDBName }}</label
-                      >
+                    <div class="form-check" style="padding:0px;">
+                      <input type="checkbox" ngModel name="applicationNamefilter_{{data.applicationName}}"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                        value="{{data}}" />
+                      <label class="form-check-label-workerNode marginLeft5"
+                        for="applicationNamefilter_{{data.applicationName}}">{{data}}</label>
                     </div>
                   </div>
                 </li>
@@ -199,92 +123,21 @@
           <th>
             <span class="marginRight5 defaultCursor">Target DB</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownTargetDbs"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                type="button" aria-haspopup="true">
+
               </i>
 
-              <ul
-                class="dropdown-menu drpdownTargetDbs"
-                aria-labelledby="drpdownTargetDbs"
-                style="left: -100px !important"
-              >
-                <li class="dropdown-item" *ngFor="let target of targetDbs">
+              <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
+                style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
+                <li class="dropdown-item" *ngFor="let data of arrayOfTargetDB">
                   <div>
-                    <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="targetfilter_{{ target.runId }}"
-                        [(ngModel)]="target.isTargetDbChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="targetfilter_{{ target.runId }}"
-                        >{{ target.targetDBName }}</label
-                      >
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </span>
-          </th>
-
-          <th
-            *ngIf="
-              nodeType == 'analytics_master' &&
-              (licenseType == 'dmap enterprise' || licenseType == 'dmap pro')
-            "
-          >
-            <span class="marginRight5 defaultCursor">Worker Node</span>
-            <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownAssignedVm"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
-              </i>
-
-              <ul
-                class="dropdown-menu drpdownAssignedVm"
-                aria-labelledby="drpdownAssignedVm"
-                style="left: -100px !important"
-              >
-                <li
-                  class="dropdown-item"
-                  *ngFor="let assignedVm of assignedVms"
-                >
-                  <div>
-                    <div
-                      class="form-check"
-                      style="padding: 0px"
-                      *ngIf="assignedVm.workerNode !== null"
-                    >
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="assignedVmfilter_{{ assignedVm.runId }}"
-                        [(ngModel)]="assignedVm.isassignedVmChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="assignedVmfilter_{{ assignedVm.runId }}"
-                        >{{ assignedVm.workerNode }}</label
-                      >
+                    <div class="form-check" style="padding:0px;">
+                      <input type="checkbox" ngModel name="applicationNamefilter_{{data.applicationName}}"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                        value="{{data}}" />
+                      <label class="form-check-label-workerNode marginLeft5"
+                        for="applicationNamefilter_{{data.applicationName}}">{{data}}</label>
                     </div>
                   </div>
                 </li>
@@ -293,40 +146,23 @@
           </th>
 
           <th>
-            <span class="marginRight5 pointerCursor">Run ID</span>
+            <span class="marginRight5 defaultCursor">Run ID</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownRequestId"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppRunID" data-toggle="dropdown"
+                type="button" aria-haspopup="true">
+
               </i>
 
-              <ul
-                class="dropdown-menu drpdownRequestId"
-                aria-labelledby="drpdownCreatedBy"
-                style="left: -100px !important; min-width: 140px !important"
-              >
-                <li class="dropdown-item" *ngFor="let request of requests">
+              <ul class="dropdown-menu drpdownAppRunID" aria-labelledby="drpdownAppRunID"
+                style="left:-100px !important;min-width: 160px !important;" (click)="onDropdownClick($event)">
+                <li class="dropdown-item" *ngFor="let data of arrayOfRunID">
                   <div>
-                    <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="reqfilter_{{ request.runId }}"
-                        [(ngModel)]="request.isRequestorChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="reqfilter_{{ request.runId }}"
-                        >{{ request.runId }}</label
-                      >
+                    <div class="form-check" style="padding:0px;">
+                      <input type="checkbox" ngModel name="applicationRunIDfilter_{{data.applicationName}}"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                        value="{{data}}" />
+                      <label class="form-check-label-workerNode marginLeft5"
+                        for="applicationRunIDfilter_{{data.applicationName}}">{{data}}</label>
                     </div>
                   </div>
                 </li>
@@ -335,39 +171,23 @@
           </th>
 
           <th>
-            <span class="marginRight5 pointerCursor">Stage</span>
+            <span class="marginRight5 defaultCursor">Stage</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownStep"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppStage" data-toggle="dropdown"
+                type="button" aria-haspopup="true">
+
               </i>
-              <ul
-                class="dropdown-menu drpdownStep"
-                aria-labelledby="drpdownStep"
-                style="min-width: 153px !important"
-              >
-                <li class="dropdown-item" *ngFor="let step of steps">
+
+              <ul class="dropdown-menu drpdownAppStage" aria-labelledby="drpdownAppStage"
+                style="left:-100px !important;min-width: 110px !important;" (click)="onDropdownClick($event)">
+                <li class="dropdown-item" *ngFor="let data of arrayOfStage">
                   <div>
-                    <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="stepfilter_{{ step.runId }}"
-                        [(ngModel)]="step.isStepChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="stepfilter_{{ step.runId }}"
-                        >{{ step.step }}</label
-                      >
+                    <div class="form-check" style="padding:0px;">
+                      <input type="checkbox" ngModel name="applicationStagefilter_{{data.applicationName}}"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                        value="{{data}}" />
+                      <label class="form-check-label-workerNode marginLeft5"
+                        for="applicationStagefilter_{{data.applicationName}}">{{data}}</label>
                     </div>
                   </div>
                 </li>
@@ -376,39 +196,23 @@
           </th>
 
           <th>
-            <span class="marginRight5 pointerCursor">Status</span>
+            <span class="marginRight5 defaultCursor">Status</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownStepStatus"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppStatus" data-toggle="dropdown"
+                type="button" aria-haspopup="true">
+
               </i>
-              <ul
-                class="dropdown-menu drpdownStepStatus"
-                aria-labelledby="drpdownStepStatus"
-                style="min-width: 136px !important"
-              >
-                <li class="dropdown-item" *ngFor="let status of stepStatuses">
+
+              <ul class="dropdown-menu drpdownAppStatus" aria-labelledby="drpdownAppStatus"
+                style="left:-100px !important;min-width: 136px !important;" (click)="onDropdownClick($event)">
+                <li class="dropdown-item" *ngFor="let data of arrayOfStatus">
                   <div>
-                    <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="statusfilter_{{ status.runId }}"
-                        [(ngModel)]="status.isStatusChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="statusfilter_{{ status.runId }}"
-                        >{{ status.stepStatus }}</label
-                      >
+                    <div class="form-check" style="padding:0px;">
+                      <input type="checkbox" ngModel name="applicationStatusfilter_{{data.applicationName}}"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                        value="{{data}}" />
+                      <label class="form-check-label-workerNode marginLeft5"
+                        for="applicationStatusfilter_{{data.applicationName}}">{{data}}</label>
                     </div>
                   </div>
                 </li>
@@ -419,36 +223,17 @@
           <th>
             <span class="marginRight5 pointerCursor">Last Updated</span>
             <span>
-              <i
-                class="fa fa-chevron-down pointerCursor dropdown-toggle"
-                id="drpdownLastUpdated"
-                data-toggle="dropdown"
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
+              <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownLastUpdated" data-toggle="dropdown"
+                type="button" aria-haspopup="true" aria-expanded="true">
               </i>
-              <ul
-                class="dropdown-menu drpdownLastUpdated"
-                aria-labelledby="drpdownLastUpdated"
-              >
+              <ul class="dropdown-menu drpdownLastUpdated" aria-labelledby="drpdownLastUpdated">
                 <li class="dropdown-item" *ngFor="let date of lastUpdates">
                   <div>
                     <div class="form-check" style="padding: 0px">
-                      <input
-                        type="checkbox"
-                        ngModel
-                        name="lastUpdatefilter_{{ date.runId }}"
-                        [(ngModel)]="date.isDateChecked"
-                        class="form_checkbox ng-untouched ng-pristine ng-valid"
-                        style="vertical-align: text-top"
-                        (change)="onFilterSelected()"
-                      />
-                      <label
-                        class="form-check-label-workerNode marginLeft5"
-                        for="lastUpdatefilter_{{ date.runId }}"
-                        >{{ date.lastUpdated }}</label
-                      >
+                      <input type="checkbox" ngModel [(ngModel)]="date.isDateChecked"
+                        class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top"
+                         />
+                      <label class="form-check-label-workerNode marginLeft5">{{ date }}</label>
                     </div>
                   </div>
                 </li>
@@ -468,24 +253,13 @@
         </ng-container>
 
         <ng-container *ngIf="tableData.length > 0">
-          <tr
-            *ngFor="let row of tableData"
-            style="font-size: 12px"
-            [ngClass]="{ highlightedRow: row.runID == radioCheckedValue }"
-          >
+          <tr *ngFor="let row of tableData" style="font-size: 12px"
+            [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
             <td class="textCenter">
               <div class="">
-                <input
-                  type="radio"
-                  [checked]="row.runID == radioCheckedValue"
-                  name="schema"
-                  value="checkbox_{{ row.runID }}"
-                  class="form_radio textCenter"
-                  style="top: 2px"
-                  #inputE2
-                  name="selectedRow"
-                  (click)="onSelectRow(row, true)"
-                />
+                <input type="radio" [checked]="row[3] == radioCheckedValue" name="schema" value="checkbox_{{ row[3] }}"
+                  class="form_radio textCenter" style="top: 2px" #inputE2 name="selectedRow"
+                  (click)="onSelectRow(row, true)" />
               </div>
             </td>
             <td>{{ row[0] }}</td>
@@ -493,35 +267,24 @@
             <td>{{ row[2] }}</td>
             <td>{{ row[3] }}</td>
             <td>{{ row[4] }}</td>
-            <td
-              [ngClass]="{
+            <td [ngClass]="{
                 completedStatus: row[5] === 'Completed',
                 notStartedStatus: row[5] === 'Not Started',
                 notErrorStatus: row[5] === 'Error',
                 notInProgressStatus: row[5] === 'In Progress',
                 completedInterim: row[5] === 'Processing Done'
-              }"
-            >
+              }">
               {{ row[5] }}
             </td>
             <td>{{ row.lastUpdated }}</td>
             <td class="textCenter">
               <span (click)="updatePassword(row)" title="Edit">
-                <svg
-                  class="bi bi-gear"
-                  width="18px"
-                  height="18px"
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"
-                  />
+                <svg class="bi bi-gear" width="18px" height="18px" viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
+                  <path fill-rule="evenodd"
+                    d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
                 </svg>
               </span>
             </td>
@@ -532,65 +295,41 @@
   </div>
 </div>
 <div style="border: 1px solid lightgray" *ngIf="selectedRow">
-  <div class="col-md-12" *ngIf="selectedRow" style="width: 97%; margin: auto">
-    <div
-      role="alert"
-      [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]"
-      style="
+  <div class="col-md-12" *ngIf="selectedRow" style="width: 98%; margin: auto">
+    <div role="alert" [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]" style="
         border: 1px solid #dee2e6;
-        padding: 20px;
+        padding: 13px;
         border-radius: 5px;
         margin-top: 11px;
-      "
-    >
+      ">
       <span>
-        <span class="font-weight-bold" style="margin-right: 10px"></span>
-        <span class="font-weight-bold">{{ discoveryMessage }}</span>
+        <span class="font-weight-bold" style="margin-right: 3px">{{selectedRow[4]}}</span>
+        <span class="font-weight-bold">{{ selectedRow[5] }}</span>
       </span>
 
-      <div style="margin-top: 15px">
-        <button
-          class="btn btn-md btn-primary"
-          *ngIf="!isDiscoveryCompleted"
-          [disabled]="isDiscoveryInProgress"
-          (click)="startDiscovery()"
-        >
+      <div>
+        <button class="btn btn-md btn-primary" *ngIf="!isDiscoveryCompleted" [disabled]="isDiscoveryInProgress"
+          (click)="startDiscovery()">
           Start Discovery
         </button>
 
-        <button
-          class="btn btn-md btn-primary"
-          *ngIf="isDiscoveryCompleted"
-          [disabled]="isAssessmentButtonDisabled"
-          (click)="startAssessment()"
-        >
+        <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted" [disabled]="isAssessmentButtonDisabled"
+          (click)="startAssessment()">
           Start Assessment
         </button>
       </div>
     </div>
     <div *ngIf="showDetails">
       <div>
-        <app-discovery-webpage-report
-          *ngIf="showDiscoveryComponent"
-          [Status]="status"
-          [Stage]="stage"
-          [runId]="RUN_ID"
-          [showComponent]="enableDiscoveryReport"
-          [schemaName]="selectedRow[0]"
-          [dbName]="selectedRow[1]"
-        ></app-discovery-webpage-report>
+        <app-discovery-webpage-report *ngIf="showDiscoveryComponent" [Status]="status" [Stage]="stage" [runId]="RUN_ID"
+          [showComponent]="enableDiscoveryReport" [schemaName]="selectedRow[0]"
+          [dbName]="selectedRow[1]"></app-discovery-webpage-report>
       </div>
 
       <div>
-        <app-assessment-webpage-report
-          *ngIf="showAssessmentComponent"
-          [Status]="status"
-          [Stage]="stage"
-          [runId]="RUN_ID"
-          [showComponent]="enableAssessmentReport"
-          [schemaName]="selectedRow[0]"
-          [dbName]="selectedRow[1]"
-        >
+        <app-assessment-webpage-report *ngIf="showAssessmentComponent" [Status]="status" [Stage]="stage"
+          [runId]="RUN_ID" [showComponent]="enableAssessmentReport" [schemaName]="selectedRow[0]"
+          [dbName]="selectedRow[1]">
         </app-assessment-webpage-report>
       </div>
     </div>

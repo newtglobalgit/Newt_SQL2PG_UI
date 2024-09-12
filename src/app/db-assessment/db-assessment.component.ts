@@ -30,7 +30,6 @@ export class DbAssessmentComponent implements OnInit {
   isDiscoveryInProgress = false;
   isDiscoveryCompleted = false;
   showAssessmentButton = false;
-  discoveryMessage = 'Discovery Not Started';
 
   enableDiscoveryReport: boolean = false;
   dropdownOpen: boolean = false;
@@ -46,8 +45,24 @@ export class DbAssessmentComponent implements OnInit {
   showAssessmentDropDown: boolean;
   showDetails: boolean = true;
   showDiscoveryComponent: boolean = true;
+  sourceSchemas:any[]=[]
+  // filter
+  selectedValuesDict: { [key: string]: string[] } = {};
+  originalData: any;
+  filterAppFlag: boolean = false;
+  filterDataSelectedFlag: boolean = false;
+  refreshInterval: boolean = true;
+
+  arrayOfSourceShema: any[];
+  arrayOfSourceDB: any[];
+  arrayOfTargetDB: any[];
+  arrayOfRunID: any[];
+  arrayOfStage: any[];
+  arrayOfStatus: any[];
+  searchDmapAppTable: string;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
     private spinner: NgxSpinnerService
@@ -55,13 +70,15 @@ export class DbAssessmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStoredSchemaInfo();
+    
+    setInterval(() => {
+      this.checkDropdownStatus();
+    }, 1000);
 
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
     } else {
-      this.discoveryMessage = this.selectedRow[5] || 'Discovery Not Started';
-      this.isDiscoveryCompleted =
-        this.selectedRow.discoveryStatus === 'Completed';
+      this.selectedRow[5]='Not Started';
     }
   }
 
@@ -86,7 +103,6 @@ export class DbAssessmentComponent implements OnInit {
 
   async startDiscovery() {
     this.isDiscoveryInProgress = true;
-    this.discoveryMessage = 'Discovery in progress...';
     this.selectedRow[5] = 'In Progress';
 
     await this.sleep(3000);
@@ -95,21 +111,17 @@ export class DbAssessmentComponent implements OnInit {
       (response) => {
         console.log(this.current_run_id);
         console.log('Discovery API Response:', response);
-        // alert(response.error)
         if (response.status == 'success') {
           this.showAssessmentComponent = false;
           this.showDiscoveryComponent = true;
           this.selectedRow[5] = 'Completed';
-          this.discoveryMessage = 'Discovery completed successfully';
           this.isDiscoveryInProgress = false;
           this.isDiscoveryCompleted = true;
-          this.selectedRow[4] = 'Assessment';
         }
       },
       (error) => {
         console.error('Error starting discovery:', error);
-        this.discoveryMessage = 'Error during discovery';
-        this.selectedRow.discoveryStatus = 'Error';
+        this.selectedRow[5] = 'Error';
         this.isDiscoveryInProgress = false;
       }
     );
@@ -117,9 +129,9 @@ export class DbAssessmentComponent implements OnInit {
 
   startAssessment() {
     console.log('Starting assessment...');
+    this.selectedRow[4] = 'Assessment';
     this.isAssessmentInProgress = true;
     this.isAssessmentButtonDisabled = !this.isAssessmentButtonDisabled;
-    this.discoveryMessage = 'Assessment in progress...';
     this.selectedRow[5] = 'In Progress';
     if (this.sql2PgService.genAiActivated) {
       this.enable_genai = 'y';
@@ -133,13 +145,11 @@ export class DbAssessmentComponent implements OnInit {
         (response) => {
           console.log(this.current_run_id);
           console.log('Assessment API Response:', response);
-          // alert(response.error)
           if (response.status == 'success') {
             this.showAssessmentComponent = true;
             this.showDiscoveryComponent = false;
           }
           this.selectedRow[5] = 'Completed';
-          this.discoveryMessage = 'Assessment completed successfully';
           this.isAssessmentInProgress = false;
           this.isAssessmentCompleted = true;
 
@@ -147,8 +157,7 @@ export class DbAssessmentComponent implements OnInit {
         },
         (error) => {
           console.error('Error starting Assessment:', error);
-          this.discoveryMessage = 'Error during Assessment';
-          this.selectedRow.discoveryStatus = 'Error';
+          this.selectedRow[5] = 'Error';
           this.isDiscoveryInProgress = false;
         }
       );
@@ -192,8 +201,141 @@ export class DbAssessmentComponent implements OnInit {
   getStoredSchemaInfo() {
     this.sql2PgService.getDBAssessmentData().subscribe((response) => {
       this.tableData = response;
-      console.log(this.tableData);
+      // console.log(this.tableData);
+      this.getAppData()
+      // this.sourceSchemas=this.tableData[0];
     });
+  }
+
+  checkDropdownStatus() {
+    if (
+      document
+        .getElementById('drpdownAppName')
+        ?.getAttribute('aria-expanded') === 'true' ||
+      document
+        .getElementById('drpdownAppRunID')
+        ?.getAttribute('aria-expanded') === 'true' ||
+      document
+        .getElementById('drpdownAppStage')
+        ?.getAttribute('aria-expanded') === 'true' ||
+      document
+        .getElementById('drpdownAppStatus')
+        ?.getAttribute('aria-expanded') === 'true' ||
+      document
+        .getElementById('drpdownAppLastUpdated')
+        ?.getAttribute('aria-expanded') === 'true' ||
+      document
+        .getElementById('drpdownAssignVm')
+        ?.getAttribute('aria-expanded') === 'true'
+    ) {
+      this.filterAppFlag = true;
+      // console.log('at least one dropdown is open');
+    } else {
+      if (this.filterDataSelectedFlag) {
+        this.filterAppFlag = true;
+        // console.log('all dropdowns are closed with data');
+      } else {
+        this.filterAppFlag = false;
+        // console.log('all dropdowns are closed');
+      }
+    }
+  }
+
+  onDropdownClick(event: MouseEvent) {
+    const target = event.target as HTMLInputElement;
+    // Check if the clicked element is a checkbox
+    if (target.tagName === 'INPUT' && target.type === 'checkbox') {
+      // Get the value of the clicked checkbox
+      const clickedValue = target.value;
+      // this.selectedValues.push(clickedValue);
+      const thElement = target.closest('th');
+      const stageText = thElement
+        .querySelector('span.marginRight5.defaultCursor')
+        ?.textContent?.trim();
+      // Check if the selected values dictionary already has an entry for the current stage text
+      if (target.checked) {
+        if (this.selectedValuesDict.hasOwnProperty(stageText)) {
+          this.selectedValuesDict[stageText].push(clickedValue);
+        } else {
+          this.selectedValuesDict[stageText] = [clickedValue];
+        }
+      } else {
+        // If the checkbox is unchecked, remove the clicked value from the selectedValuesDict
+        if (this.selectedValuesDict.hasOwnProperty(stageText)) {
+          this.selectedValuesDict[stageText] = this.selectedValuesDict[
+            stageText
+          ].filter((value) => value !== clickedValue);
+          if (this.selectedValuesDict[stageText].length === 0) {
+            delete this.selectedValuesDict[stageText];
+          }
+        }
+      }
+      // console.log(this.selectedValuesDict)
+      let filteredData = [];
+      if (Object.keys(this.selectedValuesDict).length != 0) {
+        for (const stageText in this.selectedValuesDict) {
+          if (this.selectedValuesDict.hasOwnProperty(stageText)) {
+            const selectedValues = this.selectedValuesDict[stageText];
+            let stageFilteredData = [];
+            // console.log(selectedValues)
+
+            switch (stageText) {
+              case 'Source Schema':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(row[0])
+                );
+                break;
+              case 'Source DB':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(row[1])
+                );
+                break;
+              case 'Target DB':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(row[2])
+                );
+                break;  
+              case 'Run ID':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(String(row[3]).trim())  // Convert to string and remove extra spaces
+                );
+                break;
+              case 'Stage':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(row[4])
+                );
+                break;
+              case 'Status':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(row[5])
+                );
+                break;
+              case 'Last Updated':
+                stageFilteredData = this.originalData.filter((row) =>
+                  selectedValues.includes(row[6])
+                );
+                break;
+            }
+            // console.log(stageFilteredData) 
+            const setFilteredData = new Set([
+              ...filteredData,
+              ...stageFilteredData,
+            ]);
+            filteredData = [...setFilteredData];
+            if (filteredData.length > 0) {
+              this.filterAppFlag = true;
+              this.filterDataSelectedFlag = true;
+              this.tableData = [...filteredData];
+              // console.log( this.tableData)
+            }
+          }
+        }
+      } else {
+        this.filterAppFlag = false;
+        this.filterDataSelectedFlag = false;
+        this.tableData = this.originalData;
+      }
+    }
   }
 
   editRow(row: any): void {
@@ -214,7 +356,6 @@ export class DbAssessmentComponent implements OnInit {
     if (selected) {
       this.selectedRow = row;
       this.current_run_id = row[3];
-      this.discoveryMessage = row[5] || 'Discovery Not Started'; // Update message when selecting a row
       this.isDiscoveryCompleted = row[5] === 'Completed'; // Update button visibility based on discovery completion
 
       this.resetView();
@@ -284,5 +425,61 @@ export class DbAssessmentComponent implements OnInit {
       },
       (error) => {}
     );
+  }
+
+  getAppData() {
+    this.sql2PgService.getDBAssessmentData().subscribe((resp) => {
+      if (resp.status == 'No Data Available') {
+        this.tableData = [];
+      } else if (resp.status == 'fail') {
+        alert('Alert');
+        this.refreshInterval = false;
+      } else {
+        this.tableData = resp.map((resp) => ({ ...resp }));
+        this.originalData = this.tableData;
+        // console.log(this.originalData)
+        this.arrayOfSourceShema = [
+          ...new Set(this.originalData.map((data) => data[0]).filter((item) => item !== null))
+        ];
+        // console.log(this.arrayOfSourceShema)
+        this.arrayOfSourceDB = [
+          ...new Set(this.originalData.map((data) => data[1])),
+        ];
+        // console.log(this.arrayOfSourceDB)
+        this.arrayOfTargetDB = [
+          ...new Set(this.originalData.map((data) => data[2])),
+        ];
+        // console.log(this.arrayOfTargetDB)
+        this.arrayOfRunID = [
+          ...new Set(this.originalData.map((data) => data[3])),
+        ];
+        // console.log(this.arrayOfRunID)
+        this.arrayOfStage = [
+          ...new Set(this.originalData.map((data) => data[4])),
+        ];
+        // console.log(this.arrayOfStage)
+        this.arrayOfStatus = [
+          ...new Set(this.originalData.map((data) => data[5])),
+        ];
+        // console.log(this.arrayOfStatus)
+        
+      }
+    });
+  }
+
+  resetFilters() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(
+      (checkbox) => ((checkbox as HTMLInputElement).checked = false)
+    );
+    
+    this.filterAppFlag = false;
+    this.tableData=this.originalData; 
+    for (const key of Object.keys(this.selectedValuesDict)) {
+      delete this.selectedValuesDict[key];
+    }
+    this.searchDmapAppTable = undefined;
+    console.log("reset")
+    console.log(this.tableData)
   }
 }
