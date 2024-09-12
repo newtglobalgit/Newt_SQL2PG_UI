@@ -75,7 +75,7 @@ downloadPdf(){
   this.sql2PgService.downloadDiscoveryPdfReport(this.runId,'Discovery').subscribe(data=>{
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename = 'SchemaDiscoveryReport_' +this.tableData[0].sourceDBName+'_'+this.tableData[0].sourceDBSchema+'_' + this.runId +'.pdf';
+    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
     saveAs.saveAs(blob,filename);
   });
 }
@@ -83,7 +83,7 @@ downloadPdf(){
  downloadExcel(){
      this.sql2PgService.downloadDiscoveryExcelReport(this.runId).subscribe(data=>{
      let blob = new Blob([data],{});
-     let filename = 'SchemaDiscoveryReport_'+this.tableData[0].sourceDatabase+'_'+this.tableData[0].sourceSchema+'_' + this.runId +'.xlsx';
+     let filename = this.dbName+'_'+this.schemaName+'_'+'Discovery_' + this.runId +'_Report'+'.xlsx';
      saveAs.saveAs(blob,filename);
    });
 }

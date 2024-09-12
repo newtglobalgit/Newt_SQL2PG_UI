@@ -7,6 +7,7 @@ import { AppConfigService } from 'src/app/common/Services/app-config.service';
   providedIn: 'root',
 })
 export class Sql2PgService {
+  
  
 
   genAiActivated: boolean = false;
@@ -72,6 +73,12 @@ export class Sql2PgService {
     });
   }
  
+  updatePassword(data: any): Observable<any> {
+    const payload = data;
+   
+
+    return this.http.post(this.config.host + '/updateDbConfigPassword', payload);
+    }
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');

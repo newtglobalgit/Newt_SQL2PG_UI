@@ -78,7 +78,7 @@ downloadPdf(){
   this.sql2PgService.downloadAssessmentPdfReport(this.runId,'Assessment').subscribe(data=>{
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename = 'SchemaDiscoveryReport_' +this.tableData[0].sourceDBName+'_'+this.tableData[0].sourceDBSchema+'_' + this.runId +'.pdf';
+    let filename =this.tableData[0].sourceDBName+'_'+this.tableData[0].sourceDBSchema+'_' + this.runId + '_SchemaAssessmentReport'+'.pdf';
     saveAs.saveAs(blob,filename);
   });
 }
@@ -86,7 +86,7 @@ downloadPdf(){
  downloadExcel(){
      this.sql2PgService.downloadAssessmentExcelReport(this.runId).subscribe(data=>{
      let blob = new Blob([data],{});
-     let filename = 'SchemaDiscoveryReport_'+this.tableData[0].sourceDatabase+'_'+this.tableData[0].sourceSchema+'_' + this.runId +'.xlsx';
+     let filename = this.tableData[0].sourceDatabase+'_'+this.tableData[0].sourceSchema+'_'+'Assessment_' + this.runId +'_Report'+'.xlsx';
      saveAs.saveAs(blob,filename);
    });
 }
