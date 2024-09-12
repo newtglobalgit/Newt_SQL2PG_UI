@@ -56,11 +56,39 @@
           display: flex;
           justify-content: flex-end;
           align-items: center;
-          margin-left: 30px;
+          margin-left: 29px;
         "
       >
+        <div class="dropdown marginRight5">
+          <button
+            disabled
+            type="button"
+            class="btn btn-md btn-primary"
+            id="drpdownDownloadAs"
+            aria-haspopup="true"
+            aria-expanded="dropdownOpen"
+            (click)="toggleDropdown()"
+          >
+            Data Migration
+            <i class="fa fa-chevron-down marginLeft5"></i>
+          </button>
+        </div>
+        <div class="dropdown marginRight5">
+          <button
+            disabled
+            type="button"
+            class="btn btn-md btn-primary"
+            id="drpdownDownloadAs"
+            aria-haspopup="true"
+            aria-expanded="dropdownOpen"
+            (click)="toggleDropdown()"
+          >
+            Validation
+            <i class="fa fa-chevron-down marginLeft5"></i>
+          </button>
+        </div>
         <!-- Reports Dropdown -->
-        <div class="dropdown" style="margin-right: 15px">
+        <div class="dropdown marginRight5">
           <button
             type="button"
             class="btn btn-md btn-primary"
