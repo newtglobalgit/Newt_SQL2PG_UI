@@ -159,11 +159,11 @@ export class DbAssessmentComponent implements OnInit {
       size: 'lg',
       scrollable: true,
     });
+
     modalRef.componentInstance.data = {
       title: 'Update Password',
-      runId: data.runId,
-      stage: data.stepStatus,
-      step: data.step,
+      runId: this.current_run_id
+      
     };
     modalRef.result.then((result) => {});
   }
