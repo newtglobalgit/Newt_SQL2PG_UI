@@ -13,6 +13,8 @@ import { DmapMultipleSchemaDeleteComponent } from '../common/Modal/dmap-multiple
 })
 export class DbAssessmentComponent implements OnInit {
   isShowDataAndGraph: string;
+  filteredTableData: any[] = [];  
+
 
   tableData: any[] = [];
   filteredData: any[] = [];
@@ -46,6 +48,9 @@ export class DbAssessmentComponent implements OnInit {
   showAssessmentDropDown: boolean;
   showDetails: boolean = true;
   showDiscoveryComponent: boolean = true;
+  appDetailCalls: NodeJS.Timeout;
+  lastupdated_date: any;
+ filterapplied: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -54,6 +59,11 @@ export class DbAssessmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.filteredTableData = [...this.tableData]; 
+
+    this.pingAndGetAppData();
+
     this.getStoredSchemaInfo();
 
     if (!this.tableData || this.tableData.length === 0) {
@@ -63,6 +73,19 @@ export class DbAssessmentComponent implements OnInit {
       this.isDiscoveryCompleted =
         this.selectedRow.discoveryStatus === 'Completed';
     }
+
+    
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.appDetailCalls);
+  }
+
+  pingAndGetAppData() {
+    this.appDetailCalls = setInterval(() => {
+        this.getStoredSchemaInfo();
+      
+    }, 3000);
   }
 
   getAlertClass(status: string): string {
@@ -222,6 +245,9 @@ export class DbAssessmentComponent implements OnInit {
       this.RUN_ID = row[3];
       this.status = row[5];
       this.stage = row[4];
+      this.lastupdated_date = row[6].strftime("%d-%b-%Y")
+      console.log(this.lastupdated_date)
+ 
 
       if (
         (this.stage === 'Discovery' && this.status === 'Completed') ||
@@ -242,6 +268,28 @@ export class DbAssessmentComponent implements OnInit {
         this.showDiscoveryComponent = false;
       }
     }
+  }
+
+
+  
+
+  search(query: string) {
+    this.filterapplied =true
+    if (query) {
+      this.filteredTableData = this.tableData.filter(row => 
+        
+        row[0].toLowerCase().includes(query.toLowerCase()) 
+      );
+      
+
+    } else {
+      this.filteredTableData = [...this.tableData]; 
+    }
+  }
+
+  clearSearch(searchInput: HTMLInputElement) {
+    searchInput.value = '';
+    this.search(''); 
   }
 
   multipleDeleteSchemas() {
