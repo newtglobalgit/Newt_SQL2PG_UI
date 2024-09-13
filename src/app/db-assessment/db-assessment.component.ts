@@ -77,13 +77,13 @@ export class DbAssessmentComponent implements OnInit {
 
     this.filteredTableData = [...this.tableData]; 
 
-    this.pingAndGetAppData();
+    // this.pingAndGetAppData();
 
     this.getStoredSchemaInfo();
     
-    setInterval(() => {
-      this.checkDropdownStatus();
-    }, 1000);
+    // setInterval(() => {
+    //   this.checkDropdownStatus();
+    // }, 1000);
 
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
