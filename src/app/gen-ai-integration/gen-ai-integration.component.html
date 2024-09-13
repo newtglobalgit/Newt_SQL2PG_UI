@@ -123,6 +123,10 @@
               >
               <input
                 type="number"
+                placeholder="Please enter value between 0 and 2"
+                min="0"
+                max="2"
+                step="0.01"
                 class="form-control"
                 id="temperature"
                 formControlName="temperature"
@@ -136,13 +140,32 @@
         </div>
 
         <div class="row adjust">
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label for="topP"
                 >Top P <span class="requiredField">*</span></label
               >
               <input
                 type="text"
+                class="form-control"
+                id="topP"
+                formControlName="topP"
+                [(ngModel)]="topP"
+                name="topP"
+              />
+            </div>
+          </div> -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="topP"
+                >Top P <span class="requiredField">*</span></label
+              >
+              <input
+                type="number"
+                placeholder="Please enter value between 0 and 1"
+                min="0"
+                max="1"
+                step="0.01"
                 class="form-control"
                 id="topP"
                 formControlName="topP"
@@ -169,7 +192,7 @@
         </div>
 
         <div class="row adjust">
-          <!-- <div class="col-md-6">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="maxRetries"
                 >Max Retries <span class="requiredField">*</span></label
@@ -183,8 +206,8 @@
                 name="maxRetries"
               />
             </div>
-          </div> -->
-          <div class="col-md-6">
+          </div>
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label for="maxRetries"
                 >Max Retries <span class="requiredField">*</span></label
@@ -203,7 +226,7 @@
                 <option value="5">5</option>
               </select>
             </div>
-          </div>
+          </div> -->
 
           <!-- <div class="col-md-6">
             <div class="form-group">
@@ -259,7 +282,7 @@
               />
             </div>
           </div>
-          <!-- <div class="col-md-6">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="maxApiCalls"
                 >Max API Calls <span class="requiredField">*</span></label
@@ -273,9 +296,9 @@
                 name="maxApiCalls"
               />
             </div>
-          </div> -->
+          </div>
 
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label for="maxApiCalls"
                 >Max API Calls <span class="requiredField">*</span></label
@@ -294,7 +317,7 @@
                 <option value="5">5</option>
               </select>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 

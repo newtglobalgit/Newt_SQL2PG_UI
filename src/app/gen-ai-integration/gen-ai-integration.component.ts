@@ -47,8 +47,8 @@ export class GenAiIntegrationComponent implements OnInit {
   location: string = '';
   modelSelection: string = 'Default';
   maxOutputTokens: string = '';
-  temperature: number = 1;
-  topP: string = '';
+  temperature: any = 1;
+  topP: any = 1;
   apiCallLimit: string = '';
   maxRetries: string = '1';
   retryDelay: string = '1';
@@ -76,8 +76,14 @@ export class GenAiIntegrationComponent implements OnInit {
       this.location &&
       this.modelSelection &&
       this.maxOutputTokens &&
-      this.temperature &&
-      this.topP &&
+      this.temperature !== null &&
+      this.temperature !== undefined &&
+      this.temperature >= 0 &&
+      this.temperature <= 2 &&
+      this.topP !== null &&
+      this.topP !== undefined &&
+      this.topP >= 0 &&
+      this.topP <= 1 &&
       this.apiCallLimit &&
       this.maxRetries &&
       this.retryDelay &&
@@ -86,7 +92,13 @@ export class GenAiIntegrationComponent implements OnInit {
     ) {
       this.genAIEnabledSuccessfully = true;
     } else {
-      this.openAlert('Please fill all the mandatory fields');
+      if (this.topP < 0 || this.topP > 1) {
+        this.openAlert('Top P value must be between 0 and 1');
+      } else if (this.temperature < 0 || this.temperature > 2) {
+        this.openAlert('Temperature value must be between 0 and 2');
+      } else {
+        this.openAlert('Please fill all the mandatory fields');
+      }
       return false;
     }
     this.spinner.show();

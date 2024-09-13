@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders , HttpParams} from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { AppConfigService } from 'src/app/common/Services/app-config.service';
 
@@ -7,6 +7,9 @@ import { AppConfigService } from 'src/app/common/Services/app-config.service';
   providedIn: 'root',
 })
 export class Sql2PgService {
+  
+ 
+
   genAiActivated: boolean = false;
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
@@ -41,24 +44,41 @@ export class Sql2PgService {
     return this.http.post(this.config.host + '/discoveryReport', payload);
   }
 
-  downloadDiscoveryPdfReport(details: any): Observable<any> {
-    return this.http.post(
-      this.config.host + '/generateDisoveryReport',
-      details
-    );
-  }
-
   getAssessmentWebPageReport(RUN_ID: any): Observable<any> {
     const payload = { RUN_ID: RUN_ID };
     return this.http.post(this.config.host + '/assessmentReport', payload);
   }
 
-  downloadAssessmentPdfReport(details: any): Observable<any> {
-    return this.http.post(
-      this.config.host + '/generateAssessmentReport',
-      details
-    );
+  
+  downloadDiscoveryPdfReport(RUN_ID:any,stage:any){
+    return this.http.get(this.config.host+'/download_pdf_report?RUN_ID='+RUN_ID+'&stage='+stage,{responseType: 'blob'})
+
   }
+
+ 
+  downloadAssessmentPdfReport(RUN_ID: any, stage: any) {
+    return this.http.get(this.config.host+'/download_pdf_report?RUN_ID='+RUN_ID+'&stage='+stage,{responseType: 'blob'})
+
+  }
+
+  downloadDiscoveryExcelReport(runId: any) {
+    return this.http.get(this.config.host + '/downloadExcel?RUN_ID=' + runId, {
+      responseType: 'blob',
+    });
+  }
+ 
+  downloadAssessmentExcelReport(runId: any) {
+    return this.http.get(this.config.host + '/downloadExcel?RUN_ID=' + runId, {
+      responseType: 'blob',
+    });
+  }
+ 
+  updatePassword(data: any): Observable<any> {
+    const payload = data;
+   
+
+    return this.http.post(this.config.host + '/updateDbConfigPassword', payload);
+    }
 
   getDMAPVersionDetails() {
     return this.http.get(this.config.host + '/getDMAPVersionDetails');
