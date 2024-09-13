@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { NgxSpinnerService } from 'ngx-spinner'; // Make sure this is imported
 
-import saveAs from 'file-saver';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-discovery-webpage-report',
@@ -76,15 +76,17 @@ downloadPdf(){
     this.spinner.hide();
     let blob = new Blob([data],{});
     let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
-    saveAs.saveAs(blob,filename);
+    FileSaver.saveAs(blob,filename);
   });
 }
 
  downloadExcel(){
+  this.spinner.show();
      this.sql2PgService.downloadDiscoveryExcelReport(this.runId).subscribe(data=>{
+      this.spinner.hide();
      let blob = new Blob([data],{});
      let filename = this.dbName+'_'+this.schemaName+'_'+'Discovery_' + this.runId +'_Report'+'.xlsx';
-     saveAs.saveAs(blob,filename);
+     FileSaver.saveAs(blob,filename);
    });
 }
 
