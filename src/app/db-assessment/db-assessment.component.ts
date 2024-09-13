@@ -17,7 +17,6 @@ export class DbAssessmentComponent implements OnInit {
 
 
   tableData: any[] = [];
-  filteredData: any[] = [];
   selectedRow: any;
 
   enableAssessmentReport: boolean = false;
@@ -63,8 +62,9 @@ export class DbAssessmentComponent implements OnInit {
   arrayOfStatus: any[];
   searchDmapAppTable: string;
   appDetailCalls: NodeJS.Timeout;
+
+  filterapplied:boolean= false;
   lastupdated_date: any;
- filterapplied: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -85,6 +85,8 @@ export class DbAssessmentComponent implements OnInit {
     //   this.checkDropdownStatus();
     // }, 1000);
 
+
+
     if (!this.tableData || this.tableData.length === 0) {
       console.warn('No table data found.');
     } else {
@@ -94,16 +96,6 @@ export class DbAssessmentComponent implements OnInit {
     
   }
 
-  ngOnDestroy(): void {
-    clearInterval(this.appDetailCalls);
-  }
-
-  pingAndGetAppData() {
-    this.appDetailCalls = setInterval(() => {
-        this.getStoredSchemaInfo();
-      
-    }, 3000);
-  }
 
   getAlertClass(status: string): string {
     switch (status) {
@@ -411,9 +403,6 @@ export class DbAssessmentComponent implements OnInit {
     }
   }
 
-
-  
-
   search(query: string) {
     this.filterapplied =true
     if (query) {
@@ -422,6 +411,7 @@ export class DbAssessmentComponent implements OnInit {
         row[0].toLowerCase().includes(query.toLowerCase()) 
       );
       
+
 
     } else {
       this.filteredTableData = [...this.tableData]; 

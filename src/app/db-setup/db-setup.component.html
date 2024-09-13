@@ -103,7 +103,18 @@
 
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="sourceDBSchema">Database Schema</label>
+                    <label for="sourceDBSchema"
+                      >Database Schema<span class="requiredField"
+                        >*</span
+                      ></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="
+                        sourceDBSchemaRef.valid && sourceDBSchemaRef.touched
+                      "
+                      ><i class="fa fa-check"></i
+                    ></span>
                     <input
                       type="sourceDBSchema"
                       class="form-control"
@@ -112,6 +123,7 @@
                       [(ngModel)]="sourceDBSchemaValue"
                       name="sourceDBSchema"
                       placeholder="Enter source database schema name"
+                      required
                     />
                   </div>
                 </div>
@@ -144,7 +156,16 @@
 
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="sourceDriverName">Driver</label>
+                    <label for="sourceDriverName"
+                      >Driver<span class="requiredField">*</span></label
+                    >
+                    <span
+                      class="validFormCheck"
+                      *ngIf="
+                        sourceDriverNameRef.valid && sourceDriverNameRef.touched
+                      "
+                      ><i class="fa fa-check"></i
+                    ></span>
                     <input
                       type="sourceDriverName"
                       class="form-control"
@@ -153,6 +174,7 @@
                       [(ngModel)]="sourceDriverNameValue"
                       name="sourceDriverName"
                       placeholder="Enter source driver name"
+                      required
                     />
                   </div>
                 </div>
@@ -306,6 +328,8 @@
                       [disabled]="
                         !sourceDbHostValue ||
                         !sourceDBPortValue ||
+                        !sourceDBSchemaValue ||
+                        !sourceDriverNameValue ||
                         !sourceDBNameValue ||
                         !sourceDBUserNameValue ||
                         !sourceDBPasswordValue ||
@@ -366,18 +390,28 @@
                       <div class="form-group">
                         <label for="targetDBHost"
                           >Database Host URL/IP address<span
-                            class="requiredField invisible"
+                            class="requiredField"
                             >*</span
                           ></label
                         >
+                        <span
+                          class="validFormCheck"
+                          *ngIf="
+                            targetDBHostRef.valid && targetDBHostRef.touched
+                          "
+                          ><i class="fa fa-check"></i
+                        ></span>
                         <input
                           type="targetDBHost"
                           class="form-control"
                           id="targetDBHost"
+                          #targetDBHostRef="ngModel"
+                          ngModel
                           [(ngModel)]="targetDBHostValue"
                           name="targetDBHost"
                           placeholder="Enter target database host URL/IP address"
                           title="Hint: sample.cqswlsq465jl6.us-east-1.rds.amazonaws.co"
+                          required
                         />
                       </div>
                     </div>
@@ -385,18 +419,28 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="targetDBName"
-                          >Database Name<span class="requiredField invisible"
+                          >Database Name<span class="requiredField"
                             >*</span
                           ></label
                         >
+                        <span
+                          class="validFormCheck"
+                          *ngIf="
+                            targetDBNameRef.valid && targetDBNameRef.touched
+                          "
+                          ><i class="fa fa-check"></i
+                        ></span>
                         <input
                           type="targetDBName"
                           class="form-control"
                           id="targetDBName"
+                          #targetDBNameRef="ngModel"
+                          ngModel
                           [(ngModel)]="targetDBNameValue"
                           name="targetDBName"
                           placeholder="Enter target database name"
                           title="Hint: DemoDB"
+                          required
                         />
                       </div>
                     </div>
@@ -404,17 +448,26 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="targetDBSchema"
-                          >Database Schema<span class="requiredField invisible"
+                          >Database Schema<span class="requiredField"
                             >*</span
                           ></label
                         >
+                        <span
+                          class="validFormCheck"
+                          *ngIf="
+                            targetDBSchemaRef.valid && targetDBSchemaRef.touched
+                          "
+                          ><i class="fa fa-check"></i
+                        ></span>
                         <input
                           type="targetDBSchema"
                           class="form-control"
                           id="targetDBSchema"
-                          [(ngModel)]="targetDBSchemaValue"
+                          #targetDBSchemaRef="ngModel"
+                          ngModel
+                          [(ngModel)]="sourceDBSchemaValue"
                           name="targetDBSchema"
-                          placeholder="Enter database schema name"
+                          placeholder="Enter target database schema name"
                           title="Hint: sampleShell"
                           readonly
                         />
@@ -424,18 +477,26 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="targetDBPort"
-                          >Port<span class="requiredField invisible"
-                            >*</span
-                          ></label
+                          >Port<span class="requiredField">*</span></label
                         >
+                        <span
+                          class="validFormCheck"
+                          *ngIf="
+                            targetDBPortRef.valid && targetDBPortRef.touched
+                          "
+                          ><i class="fa fa-check"></i
+                        ></span>
                         <input
                           type="targetDBPort"
                           class="form-control"
                           id="targetDBPort"
+                          #targetDBPortRef="ngModel"
+                          ngModel
                           [(ngModel)]="targetDBPortValue"
                           name="targetDBPort"
                           placeholder="Enter target database port"
                           title="Hint: 5432"
+                          required
                         />
                       </div>
                     </div>
@@ -443,18 +504,27 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="targetDBUserName"
-                          >Username<span class="requiredField invisible"
-                            >*</span
-                          ></label
+                          >Username<span class="requiredField">*</span></label
                         >
+                        <span
+                          class="validFormCheck"
+                          *ngIf="
+                            targetDBUserNameRef.valid &&
+                            targetDBUserNameRef.touched
+                          "
+                          ><i class="fa fa-check"></i
+                        ></span>
                         <input
                           type="targetDBUserName"
                           class="form-control"
                           id="targetDBUserName"
+                          #targetDBUserNameRef="ngModel"
+                          ngModel
                           [(ngModel)]="targetDBUserNameValue"
                           name="targetDBUserName"
                           placeholder="Enter target database username"
                           title="Hint: reportuser"
+                          required
                         />
                       </div>
                     </div>
@@ -462,18 +532,16 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="targetDBPassword"
-                          >Password<span class="requiredField invisible"
-                            >*</span
-                          ></label
+                          >Password<span class="requiredField">*</span></label
                         >
-                        <!-- <span
+                        <span
                           class="validFormCheck"
                           *ngIf="
                             targetDBPasswordRef.valid &&
                             targetDBPasswordRef.touched
                           "
                           ><i class="fa fa-check"></i
-                        ></span> -->
+                        ></span>
                         <app-show-password
                           (showPasswordClicked)="toggleTargetPassword($event)"
                           [password]="targetDBPasswordValue"
@@ -484,9 +552,12 @@
                           type="{{ targetPasswordType }}"
                           class="form-control"
                           id="targetDBPassword"
+                          #targetDBPasswordRef="ngModel"
+                          ngModel
                           [(ngModel)]="targetDBPasswordValue"
                           name="targetDBPassword"
                           placeholder="Enter target database password"
+                          required
                         />
                       </div>
                     </div>

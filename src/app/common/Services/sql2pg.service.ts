@@ -50,29 +50,35 @@ export class Sql2PgService {
   }
 
   
-  downloadDiscoveryPdfReport(RUN_ID:any,stage:any){
+ 
+  
+  downloadDiscoveryPdfReport(RUN_ID:any,stage:any) : Observable<Blob>{
     return this.http.get(this.config.host+'/download_pdf_report?RUN_ID='+RUN_ID+'&stage='+stage,{responseType: 'blob'})
 
   }
 
  
-  downloadAssessmentPdfReport(RUN_ID: any, stage: any) {
+  downloadAssessmentPdfReport(RUN_ID: any, stage: any) : Observable<Blob>{
     return this.http.get(this.config.host+'/download_pdf_report?RUN_ID='+RUN_ID+'&stage='+stage,{responseType: 'blob'})
 
   }
 
-  downloadDiscoveryExcelReport(runId: any) {
+
+
+  downloadDiscoveryExcelReport(runId: string): Observable<Blob> {
+  
+    return this.http.get(this.config.host + '/downloadExcel?RUN_ID=' + runId, {
+      responseType: 'blob' 
+    });
+  }
+
+
+  downloadAssessmentExcelReport(runId: any): Observable<Blob> {
     return this.http.get(this.config.host + '/downloadExcel?RUN_ID=' + runId, {
       responseType: 'blob',
     });
   }
- 
-  downloadAssessmentExcelReport(runId: any) {
-    return this.http.get(this.config.host + '/downloadExcel?RUN_ID=' + runId, {
-      responseType: 'blob',
-    });
-  }
- 
+
   updatePassword(data: any): Observable<any> {
     const payload = data;
    
