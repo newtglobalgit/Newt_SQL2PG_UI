@@ -87,7 +87,7 @@ downloadPdf(){
     console.log(data)
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
+    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_AssessmentReport'+'.pdf';
     FileSaver.saveAs(blob,filename);
   });
 }

@@ -65,6 +65,8 @@ export class DbAssessmentComponent implements OnInit {
 
   filterapplied:boolean= false;
   lastupdated_date: any;
+  searchfilteredTableData: any;
+  searchfilterapplied: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -75,7 +77,8 @@ export class DbAssessmentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.filteredTableData = [...this.tableData]; 
+
+    this.searchfilteredTableData = [...this.tableData]; 
 
     // this.pingAndGetAppData();
 
@@ -378,8 +381,6 @@ export class DbAssessmentComponent implements OnInit {
       this.RUN_ID = row[3];
       this.status = row[5];
       this.stage = row[4];
-      this.lastupdated_date = row[6].strftime("%d-%b-%Y")
-      console.log(this.lastupdated_date)
  
 
       if (
@@ -394,7 +395,14 @@ export class DbAssessmentComponent implements OnInit {
         this.enableDiscoveryReport = true;
         this.enableAssessmentReport = true;
         this.showDiscoveryComponent = true;
-      } else {
+      } 
+      else if(this.stage === 'Discovery' && this.status === 'Not Started')
+        {
+          this.enableDiscoveryReport = false;
+          this.enableAssessmentReport = false;
+          this.showDiscoveryComponent = false
+        }
+        else {
         this.enableDiscoveryReport = false;
         this.enableAssessmentReport = false;
         this.showDetails = false;
@@ -404,9 +412,9 @@ export class DbAssessmentComponent implements OnInit {
   }
 
   search(query: string) {
-    this.filterapplied =true
+    this.searchfilterapplied =true
     if (query) {
-      this.filteredTableData = this.tableData.filter(row => 
+      this.searchfilteredTableData = this.tableData.filter(row => 
         
         row[0].toLowerCase().includes(query.toLowerCase()) 
       );
@@ -414,7 +422,7 @@ export class DbAssessmentComponent implements OnInit {
 
 
     } else {
-      this.filteredTableData = [...this.tableData]; 
+      this.searchfilteredTableData = [...this.tableData]; 
     }
   }
 

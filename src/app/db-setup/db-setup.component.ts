@@ -70,7 +70,6 @@ export class DbSetupComponent implements OnInit {
   }
 
   testSourceDbConnection(isTestSrcConBtnClicked: any) {
-    this.disableSource = true;
     this.spinner.show();
 
     let reqObj = {
@@ -104,7 +103,6 @@ export class DbSetupComponent implements OnInit {
   }
 
   testTargetDbConnection(isTestTargetConBtnClicked) {
-    this.disableTarget = true;
     this.spinner.show();
 
     let reqObj = {
@@ -141,6 +139,9 @@ export class DbSetupComponent implements OnInit {
         if (res[0].status === 'SUCCESS') {
           this.openAlert('Submitted Successfully');
           this.router.navigate(['/dbAssessment']);
+        }
+        else{
+          this.openAlert(res[0].message);
         }
       });
   }
