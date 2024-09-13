@@ -1,6 +1,9 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Sql2PgService } from '../common/Services/sql2pg.service';
 import saveAs from 'file-saver';
+import FileSaver from 'file-saver';
+import { NgxSpinnerService } from 'ngx-spinner'; // Make sure this is imported
+
 
 @Component({
   selector: 'app-assessment-webpage-report',
@@ -22,16 +25,17 @@ export class AssessmentWebpageReportComponent implements OnInit , OnChanges{
 
 
   showTable: boolean;
-  spinner: any;
   databaseSelected: any;
   resp: Object;
 
 
-  constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef) { }
+  constructor( private sql2PgService: Sql2PgService, private cdr: ChangeDetectorRef , 
+    private spinner: NgxSpinnerService,
+
+  ) { }
   ngOnChanges(): void {
     this.getAssessmentWebpageSummaryData()
 
-   
   }
   
  
@@ -73,13 +77,18 @@ assessmentReport() {
     });
 }
 
+
 downloadPdf(){
+  console.log("after /download")
+
   this.spinner.show();
   this.sql2PgService.downloadAssessmentPdfReport(this.runId,'Assessment').subscribe(data=>{
+    console.log("after /download")
+    console.log(data)
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename =this.tableData[0].sourceDBName+'_'+this.tableData[0].sourceDBSchema+'_' + this.runId + '_SchemaAssessmentReport'+'.pdf';
-    saveAs.saveAs(blob,filename);
+    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
+    FileSaver.saveAs(blob,filename);
   });
 }
 
