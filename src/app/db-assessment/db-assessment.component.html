@@ -438,7 +438,7 @@
               Start Discovery
             </button>
 
-            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted" [disabled]="isAssessmentButtonDisabled"
+            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted||isAssessmentError"   [disabled]="isAssessmentButtonDisabled"
               (click)="startAssessment()">
               Start Assessment
             </button>
