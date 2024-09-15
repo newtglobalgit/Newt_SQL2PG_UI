@@ -44,6 +44,7 @@ ngOnInit(): void {
 
  
 discoveryReport() {
+  this.spinner.show();
   this.sql2PgService.getDiscoveryWebPageReport(this.runId).subscribe(
     (response) => {    
       
@@ -61,9 +62,10 @@ discoveryReport() {
           }, 5000);
         }
       }
-    
+      this.spinner.hide();
     },
     (error) => {
+      this.spinner.hide();
        console.error('Error fetching data:', error);
     });
 }

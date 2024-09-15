@@ -53,6 +53,7 @@ getAssessmentWebpageSummaryData(){
 
  
 assessmentReport() {
+  this.spinner.show();
   this.sql2PgService.getAssessmentWebPageReport(this.runId).subscribe(
     (response) => {    
       
@@ -70,9 +71,10 @@ assessmentReport() {
           }, 5000);
         }
       }
-    
+      this.spinner.hide();
     },
     (error) => {
+      this.spinner.hide();
        console.error('Error fetching data:', error);
     });
 }
