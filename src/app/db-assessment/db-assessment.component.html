@@ -152,14 +152,15 @@
               <th>
                 <span class="marginRight5 defaultCursor">Source Schema</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppName" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
      
                   <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
                     style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
-                    <li class="dropdown-item" *ngFor="let data of arrayOfSourceShema">
+                    <li class="dropdown-item" style="padding: 0.25rem 0.5rem;"
+                     *ngFor="let data of arrayOfSourceShema">
                       <div>
                         <div class="form-check" style="padding:0px;">
                           <input type="checkbox" ngModel name="applicationNamefilter_{{data.applicationName}}"
@@ -177,13 +178,13 @@
               <th>
                 <span class="marginRight5 defaultCursor">Source DB</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppName" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
-     
+
                   <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
-                    style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
+                    style="left:-100px !important;min-width: 166px !important;" (click)="onDropdownClick($event)">
                     <li class="dropdown-item" *ngFor="let data of arrayOfSourceDB">
                       <div>
                         <div class="form-check" style="padding:0px;">
@@ -202,7 +203,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Target DB</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppName" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -227,7 +228,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Run ID</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppRunID" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppRunID" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -252,7 +253,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Stage</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppStage" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppStage" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -277,7 +278,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Status</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppStatus" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppStatus" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -302,7 +303,7 @@
               <th>
                 <span class="marginRight5 pointerCursor">Last Updated</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownLastUpdated" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownLastUpdated" data-toggle="dropdown"
                     type="button" aria-haspopup="true" aria-expanded="true">
                   </i>
                   <ul class="dropdown-menu drpdownLastUpdated" aria-labelledby="drpdownLastUpdated">

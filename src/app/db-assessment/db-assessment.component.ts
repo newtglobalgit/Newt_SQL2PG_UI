@@ -136,6 +136,11 @@ export class DbAssessmentComponent implements OnInit {
           this.isDiscoveryInProgress = false;
           this.isDiscoveryCompleted = true;
         }
+        else if(response.status == 'failed')
+        {
+          this.selectedRow[5] = 'Error';
+          this.isDiscoveryInProgress = !this.isDiscoveryInProgress;
+        }
       },
       (error) => {
         console.error('Error starting discovery:', error);
@@ -166,8 +171,14 @@ export class DbAssessmentComponent implements OnInit {
           if (response.status == 'success') {
             this.showAssessmentComponent = true;
             this.showDiscoveryComponent = false;
+            this.isAssessmentButtonDisabled = this.isAssessmentButtonDisabled;
+            this.selectedRow[5] = 'Completed';
           }
-          this.selectedRow[5] = 'Completed';
+          else if(response.status == 'failed'){
+            this.isAssessmentButtonDisabled = !this.isAssessmentButtonDisabled;
+            this.selectedRow[5] = 'Error';
+
+          }
           this.isAssessmentInProgress = false;
           this.isAssessmentCompleted = true;
 
@@ -176,7 +187,7 @@ export class DbAssessmentComponent implements OnInit {
         (error) => {
           console.error('Error starting Assessment:', error);
           this.selectedRow[5] = 'Error';
-          this.isDiscoveryInProgress = false;
+          this.isAssessmentButtonDisabled = true;
         }
       );
   }
@@ -208,6 +219,15 @@ export class DbAssessmentComponent implements OnInit {
     if (
       state == 'Discovery' &&
       (this.status == 'Completed' || this.status == 'completed')
+    ) {
+      this.enableDiscoveryReport = true;
+      this.showAssessmentComponent = false;
+      this.enableAssessmentReport = this.stage === 'Assessment';
+      this.showDiscoveryComponent = true;
+    }
+    if (
+      state == 'Assessment' &&
+      (this.status == 'In Progress' || this.status == 'Error')
     ) {
       this.enableDiscoveryReport = true;
       this.showAssessmentComponent = false;
