@@ -30,7 +30,8 @@ export class DbAssessmentComponent implements OnInit {
   isDiscoveryInProgress = false;
   isDiscoveryCompleted = false;
   showAssessmentButton = false;
-  isAssessmentError=false;
+  // isAssessmentError=false;
+  isAssessmentInProgress=false;
 
   enableDiscoveryReport: boolean = false;
   dropdownOpen: boolean = false;
@@ -60,6 +61,7 @@ export class DbAssessmentComponent implements OnInit {
   arrayOfRunID: any[];
   arrayOfStage: any[];
   arrayOfStatus: any[];
+  arrayOfLastUpdated:any[];
   searchDmapAppTable: string;
   appDetailCalls: NodeJS.Timeout;
 
@@ -81,7 +83,7 @@ export class DbAssessmentComponent implements OnInit {
 
     this.searchfilteredTableData = [...this.tableData]; 
 
-    this.pingAndGetAppData();
+    // this.pingAndGetAppData();
 
     this.getStoredSchemaInfo();
     
@@ -110,15 +112,15 @@ export class DbAssessmentComponent implements OnInit {
   getAlertClass(status: string): string {
     switch (status) {
       case 'Not Started':
-        return 'alert-info';
+        return 'alertPrimary';
       case 'In Progress':
-        return 'alert-warning';
+        return 'alertWarning';
       case 'Completed':
-        return 'alert-success';
+        return 'alertSuccess';
       case 'Error':
-        return 'alert-danger';
+        return 'alertDanger';
       default:
-        return 'alert-info';
+        return 'alertPrimary';
     }
   }
 
@@ -128,8 +130,8 @@ export class DbAssessmentComponent implements OnInit {
 
   async startDiscovery() {
     this.isDiscoveryInProgress = true;
+    this.isDiscoveryCompleted = false;
     this.selectedRow[5] = 'In Progress';
-
     await this.sleep(3000);
 
     this.sql2PgService.startDiscovery(this.current_run_id).subscribe(
@@ -142,6 +144,7 @@ export class DbAssessmentComponent implements OnInit {
           this.selectedRow[5] = 'Completed';
           this.isDiscoveryInProgress = false;
           this.isDiscoveryCompleted = true;
+          this.isAssessmentButtonDisabled=false;
         }
         else if(response.status == 'failed')
         {
@@ -160,7 +163,8 @@ export class DbAssessmentComponent implements OnInit {
   startAssessment() {
     console.log('Starting assessment...');
     this.selectedRow[4] = 'Assessment';
-    this.isAssessmentButtonDisabled = !this.isAssessmentButtonDisabled;
+    this.isAssessmentInProgress=true;
+    // this.isAssessmentButtonDisabled = !this.isAssessmentButtonDisabled;
     this.selectedRow[5] = 'In Progress';
     if (this.sql2PgService.genAiActivated) {
       this.enable_genai = 'y';
@@ -174,7 +178,9 @@ export class DbAssessmentComponent implements OnInit {
         (response) => {
           console.log(this.current_run_id);
           console.log('Assessment API Response:', response);
+          this.isAssessmentInProgress=false;
           if (response.status == 'success') {
+            this.isAssessmentButtonDisabled = true;
             this.showAssessmentComponent = true;
             this.showDiscoveryComponent = false;
             this.selectedRow[5] = 'Completed';
@@ -189,6 +195,7 @@ export class DbAssessmentComponent implements OnInit {
         (error) => {
           console.error('Error starting Assessment:', error);
           this.selectedRow[5] = 'Error';
+          // this.isAssessmentError=true;
           this.isAssessmentButtonDisabled = false;
         }
       );
@@ -422,7 +429,7 @@ export class DbAssessmentComponent implements OnInit {
         this.showDiscoveryComponent = true;
         this.isAssessmentButtonDisabled=false;
         if(this.stage === 'Assessment' && this.status === 'Error'){
-          this.isAssessmentError=true;
+          // this.isAssessmentError=true;
           this.isDiscoveryCompleted=true;
         }
       } else if (this.stage === 'Assessment' && this.status === 'Completed') {
@@ -435,13 +442,18 @@ export class DbAssessmentComponent implements OnInit {
         {
           this.enableDiscoveryReport = false;
           this.enableAssessmentReport = false;
-          this.showDiscoveryComponent = false
+          this.showDiscoveryComponent = false;
+          this.isDiscoveryCompleted=false;
         }
         else if(this.stage === 'Discovery' && this.status === 'Error')
           {
-            this.isAssessmentError=false;
+            // this.isAssessmentError=false;
             this.isDiscoveryCompleted=false;
           }
+        else if(this.stage === 'Assessment' && this.status === 'In Progress')
+          {
+            this.isDiscoveryCompleted=true;
+          }  
         else {
         this.enableDiscoveryReport = false;
         this.enableAssessmentReport = false;
@@ -548,7 +560,10 @@ export class DbAssessmentComponent implements OnInit {
           ...new Set(this.originalData.map((data) => data[5])),
         ];
         // console.log(this.arrayOfStatus)
-        
+        this.arrayOfLastUpdated = [
+          ...new Set(this.originalData.map((data) => data[6])),
+        ];
+        // console.log(this.arrayOfLastUpdated)
       }
     });
   }
