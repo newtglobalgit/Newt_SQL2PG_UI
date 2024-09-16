@@ -394,8 +394,7 @@ export class DbAssessmentComponent implements OnInit {
   }
   resetView() {
     this.showDetails = true;
-    this.showDiscoveryComponent = true;
-    this.showAssessmentComponent = false;
+
   }
 
   onSelectRow(row: any, selected: boolean) {
@@ -428,8 +427,10 @@ export class DbAssessmentComponent implements OnInit {
       } else if (this.stage === 'Assessment' && this.status === 'Completed') {
         this.enableDiscoveryReport = true;
         this.enableAssessmentReport = true;
-        this.showDiscoveryComponent = true;
+        this.showDiscoveryComponent = false;
         this.isAssessmentButtonDisabled=true;
+        this.showAssessmentComponent = true;
+
       } 
       else if(this.stage === 'Discovery' && (this.status === 'Not Started' || this.status === 'Error'))
         {
@@ -452,19 +453,19 @@ export class DbAssessmentComponent implements OnInit {
   }
 
   search(query: string) {
-    this.searchfilterapplied =true
+    this.searchfilterapplied = true;
     if (query) {
-      this.searchfilteredTableData = this.tableData.filter(row => 
-        
-        row[0].toLowerCase().includes(query.toLowerCase()) 
-      );
-      
-
-
+      this.searchfilteredTableData = this.tableData.filter(row => {
+        return Object.values(row).some(cell => 
+          cell.toString().toLowerCase().includes(query.toLowerCase())
+        );
+      });
     } else {
-      this.searchfilteredTableData = [...this.tableData]; 
+      this.searchfilteredTableData = [...this.tableData];
     }
   }
+  
+  
 
   clearSearch(searchInput: HTMLInputElement) {
     searchInput.value = '';
