@@ -93,10 +93,12 @@ downloadPdf(){
 }
 
  downloadExcel(){
-     this.sql2PgService.downloadAssessmentExcelReport(this.runId).subscribe(data=>{
-     let blob = new Blob([data],{});
-     let filename = this.dbName+'_'+this.schemaName+'_'+'Discovery_' + this.runId +'_Report'+'.xlsx';
-     saveAs.saveAs(blob,filename);
+    this.spinner.show();
+    this.sql2PgService.downloadAssessmentExcelReport(this.runId).subscribe(data=>{
+    this.spinner.hide();
+    let blob = new Blob([data],{});
+    let filename = this.dbName+'_'+this.schemaName+'_'+'Discovery_' + this.runId +'_Report'+'.xlsx';
+    saveAs.saveAs(blob,filename);
    });
 }
 

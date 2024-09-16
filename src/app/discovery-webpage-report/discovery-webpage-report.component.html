@@ -143,33 +143,6 @@
             </div>
         </div>
         
-        <!-- Disk Space Section -->
-        <div class="row adjust wizardDiv" style="width: 97%;margin: auto;margin-bottom: 20px;">
-          <div class="col-md-12 wizardHeader">
-            <div>Disk Space</div>
-          </div>
-          <div class="col-md-12" style="padding: 10px;"> 
-            <div style=" padding: 0px;"> 
-              <table id="diskSpaceTable" class="analyticsTable table table-hover table-sm table-bordered" style="width: 100%;">
-                <thead class="thead_custom">
-                  <tr>
-                    <th>Table Name</th>
-                    <th>Column Name</th>
-                    <th>Data Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let space of tableData[0]['Disc space']">
-                    <td>{{ space.table_name }}</td>
-                    <td>{{ space.column_name }}</td>
-                    <td>{{ space.data_type }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        
         
         
       </div>

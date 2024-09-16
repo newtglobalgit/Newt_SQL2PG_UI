@@ -128,45 +128,7 @@
             </div>
         </div>
 
-        <!-- Converted Objects -->
-        <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px;">
-          <div class="col-md-12 wizardHeader">
-              <div>Converted Objects</div>
-          </div>
-          <div class="col-md-12" style="padding: 10px;"> 
-          <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered" style="font-size:12px;">
-              <thead class="thead_custom">
-                  <tr class="tr_custom_14">
-                      <th>Object Type</th>
-                      <th>Total Objects</th>
-                      <th>Converted Objects</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td colspan="5"><strong>Storage Objects</strong></td>
-                  </tr>
-                  <tr *ngFor="let object of this.tableData[0].storageObjects">
-                      <td>{{ object.objectType }}</td>
-                      <td>{{ object.total }}</td>
-                      <td>{{ object.converted }}</td>
-                  </tr>
-      
-                  <tr>
-                      <td colspan="5"><strong>Code Objects</strong></td>
-                  </tr>
-                  <tr *ngFor="let object of tableData[0].codeObjects">
-                    <td>{{ object.objectType }}</td>
-                    <td>{{ object.total }}</td>
-                    <td>{{ object.converted }}</td>
-                  </tr>
-      
-                  
-              </tbody>
-          </table>
-          </div>
-      </div>
-      
+ 
         
         <!-- Dependencies Section -->
         <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px;">
