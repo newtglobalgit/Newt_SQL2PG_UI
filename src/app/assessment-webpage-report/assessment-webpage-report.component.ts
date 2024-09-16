@@ -53,6 +53,7 @@ getAssessmentWebpageSummaryData(){
 
  
 assessmentReport() {
+  this.spinner.show();
   this.sql2PgService.getAssessmentWebPageReport(this.runId).subscribe(
     (response) => {    
       
@@ -70,9 +71,10 @@ assessmentReport() {
           }, 5000);
         }
       }
-    
+      this.spinner.hide();
     },
     (error) => {
+      this.spinner.hide();
        console.error('Error fetching data:', error);
     });
 }
@@ -87,7 +89,7 @@ downloadPdf(){
     console.log(data)
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
+    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_AssessmentReport'+'.pdf';
     FileSaver.saveAs(blob,filename);
   });
 }

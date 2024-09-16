@@ -152,14 +152,15 @@
               <th>
                 <span class="marginRight5 defaultCursor">Source Schema</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppName" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
      
                   <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
                     style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
-                    <li class="dropdown-item" *ngFor="let data of arrayOfSourceShema">
+                    <li class="dropdown-item" style="padding: 0.25rem 0.5rem;"
+                     *ngFor="let data of arrayOfSourceShema">
                       <div>
                         <div class="form-check" style="padding:0px;">
                           <input type="checkbox" ngModel name="applicationNamefilter_{{data.applicationName}}"
@@ -177,13 +178,13 @@
               <th>
                 <span class="marginRight5 defaultCursor">Source DB</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppName" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
-     
+
                   <ul class="dropdown-menu drpdownAppName" aria-labelledby="drpdownAppName"
-                    style="left:-100px !important;min-width: 140px !important;" (click)="onDropdownClick($event)">
+                    style="left:-100px !important;min-width: 166px !important;" (click)="onDropdownClick($event)">
                     <li class="dropdown-item" *ngFor="let data of arrayOfSourceDB">
                       <div>
                         <div class="form-check" style="padding:0px;">
@@ -202,7 +203,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Target DB</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppName" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppName" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -227,7 +228,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Run ID</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppRunID" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppRunID" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -252,7 +253,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Stage</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppStage" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppStage" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -277,7 +278,7 @@
               <th>
                 <span class="marginRight5 defaultCursor">Status</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownAppStatus" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownAppStatus" data-toggle="dropdown"
                     type="button" aria-haspopup="true">
      
                   </i>
@@ -302,7 +303,7 @@
               <th>
                 <span class="marginRight5 pointerCursor">Last Updated</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor dropdown-toggle" id="drpdownLastUpdated" data-toggle="dropdown"
+                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownLastUpdated" data-toggle="dropdown"
                     type="button" aria-haspopup="true" aria-expanded="true">
                   </i>
                   <ul class="dropdown-menu drpdownLastUpdated" aria-labelledby="drpdownLastUpdated">
@@ -330,14 +331,14 @@
                 <td colspan="9">No Schemas found</td>
               </tr>
             </ng-container>
-            <ng-container *ngIf="filteredTableData.length == 0 && filterapplied">
+            <ng-container *ngIf="searchfilteredTableData.length == 0 && searchfilterapplied">
               <tr>
                 <td colspan="9">No Match Found!</td>
               </tr>
             </ng-container>
 
-            <ng-container *ngIf="tableData.length > 0">
-              <tr *ngFor="let row of tableData" style="font-size: 12px"
+            <ng-container *ngIf="searchfilteredTableData.length > 0 && searchfilterapplied">
+              <tr *ngFor="let row of searchfilteredTableData" style="font-size: 12px"
                 [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
                 <td class="textCenter">
                   <div class="">
@@ -347,6 +348,46 @@
                   </div>
                 </td>
                 <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td [ngClass]="{
+                completedStatus: row[5] === 'Completed',
+                notStartedStatus: row[5] === 'Not Started',
+                notErrorStatus: row[5] === 'Error',
+                notInProgressStatus: row[5] === 'In Progress',
+                completedInterim: row[5] === 'Processing Done'
+              }">
+                  {{ row[5] }}
+                </td>
+                <td>{{ row[6] }}</td>
+                <td class="textCenter">
+                  <span (click)="updatePassword(row)" title="Edit">
+                    <svg class="bi bi-gear" width="18px" height="18px" viewBox="0 0 16 16"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                        d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
+                      <path fill-rule="evenodd"
+                        d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
+
+
+            <ng-container *ngIf="tableData.length > 0 && !searchfilterapplied">
+              <tr *ngFor="let row of tableData" style="font-size: 12px"
+                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
+                <td class="textCenter">
+                  <div class="">
+                    <input type="radio" [checked]="row[3] == radioCheckedValue" name="schema"
+                      value="checkbox_{{ row[3] }}" class="form_radio textCenter" style="top: 2px" #inputE2
+                      name="selectedRow" (click)="onSelectRow(row, true)" />
+                  </div>
+                </td>
+                <td >{{ row[0] }}</td>
                 <td>{{ row[1] }}</td>
                 <td>{{ row[2] }}</td>
                 <td>{{ row[3] }}</td>
@@ -397,7 +438,7 @@
               Start Discovery
             </button>
 
-            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted" [disabled]="isAssessmentButtonDisabled"
+            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted||isAssessmentError"   [disabled]="isAssessmentButtonDisabled"
               (click)="startAssessment()">
               Start Assessment
             </button>

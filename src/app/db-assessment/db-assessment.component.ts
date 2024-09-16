@@ -26,11 +26,11 @@ export class DbAssessmentComponent implements OnInit {
   current_run_id: any;
   enable_genai: any;
 
-  isAssessmentInProgress = false;
   isAssessmentCompleted = false;
   isDiscoveryInProgress = false;
   isDiscoveryCompleted = false;
   showAssessmentButton = false;
+  isAssessmentError=false;
 
   enableDiscoveryReport: boolean = false;
   dropdownOpen: boolean = false;
@@ -65,6 +65,9 @@ export class DbAssessmentComponent implements OnInit {
 
   filterapplied:boolean= false;
   lastupdated_date: any;
+  searchfilteredTableData: any;
+  searchfilterapplied: boolean = false;
+  radioCheckedValue:any;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -75,9 +78,10 @@ export class DbAssessmentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.filteredTableData = [...this.tableData]; 
 
-    // this.pingAndGetAppData();
+    this.searchfilteredTableData = [...this.tableData]; 
+
+    this.pingAndGetAppData();
 
     this.getStoredSchemaInfo();
     
@@ -94,6 +98,12 @@ export class DbAssessmentComponent implements OnInit {
     }
 
     
+  }
+
+  pingAndGetAppData() {
+    this.appDetailCalls = setInterval(() => {
+      this.getStoredSchemaInfo();
+    }, 10000);
   }
 
 
@@ -133,6 +143,11 @@ export class DbAssessmentComponent implements OnInit {
           this.isDiscoveryInProgress = false;
           this.isDiscoveryCompleted = true;
         }
+        else if(response.status == 'failed')
+        {
+          this.selectedRow[5] = 'Error';
+          this.isDiscoveryInProgress = !this.isDiscoveryInProgress;
+        }
       },
       (error) => {
         console.error('Error starting discovery:', error);
@@ -145,7 +160,6 @@ export class DbAssessmentComponent implements OnInit {
   startAssessment() {
     console.log('Starting assessment...');
     this.selectedRow[4] = 'Assessment';
-    this.isAssessmentInProgress = true;
     this.isAssessmentButtonDisabled = !this.isAssessmentButtonDisabled;
     this.selectedRow[5] = 'In Progress';
     if (this.sql2PgService.genAiActivated) {
@@ -163,17 +177,19 @@ export class DbAssessmentComponent implements OnInit {
           if (response.status == 'success') {
             this.showAssessmentComponent = true;
             this.showDiscoveryComponent = false;
+            this.selectedRow[5] = 'Completed';
+            this.isAssessmentCompleted = true;
           }
-          this.selectedRow[5] = 'Completed';
-          this.isAssessmentInProgress = false;
-          this.isAssessmentCompleted = true;
+          else if(response.status == 'failed'){
+            this.isAssessmentButtonDisabled = false;
+            this.selectedRow[5] = 'Error';
 
-          // }
+          }
         },
         (error) => {
           console.error('Error starting Assessment:', error);
           this.selectedRow[5] = 'Error';
-          this.isDiscoveryInProgress = false;
+          this.isAssessmentButtonDisabled = false;
         }
       );
   }
@@ -211,6 +227,15 @@ export class DbAssessmentComponent implements OnInit {
       this.enableAssessmentReport = this.stage === 'Assessment';
       this.showDiscoveryComponent = true;
     }
+    if (
+      state == 'Assessment' &&
+      (this.status == 'In Progress' || this.status == 'Error')
+    ) {
+      this.enableDiscoveryReport = true;
+      this.showAssessmentComponent = false;
+      this.enableAssessmentReport = this.stage === 'Assessment';
+      this.showDiscoveryComponent = true;
+    }
   }
 
   getStoredSchemaInfo() {
@@ -219,6 +244,12 @@ export class DbAssessmentComponent implements OnInit {
       // console.log(this.tableData);
       this.getAppData()
       // this.sourceSchemas=this.tableData[0];
+      if (this.radioCheckedValue) {
+        const selectedRow = this.tableData.find(row => row[3] == this.radioCheckedValue);
+        if (selectedRow) {
+          this.radioCheckedValue = selectedRow[3]; 
+        }
+      }
     });
   }
 
@@ -368,6 +399,7 @@ export class DbAssessmentComponent implements OnInit {
   }
 
   onSelectRow(row: any, selected: boolean) {
+    this.radioCheckedValue=row[3];
     if (selected) {
       this.selectedRow = row;
       this.current_run_id = row[3];
@@ -378,8 +410,6 @@ export class DbAssessmentComponent implements OnInit {
       this.RUN_ID = row[3];
       this.status = row[5];
       this.stage = row[4];
-      this.lastupdated_date = row[6].strftime("%d-%b-%Y")
-      console.log(this.lastupdated_date)
  
 
       if (
@@ -390,11 +420,29 @@ export class DbAssessmentComponent implements OnInit {
         this.enableAssessmentReport = false;
         this.showAssessmentComponent = false;
         this.showDiscoveryComponent = true;
+        this.isAssessmentButtonDisabled=false;
+        if(this.stage === 'Assessment' && this.status === 'Error'){
+          this.isAssessmentError=true;
+          this.isDiscoveryCompleted=true;
+        }
       } else if (this.stage === 'Assessment' && this.status === 'Completed') {
         this.enableDiscoveryReport = true;
         this.enableAssessmentReport = true;
         this.showDiscoveryComponent = true;
-      } else {
+        this.isAssessmentButtonDisabled=true;
+      } 
+      else if(this.stage === 'Discovery' && (this.status === 'Not Started' || this.status === 'Error'))
+        {
+          this.enableDiscoveryReport = false;
+          this.enableAssessmentReport = false;
+          this.showDiscoveryComponent = false
+        }
+        else if(this.stage === 'Discovery' && this.status === 'Error')
+          {
+            this.isAssessmentError=false;
+            this.isDiscoveryCompleted=false;
+          }
+        else {
         this.enableDiscoveryReport = false;
         this.enableAssessmentReport = false;
         this.showDetails = false;
@@ -404,9 +452,9 @@ export class DbAssessmentComponent implements OnInit {
   }
 
   search(query: string) {
-    this.filterapplied =true
+    this.searchfilterapplied =true
     if (query) {
-      this.filteredTableData = this.tableData.filter(row => 
+      this.searchfilteredTableData = this.tableData.filter(row => 
         
         row[0].toLowerCase().includes(query.toLowerCase()) 
       );
@@ -414,7 +462,7 @@ export class DbAssessmentComponent implements OnInit {
 
 
     } else {
-      this.filteredTableData = [...this.tableData]; 
+      this.searchfilteredTableData = [...this.tableData]; 
     }
   }
 
