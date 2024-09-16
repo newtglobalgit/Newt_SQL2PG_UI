@@ -417,7 +417,7 @@ export class DbAssessmentComponent implements OnInit {
         this.showDiscoveryComponent = true;
         this.isAssessmentButtonDisabled=true;
       } 
-      else if(this.stage === 'Discovery' && this.status === 'Not Started')
+      else if(this.stage === 'Discovery' && (this.status === 'Not Started' || this.status === 'Error'))
         {
           this.enableDiscoveryReport = false;
           this.enableAssessmentReport = false;
