@@ -67,6 +67,7 @@ export class DbAssessmentComponent implements OnInit {
   lastupdated_date: any;
   searchfilteredTableData: any;
   searchfilterapplied: boolean = false;
+  radioCheckedValue:any;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -80,7 +81,7 @@ export class DbAssessmentComponent implements OnInit {
 
     this.searchfilteredTableData = [...this.tableData]; 
 
-    // this.pingAndGetAppData();
+    this.pingAndGetAppData();
 
     this.getStoredSchemaInfo();
     
@@ -97,6 +98,12 @@ export class DbAssessmentComponent implements OnInit {
     }
 
     
+  }
+
+  pingAndGetAppData() {
+    this.appDetailCalls = setInterval(() => {
+      this.getStoredSchemaInfo();
+    }, 10000);
   }
 
 
@@ -237,6 +244,12 @@ export class DbAssessmentComponent implements OnInit {
       // console.log(this.tableData);
       this.getAppData()
       // this.sourceSchemas=this.tableData[0];
+      if (this.radioCheckedValue) {
+        const selectedRow = this.tableData.find(row => row[3] == this.radioCheckedValue);
+        if (selectedRow) {
+          this.radioCheckedValue = selectedRow[3]; 
+        }
+      }
     });
   }
 
@@ -386,6 +399,7 @@ export class DbAssessmentComponent implements OnInit {
   }
 
   onSelectRow(row: any, selected: boolean) {
+    this.radioCheckedValue=row[3];
     if (selected) {
       this.selectedRow = row;
       this.current_run_id = row[3];
