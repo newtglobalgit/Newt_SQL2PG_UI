@@ -339,7 +339,7 @@
 
             <ng-container *ngIf="searchfilteredTableData.length > 0 && searchfilterapplied">
               <tr *ngFor="let row of searchfilteredTableData" style="font-size: 12px"
-                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
+                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }"  (click)="onSelectRow(row , true)">
                 <td class="textCenter">
                   <div class="">
                     <input type="radio" [checked]="row[3] == radioCheckedValue" name="schema"
@@ -379,7 +379,7 @@
 
             <ng-container *ngIf="tableData.length > 0 && !searchfilterapplied">
               <tr *ngFor="let row of tableData" style="font-size: 12px"
-                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
+                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }"  (click)="onSelectRow(row, true)">
                 <td class="textCenter">
                   <div class="">
                     <input type="radio" [checked]="row[3] == radioCheckedValue" name="schema"

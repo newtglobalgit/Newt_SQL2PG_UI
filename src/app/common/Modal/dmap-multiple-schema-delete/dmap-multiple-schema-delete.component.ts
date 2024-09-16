@@ -6,6 +6,7 @@ import { NgbdConfirmationModal } from '../dmap-confirmation-dialog/dmap-confirma
 import 'jqueryui';
 import { PopupDraggableService } from '../../Services/popup-draggable.service';
 import { Sql2PgService } from '../../Services/sql2pg.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dmap-multiple-schema-delete',
@@ -31,7 +32,7 @@ export class DmapMultipleSchemaDeleteComponent implements OnInit {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private _PopupDraggableService: PopupDraggableService,
-    private sql2PgService: Sql2PgService
+    private sql2PgService: Sql2PgService,
   ) {}
 
   ngOnInit() {
@@ -202,6 +203,7 @@ export class DmapMultipleSchemaDeleteComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result === 'ok') {
         this.spinner.show();
+        window.location.reload();
         let selecteDatabase_ = sessionStorage.getItem(
           'assessmentSelectedDatabase'
         );

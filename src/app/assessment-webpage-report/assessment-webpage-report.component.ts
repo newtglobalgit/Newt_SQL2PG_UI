@@ -65,10 +65,8 @@ assessmentReport() {
         if (this.tableData && this.tableData.length > 0)
         {
           this.showComponent = true;
-
-          setTimeout(() => {
-            this.showTable = true;
-          }, 5000);
+          this.showTable = true;
+         
         }
       }
       this.spinner.hide();
@@ -89,7 +87,7 @@ downloadPdf(){
     console.log(data)
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_AssessmentReport'+'.pdf';
+    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
     FileSaver.saveAs(blob,filename);
   });
 }
@@ -97,7 +95,7 @@ downloadPdf(){
  downloadExcel(){
      this.sql2PgService.downloadAssessmentExcelReport(this.runId).subscribe(data=>{
      let blob = new Blob([data],{});
-     let filename = this.tableData[0].sourceDatabase+'_'+this.tableData[0].sourceSchema+'_'+'Assessment_' + this.runId +'_Report'+'.xlsx';
+     let filename = this.dbName+'_'+this.schemaName+'_'+'Discovery_' + this.runId +'_Report'+'.xlsx';
      saveAs.saveAs(blob,filename);
    });
 }

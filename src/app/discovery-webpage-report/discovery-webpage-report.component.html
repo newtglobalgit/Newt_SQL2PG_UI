@@ -1,7 +1,7 @@
 <div class="row" *ngIf="showTable">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12"  style="margin-left: -7px;" >
         <div class="row">
           <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="tableData">
             <div class="col-md-5 marginLeft0">
@@ -28,7 +28,7 @@
 
       <div class="collapse show" id="href_1">
         <div class="col-md-12 padding0">
-          <div class="row" style="width: 97%;margin: auto;">
+          <div class="row" style="width: 98%;margin: auto;">
             <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="tableData">
               <span class="float-left marginRight40"><span style="font-weight: bold;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
               <span class="float-left marginRight40"><span style="font-weight: bold;">End Date & Time: </span>{{tableData[0].end_time}}</span>
@@ -39,9 +39,6 @@
             </p>
           </div>
 
-          <div *ngIf="showComponent && !showTable">
-            <p>Loading data...</p>
-        </div>
 
           <div class="col-md-12 marginBottom20" *ngIf="tableData">
             <div class="row adjust wizardDiv">
@@ -49,8 +46,8 @@
                 <div>Database Size</div>
               </div>
               <div class="col-md-12 padding10">
-                <div class="fontSize15">
-                  <span>{{tableData[0].sourceSchema}}</span> schema is <span style="font-weight: bold;">{{tableData[0].sourceDBSize}}</span> in size.
+                <div class="fontSize15">a
+                  <span>{{tableData[0].sourceSchema}}</span> schema is <span style="font-weight: bold;">{{tableData[0].sourceDBSize}}</span> MB in size.
                 </div>
               </div>
             </div>
