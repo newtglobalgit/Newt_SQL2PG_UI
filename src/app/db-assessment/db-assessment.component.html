@@ -59,6 +59,8 @@
       >
         <div class="dropdown marginRight5">
           <button
+          data-title="Data Migration"
+          data-intro="Click this button to execute a test data migration for the selected schema."
             disabled
             type="button"
             class="btn btn-md btn-primary"
@@ -88,6 +90,8 @@
         <!-- Reports Dropdown -->
         <div class="dropdown marginRight5">
           <button
+          data-title="Reports"
+          data-intro="Use this menu option to download the Schema Discovery and Schema Assessment reports in PDF or excel format."
             type="button"
             class="btn btn-md btn-primary"
             id="drpdownDownloadAs"
@@ -132,7 +136,8 @@
         >
           Delete Schemas
         </button>
-        <button type="button" class="btn btn-md btn-primary marginRight5  float-right"
+        <button  data-title="Reset Filters"
+        data-intro="Click on this button to clear the search filters." type="button" class="btn btn-md btn-primary marginRight5  float-right"
             style="margin-right: 4px;" (click)="resetFilters()">Reset
             Filters</button>
       </div>
@@ -423,7 +428,8 @@
         </table>
       </div>
     </div>
-    <div style="border: 1px solid lightgray" *ngIf="selectedRow">
+    <div  data-title="Schema Status"
+    data-intro="This status bar indicates the current status of the schema in the data migration life cycle stage. Perform schema discovery, assessment, and conversion by selecting the corresponding button in the status bar." style="border: 1px solid lightgray" *ngIf="selectedRow">
       <div class="col-md-12" *ngIf="selectedRow" style="width: 98%; margin: auto">
         <div role="alert" [ngClass]="['alert', 'text-center', getAlertClass(selectedRow[5])]" style="
         border: 1px solid #dee2e6;
@@ -437,12 +443,14 @@
           </span>
 
           <div>
-            <button class="btn btn-md btn-primary" *ngIf="!isDiscoveryCompleted&&!isDiscoveryInProgress" 
+            <button  data-title="Start Schema Discovery"
+            data-intro="Click on this button to start the discovery process." class="btn btn-md btn-primary" *ngIf="!isDiscoveryCompleted&&!isDiscoveryInProgress" 
               (click)="startDiscovery()">
               Start Discovery
             </button>
 
-            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted&&!isAssessmentInProgress"   [disabled]="isAssessmentButtonDisabled"
+            <button   data-title="Start Schema Assessment"
+            data-intro="Click on this button to start the assessment process." class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted&&!isAssessmentInProgress"   [disabled]="isAssessmentButtonDisabled"
               (click)="startAssessment()">
               Start Assessment
             </button>

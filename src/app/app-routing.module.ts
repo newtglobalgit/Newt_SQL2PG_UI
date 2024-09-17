@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { LicenseComponent } from './license/license.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: LoginComponent },
   { path: 'resetPassword', component: LoginComponent },
