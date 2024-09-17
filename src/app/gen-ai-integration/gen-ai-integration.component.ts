@@ -54,7 +54,10 @@ export class GenAiIntegrationComponent implements OnInit {
   retryDelay: string = '1';
   maxTokens: string = '';
   maxApiCalls: string = '1';
-
+  locationInvalid: boolean = false;
+  
+  fileName: string | null = null; 
+  isFileRequired: boolean = false;
   projectId: string = '';
   serviceAccountEmail: string = '';
 
@@ -72,10 +75,11 @@ export class GenAiIntegrationComponent implements OnInit {
   }
 
   saveGenAiDetails() {
+    const maxTokens = Number(this.maxOutputTokens);
     if (
-      this.location &&
+      this.location &&!this.locationInvalid&&
       this.modelSelection &&
-      this.maxOutputTokens &&
+      this.maxOutputTokens &&maxTokens <= 8192&&
       this.temperature !== null &&
       this.temperature !== undefined &&
       this.temperature >= 0 &&
@@ -96,7 +100,14 @@ export class GenAiIntegrationComponent implements OnInit {
         this.openAlert('Top P value must be between 0 and 1');
       } else if (this.temperature < 0 || this.temperature > 2) {
         this.openAlert('Temperature value must be between 0 and 2');
-      } else {
+      } 
+      else if (this.locationInvalid) {
+        this.openAlert('enter valid location');
+      } 
+      else if ( maxTokens > 8192) {
+        this.openAlert('Max Output Tokens cannot exceed more than 8192'); 
+      }
+      else {
         this.openAlert('Please fill all the mandatory fields');
       }
       return false;
@@ -112,8 +123,21 @@ export class GenAiIntegrationComponent implements OnInit {
     this.enableServiceAccount = true;
   }
 
+  validateLocation(value: string) {
+    const regex = /^[A-Za-z0-9\- ]+$/; // Allows letters, numbers, hyphens, spaces
+    const isNumeric = /^\d+$/; // Only numbers
+
+    if (!regex.test(value) || isNumeric.test(value)) {
+      this.locationInvalid = true; // Set to true if invalid or only numeric
+    } else {
+      this.locationInvalid = false; // No errors, valid input
+      this.location = value; // Assign the valid value
+    }
+  }
+
   activateServiceAccount() {
-    if (this.projectId && this.serviceAccountEmail) {
+    this.validateFileUpload();
+    if (this.projectId && this.serviceAccountEmail&&!this.isFileRequired) {
       this.genAIEnabledSuccessfully = true;
     } else {
       this.openAlert('Please fill all the mandatory fields');
@@ -135,7 +159,9 @@ export class GenAiIntegrationComponent implements OnInit {
     }
 
     // const serviceAccountdata: any = this.serviceAccountForm.value;
-    console.log('Service Account submit data - ', formData);
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
     this.sql2PgService.saveServiceAccountDetails(formData).subscribe((res) => {
       this.spinner.hide();
       this.openAlert(res.message);
@@ -192,11 +218,22 @@ export class GenAiIntegrationComponent implements OnInit {
       // Handle the uncheck case here if needed
     }
   }
+  validateFileUpload() {
+    if (!this.fileName) {
+      console.log("no file")
+      this.isFileRequired = true; // Set the flag if no file is uploaded
+    } else {
+      this.isFileRequired = false; // Clear the flag if the file is uploaded
+    }
+  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
+      this.fileName = file.name; // Store the file name
+      console.log(this.fileName);
+      this.isFileRequired = false;
       console.log('File selected:', file.name);
       const input = document.getElementById('fileUpload') as HTMLInputElement;
       const fileName =

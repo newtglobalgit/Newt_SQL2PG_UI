@@ -20,7 +20,7 @@ export class DbAssessmentComponent implements OnInit {
   selectedRow: any;
 
   enableAssessmentReport: boolean = false;
-  isAssessmentButtonDisabled: boolean = false;
+  // isAssessmentButtonDisabled: boolean = false;
 
   showAssessmentComponent: boolean = false;
   current_run_id: any;
@@ -144,7 +144,7 @@ export class DbAssessmentComponent implements OnInit {
           this.selectedRow[5] = 'Completed';
           this.isDiscoveryInProgress = false;
           this.isDiscoveryCompleted = true;
-          this.isAssessmentButtonDisabled=false;
+          // this.isAssessmentButtonDisabled=false;
         }
         else
         {
@@ -180,8 +180,8 @@ export class DbAssessmentComponent implements OnInit {
           console.log(this.current_run_id);
           console.log('Assessment API Response:', response);
           if (response.status == 'success') {
-            this.isAssessmentInProgress=false;
-            this.isAssessmentButtonDisabled = true;
+            this.isAssessmentInProgress=true;
+            // this.isAssessmentButtonDisabled = true;
             this.showAssessmentComponent = true;
             this.showDiscoveryComponent = false;
             this.selectedRow[5] = 'Completed';
@@ -189,7 +189,7 @@ export class DbAssessmentComponent implements OnInit {
           }
           else{
             this.isAssessmentInProgress=false;
-            this.isAssessmentButtonDisabled = false;
+            // this.isAssessmentButtonDisabled = false;
             this.selectedRow[5] = 'Error';
           }
         },
@@ -197,7 +197,7 @@ export class DbAssessmentComponent implements OnInit {
           console.error('Error starting Assessment:', error);
           this.selectedRow[5] = 'Error';
           this.isAssessmentInProgress=false;
-          this.isAssessmentButtonDisabled = false;
+          // this.isAssessmentButtonDisabled = false;
         }
       );
   }
@@ -429,13 +429,13 @@ export class DbAssessmentComponent implements OnInit {
         this.showDiscoveryComponent = true;
         this.isDiscoveryCompleted=true;
         this.isAssessmentInProgress=false;
-        this.isAssessmentButtonDisabled=false;
+        // this.isAssessmentButtonDisabled=false;
       } else if (this.stage === 'Assessment' && this.status === 'Completed') {
         this.enableDiscoveryReport = true;
         this.enableAssessmentReport = true;
         this.showDiscoveryComponent = false;
-        this.isAssessmentInProgress=false;
-        this.isAssessmentButtonDisabled=true;
+        this.isAssessmentInProgress=true;
+        // this.isAssessmentButtonDisabled=true;
         this.showAssessmentComponent = true;
 
       } 
