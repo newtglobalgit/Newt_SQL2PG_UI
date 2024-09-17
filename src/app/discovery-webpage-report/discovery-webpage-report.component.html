@@ -1,7 +1,7 @@
 <div class="row" *ngIf="showTable">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-12"  style="margin-left: -6px;" >
+      <div class="col-md-12"  style="margin-left: -5px;" >
         <div class="row">
           <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="tableData">
             <div class="col-md-5 marginLeft0">
@@ -30,11 +30,11 @@
         <div class="col-md-12 padding0">
           <div class="row" style="width: 98%;margin: auto;">
             <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="tableData">
-              <span class="float-left marginRight40"><span style="font-weight: bold;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
+              <span class="float-left marginRight40"><span style="font-weight: bold; margin-left: -5px;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
               <span class="float-left marginRight40"><span style="font-weight: bold;">End Date & Time: </span>{{tableData[0].end_time}}</span>
               <span class="float-left marginRight10"><span style="font-weight: bold;" >Run Duration: </span>{{tableData[0].run_duration}}</span>
             </div>
-            <p class="p-2" *ngIf="tableData[0]['Grand Total']">
+            <p class="p-2" style="margin-left: -5px;" *ngIf="tableData[0]['Grand Total']">
               DMAP analyzed {{ tableData[0]['Grand Total'][0].validType }} database objects within the source MSSQL database schema. A summary of the analysis is outlined below.
             </p>
           </div>
