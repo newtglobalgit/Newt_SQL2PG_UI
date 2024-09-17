@@ -63,9 +63,9 @@
         <div class="row adjust">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="location"
-                >Location <span class="requiredField">*</span></label
-              >
+              <label for="location">
+                Location <span class="requiredField">*</span>
+              </label>
               <input
                 type="text"
                 formControlName="location"
@@ -74,7 +74,12 @@
                 placeholder="Enter location"
                 [(ngModel)]="location"
                 name="location"
+                (ngModelChange)="validateLocation($event)"
               />
+              <!-- Error message if the location contains invalid characters -->
+              <div *ngIf="locationInvalid" class="error-message">
+                Location must contain only letters.
+              </div>
             </div>
           </div>
           <div class="col-md-6">
@@ -414,7 +419,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="fileUpload" class="custom-file-upload">
-                Upload JSON File
+                Upload JSON File <span class="requiredField">*</span>
               </label>
               <input
                 id="fileUpload"
@@ -423,21 +428,17 @@
                 style="display: none"
                 (change)="onFileSelected($event)"
                 [disabled]="!genAIEnabledSuccessfully"
+                required
               />
-              <span id="file-upload-filename"></span>
-
-              <!-- <label for="fileUpload" class="custom-file-upload"
-                >Upload JSON File</label
-              >
-              <input
-                type="file"
-                class="form-control"
-                id="fileUpload"
-                (change)="onFileSelected($event)"
-                [disabled]="!genAIEnabledSuccessfully"
-              /> -->
+              <span id="file-upload-filename">{{ fileName || 'No file chosen' }}</span>
+          
+              <!-- Error message when the file is not uploaded -->
+              <div *ngIf="isFileRequired && !fileName" class="error-message">
+                JSON file is required.
+              </div>
             </div>
           </div>
+          
         </div>
 
         <div
