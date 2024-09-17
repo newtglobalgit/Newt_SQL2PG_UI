@@ -1,7 +1,7 @@
 <div class="row" *ngIf="showTable">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" style="margin-left: -4px;">
         <div class="row">
           <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="tableData">
             <div class="col-md-5 marginLeft0">
@@ -30,21 +30,18 @@
         <div class="col-md-12 padding0">
           <div class="row" style="width: 98%;margin: auto;">
             <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="tableData">
-              <span class="float-left marginRight40"><span style="font-weight: bold;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
+              <span class="float-left marginRight30"><span style="font-weight: bold; margin-left: -4px;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
               <span class="float-left marginRight40"><span style="font-weight: bold;">End Date & Time: </span>{{tableData[0].end_time}}</span>
               <span class="float-left marginRight10"><span style="font-weight: bold;" >Run Duration: </span>{{tableData[0].run_duration}}</span>
             </div>
-            <p class="p-2" >
+            <p class="p-2"  style="margin-left: -4px;">
               {{ tableData[0].headerText }} 
             </p>
           </div>
 
-          <div *ngIf="showComponent && !showTable">
-            <p>Loading data...</p>
-        </div>
 
 
-          <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px;">
+          <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px; margin-left: 15px;">
             <!-- Existing Database Objects Table -->
             <div class="col-md-12 wizardHeader">
                 <div>Database Objects</div>
@@ -130,6 +127,51 @@
             </table>
             </div>
         </div>
+
+
+
+
+
+        <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px;">
+          <!-- Existing Database Objects Table -->
+          <div class="col-md-12 wizardHeader">
+              <div>Converted Objects</div>
+          </div>
+          <div class="col-md-12" style="padding: 10px;"> 
+          <table id="analyticsTable" class="analyticsTable table table-hover table-sm table-bordered" style="font-size:12px;">
+              <thead class="thead_custom">
+                  <tr class="tr_custom_14">
+                      <th>Object Type</th>
+                      <th>Total Objects</th>
+                      <th>Converted Objects</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td colspan="5"><strong>Storage Objects</strong></td>
+                  </tr>
+                  <tr *ngFor="let object of this.tableData[0].storageObjects;">
+                    <td>{{ object.objectType }}</td>
+                    <td>{{ object.total}}</td>
+                    <td>{{ object.converted }}</td>
+                  </tr>
+      
+                  <tr>
+                      <td colspan="5"><strong>Code Objects</strong></td>
+                  </tr>
+                  <tr *ngFor="let object of tableData[0].codeObjects;">
+                      <td>{{ object.objectType }}</td>
+                      <td>{{ object.total}}</td>
+                      <td>{{ object.converted }}</td>
+                  </tr>
+                </tbody>
+          </table>
+          </div>
+      </div>
+
+
+
+ 
         
         <!-- Dependencies Section -->
         <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px;">

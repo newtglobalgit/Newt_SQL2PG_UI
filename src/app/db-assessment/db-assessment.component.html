@@ -301,19 +301,23 @@
               </th>
      
               <th>
-                <span class="marginRight5 pointerCursor">Last Updated</span>
+                <span class="marginRight5 defaultCursor">Last Updated</span>
                 <span>
-                  <i class="fa fa-chevron-down pointerCursor  " id="drpdownLastUpdated" data-toggle="dropdown"
-                    type="button" aria-haspopup="true" aria-expanded="true">
+                  <i class="fa fa-chevron-down pointerCursor" id="drpdownAppLastUpdated"
+                    data-toggle="dropdown" type="button" aria-haspopup="true">
+  
                   </i>
-                  <ul class="dropdown-menu drpdownLastUpdated" aria-labelledby="drpdownLastUpdated">
-                    <li class="dropdown-item" *ngFor="let date of lastUpdates">
+  
+                  <ul class="dropdown-menu drpdownAppLastUpdated" aria-labelledby="drpdownAppLastUpdated"
+                    style="left:-100px !important;min-width: 170px !important;" (click)="onDropdownClick($event)">
+                    <li class="dropdown-item" *ngFor="let data of arrayOfLastUpdated">
                       <div>
-                        <div class="form-check" style="padding: 0px">
-                          <input type="checkbox" ngModel [(ngModel)]="date.isDateChecked"
-                            class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top"
-                             />
-                          <label class="form-check-label-workerNode marginLeft5">{{ date }}</label>
+                        <div class="form-check" style="padding:0px;">
+                          <input type="checkbox" ngModel name="applicationLastUpdatedfilter_{{data.applicationName}}"
+                            class="form_checkbox ng-untouched ng-pristine ng-valid" style="vertical-align: text-top;"
+                            value="{{data}}" />
+                          <label class="form-check-label-workerNode marginLeft5"
+                            for="applicationLastUpdatedfilter_{{data.applicationName}}">{{data}}</label>
                         </div>
                       </div>
                     </li>
@@ -339,7 +343,7 @@
 
             <ng-container *ngIf="searchfilteredTableData.length > 0 && searchfilterapplied">
               <tr *ngFor="let row of searchfilteredTableData" style="font-size: 12px"
-                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
+                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }"  (click)="onSelectRow(row , true)">
                 <td class="textCenter">
                   <div class="">
                     <input type="radio" [checked]="row[3] == radioCheckedValue" name="schema"
@@ -379,7 +383,7 @@
 
             <ng-container *ngIf="tableData.length > 0 && !searchfilterapplied">
               <tr *ngFor="let row of tableData" style="font-size: 12px"
-                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }">
+                [ngClass]="{ highlightedRow: row[3] == radioCheckedValue }"  (click)="onSelectRow(row, true)">
                 <td class="textCenter">
                   <div class="">
                     <input type="radio" [checked]="row[3] == radioCheckedValue" name="schema"
@@ -433,12 +437,12 @@
           </span>
 
           <div>
-            <button class="btn btn-md btn-primary" *ngIf="!isDiscoveryCompleted" [disabled]="isDiscoveryInProgress"
+            <button class="btn btn-md btn-primary" *ngIf="!isDiscoveryCompleted&&!isDiscoveryInProgress" 
               (click)="startDiscovery()">
               Start Discovery
             </button>
 
-            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted||isAssessmentError"   [disabled]="isAssessmentButtonDisabled"
+            <button class="btn btn-md btn-primary" *ngIf="isDiscoveryCompleted&&!isAssessmentInProgress"   [disabled]="isAssessmentButtonDisabled"
               (click)="startAssessment()">
               Start Assessment
             </button>

@@ -31,7 +31,7 @@ export class DmapMultipleSchemaDeleteComponent implements OnInit {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private _PopupDraggableService: PopupDraggableService,
-    private sql2PgService: Sql2PgService
+    private sql2PgService: Sql2PgService,
   ) {}
 
   ngOnInit() {
@@ -229,6 +229,7 @@ export class DmapMultipleSchemaDeleteComponent implements OnInit {
             if (data.status == 'success') {
               // this.spinner.hide();
               this.activeModal.close('ok');
+              window.location.reload();
               this.openAlert('Selected schema(s) deleted successfully.');
             } else {
               // this.spinner.hide();

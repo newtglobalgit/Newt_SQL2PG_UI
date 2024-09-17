@@ -56,10 +56,8 @@ discoveryReport() {
         if (this.tableData && this.tableData.length > 0)
         {
           this.showComponent = true;
-
-          setTimeout(() => {
-            this.showTable = true;
-          }, 5000);
+          this.showTable = true;
+          
         }
       }
       this.spinner.hide();
