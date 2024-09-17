@@ -1,10 +1,12 @@
 <div class="row" *ngIf="showTable">
-  <div class="col-md-12">
+  <div class="col-md-12"  >
     <div class="row">
       <div class="col-md-12" style="margin-left: -4px;">
         <div class="row">
           <div class="col-md-12 row font-weight-bold reportHeaderLabel" *ngIf="tableData">
             <div class="col-md-5 marginLeft0">
+            <div data-title="Assessment Report"
+            data-intro="Download assessment report in PDF or excel format from here.">
               <span class="col-md-6" style="font-size: 14; font-weight: bold;" >Assessment Report</span>
               <a>
                 <img (click)="downloadPdf()" width="25" height="25" alt="PDF"
@@ -16,7 +18,7 @@
                     src="../../../assets/images/SVG/icon-02.svg" title="Download Excel"
                     style="cursor: pointer;">
               </a>
-              
+            </div>
             </div>
           </div>
         </div>
@@ -30,17 +32,18 @@
         <div class="col-md-12 padding0">
           <div class="row" style="width: 98%;margin: auto;">
             <div class="col-md-12 reportHeaderLabel fontSize15" *ngIf="tableData">
-              <span class="float-left marginRight30"><span style="font-weight: bold; margin-left: -4px;" >Start Date & Time: </span>{{tableData[0].start_time}}</span>
+              <span class="float-left marginRight40"><span style="font-weight: bold; margin-left: 2px; " >Start Date & Time: </span>{{tableData[0].start_time}}</span>
               <span class="float-left marginRight40"><span style="font-weight: bold;">End Date & Time: </span>{{tableData[0].end_time}}</span>
               <span class="float-left marginRight10"><span style="font-weight: bold;" >Run Duration: </span>{{tableData[0].run_duration}}</span>
             </div>
-            <p class="p-2"  style="margin-left: -4px;">
+            <p class="p-2"  style="margin-left : 2px;">
               {{ tableData[0].headerText }} 
             </p>
           </div>
 
 
-
+          <div data-title="DB Object Details"
+          data-intro="This section shows the details of storage and code objects discovered by DMAP in the source database and their compexity.">
           <div  class="row adjust wizardDiv" style="width: 97%; margin: auto;margin-bottom: 20px; margin-left: 15px;">
             <!-- Existing Database Objects Table -->
             <div class="col-md-12 wizardHeader">
@@ -127,6 +130,7 @@
             </table>
             </div>
         </div>
+        
 
 
 
@@ -198,6 +202,7 @@
             </div>
         </div>
          
+      </div>
       </div>
     </div>
   </div>
