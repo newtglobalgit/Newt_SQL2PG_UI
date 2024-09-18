@@ -82,8 +82,9 @@ export class DbAssessmentComponent implements OnInit {
 
 
     this.searchfilteredTableData = [...this.tableData]; 
+    this.getAppData();
 
-    // this.pingAndGetAppData();
+    this.pingAndGetAppData();
 
     this.getStoredSchemaInfo();
     
@@ -250,7 +251,7 @@ export class DbAssessmentComponent implements OnInit {
     this.sql2PgService.getDBAssessmentData().subscribe((response) => {
       this.tableData = response;
       // console.log(this.tableData);
-      this.getAppData()
+      // this.getAppData()
       // this.sourceSchemas=this.tableData[0];
       if (this.radioCheckedValue) {
         const selectedRow = this.tableData.find(row => row[3] == this.radioCheckedValue);
