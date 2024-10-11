@@ -87,7 +87,7 @@ downloadPdf(){
     console.log(data)
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_discoveryReport'+'.pdf';
+    let filename =this.dbName+'_'+this.schemaName+'_' + this.runId + '_assessmentReport'+'.pdf';
     FileSaver.saveAs(blob,filename);
   });
 }
@@ -97,7 +97,7 @@ downloadPdf(){
     this.sql2PgService.downloadAssessmentExcelReport(this.runId).subscribe(data=>{
     this.spinner.hide();
     let blob = new Blob([data],{});
-    let filename = this.dbName+'_'+this.schemaName+'_'+'Discovery_' + this.runId +'_Report'+'.xlsx';
+    let filename = this.dbName+'_'+this.schemaName+'_'+'assessment_' + this.runId +'_Report'+'.xlsx';
     saveAs.saveAs(blob,filename);
    });
 }
