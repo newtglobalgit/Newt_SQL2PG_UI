@@ -8,6 +8,7 @@ import { AppConfigService } from './app-config.service';
   providedIn: 'root',
 })
 export class LoginService {
+  
   userEmail: string = '';
   userName: string = '';
   licenseBuyMessage: string;
@@ -18,6 +19,7 @@ export class LoginService {
 
   $userName = new BehaviorSubject<string>(this.userEmail);
   $userNameObj = this.$userName.asObservable();
+  userData: any;
 
   constructor(private http: HttpClient, private config: AppConfigService) {}
 
@@ -72,4 +74,17 @@ export class LoginService {
   resetPassword(reqObj: any): Observable<any> {
     return this.http.post(this.config.host + '/resetPassword', reqObj);
   }
+
+  setUserData(data: any) {
+    this.userData = data;
+  }
+
+  getUserData()
+  {
+    console.log(this.userData.user_id +" "+ this.userData.user_name)
+    return [this.userData.user_id , this.userData.user_name];
+  }
+
+  
+
 }

@@ -199,6 +199,7 @@ export class LoginComponent implements OnInit {
             this.loginForm.value.emailAddress,
             data
           );
+          this.loginService.setUserData(data)
           this.router.navigate(['/dbSetup']);
         } else if (
           data.status == 'success' &&
@@ -209,6 +210,7 @@ export class LoginComponent implements OnInit {
             this.loginForm.value.emailAddress,
             data
           );
+          this.loginService.setUserData(data)
           this.router.navigate(['/dbSetup']);
         } else {
           this.loginService.setLicenseBuyMessage(data.license_message);
@@ -231,4 +233,6 @@ export class LoginComponent implements OnInit {
     modalRef.componentInstance.data = { msg: msg, title: 'Alert' };
     modalRef.result.then((result) => {});
   }
+
+  
 }

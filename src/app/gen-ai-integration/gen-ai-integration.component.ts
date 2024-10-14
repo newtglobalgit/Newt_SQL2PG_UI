@@ -6,6 +6,7 @@ import { Sql2PgService } from '../common/Services/sql2pg.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DmapAlertDialogModal } from '../common/Modal/dmap-alert-dialog/dmap-alert-dialog.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoginService } from '../common/Services/login-service.service';
 
 @Component({
   selector: 'app-gen-ai-integration',
@@ -16,15 +17,22 @@ export class GenAiIntegrationComponent implements OnInit {
   genAIForm: FormGroup;
   @ViewChild('f', { static: false }) genAiForm: NgForm;
   @ViewChild('ff', { static: false }) serviceAccountForm: NgForm;
+  userId: any;
+  userName: any;
 
   constructor(
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loginService : LoginService
   ) {}
 
   ngOnInit(): void {
+    const [user_id  , user_name] =this.loginService.getUserData()
+    this.userId = user_id
+    this.userName = user_name
+    console.log(user_id +" "+ user_name)
     this.genAIForm = this.fb.group({
       location: [''],
       modelSelection: ['Default'],
@@ -38,6 +46,8 @@ export class GenAiIntegrationComponent implements OnInit {
       maxApiCalls: ['1'],
     });
   }
+
+  
   existingGenAiDetails: any;
   selectedFile: File | null = null;
   chatGptEnabled: boolean = false;
@@ -114,6 +124,9 @@ export class GenAiIntegrationComponent implements OnInit {
     }
     this.spinner.show();
     const genAidata: any = this.genAiForm.value;
+    genAidata.userId = this.userId
+    genAidata.userName = this.userName
+    genAidata.isEnabled = this.genAIEnabledSuccessfully
     console.log('Gen Ai submit data - ', genAidata);
     this.sql2PgService.saveGenAiDetails(genAidata).subscribe((res) => {
       this.spinner.hide();
