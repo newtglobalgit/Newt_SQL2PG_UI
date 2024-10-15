@@ -430,7 +430,8 @@
                 [disabled]="!genAIEnabledSuccessfully"
                 required
               />
-              <span id="file-upload-filename">{{ fileName || 'No file chosen' }}</span>
+
+              <span *ngIf="isFilePresent" id="file-upload-filename">{{ fileName || 'No file chosen' }}</span>
           
               <!-- Error message when the file is not uploaded -->
               <div *ngIf="isFileRequired && !fileName" class="error-message">
@@ -463,7 +464,7 @@
               type="button"
               class="btn btn-md btn-primary"
               (click)="activateServiceAccount()"
-              [disabled]="!genAIEnabledSuccessfully"
+              [disabled]="!activate"
             >
               Activate
             </button>
