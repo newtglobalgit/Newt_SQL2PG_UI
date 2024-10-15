@@ -33,10 +33,6 @@ export class GenAiIntegrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const [user_id  , user_name] =this.loginService.getUserData()
-    this.userId = user_id
-    this.userName = user_name
-    console.log(user_id +" "+ user_name)
     this.genAIForm = this.fb.group({
       location: [''],
       modelSelection: ['Default'],
