@@ -118,8 +118,11 @@ export class Sql2PgService {
     );
   }
 
-  fetchGenAiDetails() {
-    return this.http.get(this.config.host + '/fetch_gen_ai_details');
+  fetchGenAiDetails(userId : any) : Observable<any>{
+    const reqObj ={
+      "userId": userId
+    }
+    return this.http.post(this.config.host + '/fetch_gen_ai_details', reqObj);
   }
 
   getMultipleSchemasToDelete(): Observable<any> {

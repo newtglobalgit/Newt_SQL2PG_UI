@@ -37,6 +37,7 @@ export class LoginService {
       sessionStorage['user_name'] = emailaddress;
       sessionStorage['userName'] = user.user_name;
       sessionStorage['token'] = user.auth_token;
+      this.setUserData(user.user_id, user.user_name);
       this.setUserName(user.user_name);
     }
     this.setUserCredentials(emailaddress);
@@ -75,16 +76,14 @@ export class LoginService {
     return this.http.post(this.config.host + '/resetPassword', reqObj);
   }
 
-  setUserData(data: any) {
-    this.userData = data;
+  setUserData(userId: string, userName: string) {
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('userName', userName);
   }
 
-  getUserData()
-  {
-    console.log(this.userData.user_id +" "+ this.userData.user_name)
-    return [this.userData.user_id , this.userData.user_name];
+  getUserData(): [string | null, string | null] {
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
+    return [userId, userName];
   }
-
-  
-
 }

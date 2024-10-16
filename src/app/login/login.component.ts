@@ -199,7 +199,8 @@ export class LoginComponent implements OnInit {
             this.loginForm.value.emailAddress,
             data
           );
-          this.loginService.setUserData(data)
+          
+          this.loginService.setUserData(data.user_id, data.user_name)
           this.router.navigate(['/dbSetup']);
         } else if (
           data.status == 'success' &&
@@ -210,7 +211,7 @@ export class LoginComponent implements OnInit {
             this.loginForm.value.emailAddress,
             data
           );
-          this.loginService.setUserData(data)
+          this.loginService.setUserData(data.user_id, data.user_name)
           this.router.navigate(['/dbSetup']);
         } else {
           this.loginService.setLicenseBuyMessage(data.license_message);

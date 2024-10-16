@@ -18,8 +18,8 @@ export class GenAiIntegrationComponent implements OnInit {
   genAIForm: FormGroup;
   @ViewChild('f', { static: false }) genAiForm: NgForm;
   @ViewChild('ff', { static: false }) serviceAccountForm: NgForm;
-  userId: any;
-  userName: any;
+  userId: string | null = null;
+  userName: string | null = null;
   setFlag: any;
   data: any;
   appDetailCalls:any;
@@ -33,6 +33,15 @@ export class GenAiIntegrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const [storedUserId, storedUserName] = this.loginService.getUserData();
+    if (storedUserId && storedUserName) {
+      this.userId = storedUserId;
+      this.userName = storedUserName;
+      console.log(`User ID: ${this.userId}, User Name: ${this.userName}`);
+    } else {
+      console.error('User ID and User Name are not available.');
+    }
+
     this.genAIForm = this.fb.group({
       location: [''],
       modelSelection: ['Default'],
@@ -46,19 +55,17 @@ export class GenAiIntegrationComponent implements OnInit {
       maxApiCalls: ['1'],
     });
     this.pingAndGetFlagData();
-    this.spinner.show()
+    this.spinner.show();
     setInterval(() => {
-      this.spinner.hide()
+      this.spinner.hide();
     }, 8000);
-    
   }
 
-  
   existingGenAiDetails: any;
-  setexistingGenAiDetails: any
+  setexistingGenAiDetails: any;
   selectedFile: File | null = null;
-  chatGptEnabled: boolean ;
-  genAIEnabledSuccessfully: boolean = false;
+  chatGptEnabled: boolean;
+  genAIEnabledSuccessfully: boolean = true;
   enableServiceAccount: boolean = false;
   status : boolean;
   location: string = '';
@@ -72,7 +79,7 @@ export class GenAiIntegrationComponent implements OnInit {
   maxTokens: string = '';
   maxApiCalls: string = '1';
   locationInvalid: boolean = false;
-  activate: boolean = false;
+  activate: boolean = true;
   
   fileName: string | null = null; 
   isFileRequired: boolean = false;
@@ -134,16 +141,13 @@ export class GenAiIntegrationComponent implements OnInit {
     }
     this.spinner.show();
     const genAidata: any = this.genAiForm.value;
-    const [user_id  , user_name] =this.loginService.getUserData()
-    this.userId = user_id
-    this.userName = user_name
     genAidata.userId = this.userId
     genAidata.userName = this.userName
     genAidata.isEnabled = this.chatGptEnabled
     console.log('Gen Ai submit data - ', genAidata);
     this.sql2PgService.saveGenAiDetails(genAidata).subscribe((res) => {
       this.spinner.hide();
-      this.pingAndGetFlagData()
+      // this.pingAndGetFlagData()
       this.openAlert(res.message);
     });
 
@@ -224,7 +228,7 @@ export class GenAiIntegrationComponent implements OnInit {
   onGenAiEnableTick(isChecked: boolean) {
     if (isChecked) {
       console.log('Checkbox is checked');
-      this.sql2PgService.fetchGenAiDetails().subscribe((res) => {
+      this.sql2PgService.fetchGenAiDetails(this.userId).subscribe((res) => {
         this.existingGenAiDetails = res;
         console.log(
           'Existing Gen AI Details --> ',
@@ -292,7 +296,9 @@ export class GenAiIntegrationComponent implements OnInit {
   }
   getFlagStatus(){
     console.log("getFlag")
-  this.sql2PgService.fetchGenAiDetails().subscribe((res) =>{
+  this.sql2PgService.fetchGenAiDetails(this.userId).subscribe((res) =>{
+    if (res.status == 'success')
+    {
     this.setexistingGenAiDetails = res
     this.chatGptEnabled =this.setexistingGenAiDetails.data.isEnable
    
@@ -314,6 +320,7 @@ export class GenAiIntegrationComponent implements OnInit {
       this.activate=false;
 
     }
+  }
     
   },
   (error) => {
