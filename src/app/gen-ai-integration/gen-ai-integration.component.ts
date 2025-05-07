@@ -14,7 +14,7 @@ import { LoginService } from '../common/Services/login-service.service';
   styleUrls: ['./gen-ai-integration.component.css'],
 })
 export class GenAiIntegrationComponent implements OnInit {
-
+  selectedForm: string = 'gcp'; // default selected
   genAIForm: FormGroup;
   @ViewChild('f', { static: false }) genAiForm: NgForm;
   @ViewChild('ff', { static: false }) serviceAccountForm: NgForm;
@@ -22,14 +22,14 @@ export class GenAiIntegrationComponent implements OnInit {
   userName: string | null = null;
   setFlag: any;
   data: any;
-  appDetailCalls:any;
+  appDetailCalls: any;
 
   constructor(
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
     private sql2PgService: Sql2PgService,
     private fb: FormBuilder,
-    private loginService : LoginService
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class GenAiIntegrationComponent implements OnInit {
   chatGptEnabled: boolean;
   genAIEnabledSuccessfully: boolean = true;
   enableServiceAccount: boolean = false;
-  status : boolean;
+  status: boolean;
   location: string = '';
   modelSelection: string = 'Default';
   maxOutputTokens: string = '';
@@ -80,8 +80,8 @@ export class GenAiIntegrationComponent implements OnInit {
   maxApiCalls: string = '1';
   locationInvalid: boolean = false;
   activate: boolean = true;
-  
-  fileName: string | null = null; 
+
+  fileName: string | null = null;
   isFileRequired: boolean = false;
   isFilePresent: boolean = true;
 
@@ -104,9 +104,11 @@ export class GenAiIntegrationComponent implements OnInit {
   saveGenAiDetails() {
     const maxTokens = Number(this.maxOutputTokens);
     if (
-      this.location &&!this.locationInvalid&&
+      this.location &&
+      !this.locationInvalid &&
       this.modelSelection &&
-      this.maxOutputTokens &&maxTokens <= 8192&&
+      this.maxOutputTokens &&
+      maxTokens <= 8192 &&
       this.temperature !== null &&
       this.temperature !== undefined &&
       this.temperature >= 0 &&
@@ -127,23 +129,20 @@ export class GenAiIntegrationComponent implements OnInit {
         this.openAlert('Top P value must be between 0 and 1');
       } else if (this.temperature < 0 || this.temperature > 2) {
         this.openAlert('Temperature value must be between 0 and 2');
-      } 
-      else if (this.locationInvalid) {
+      } else if (this.locationInvalid) {
         this.openAlert('enter valid location');
-      } 
-      else if ( maxTokens > 8192) {
-        this.openAlert('Max Output Tokens cannot exceed more than 8192'); 
-      }
-      else {
+      } else if (maxTokens > 8192) {
+        this.openAlert('Max Output Tokens cannot exceed more than 8192');
+      } else {
         this.openAlert('Please fill all the mandatory fields');
       }
       return false;
     }
     this.spinner.show();
     const genAidata: any = this.genAiForm.value;
-    genAidata.userId = this.userId
-    genAidata.userName = this.userName
-    genAidata.isEnabled = this.chatGptEnabled
+    genAidata.userId = this.userId;
+    genAidata.userName = this.userName;
+    genAidata.isEnabled = this.chatGptEnabled;
     console.log('Gen Ai submit data - ', genAidata);
     this.sql2PgService.saveGenAiDetails(genAidata).subscribe((res) => {
       this.spinner.hide();
@@ -152,7 +151,6 @@ export class GenAiIntegrationComponent implements OnInit {
     });
 
     this.enableServiceAccount = true;
-   
   }
 
   validateLocation(value: string) {
@@ -169,9 +167,9 @@ export class GenAiIntegrationComponent implements OnInit {
 
   activateServiceAccount() {
     this.validateFileUpload();
-    if (this.projectId && this.serviceAccountEmail&&!this.isFileRequired) {
+    if (this.projectId && this.serviceAccountEmail && !this.isFileRequired) {
       this.genAIEnabledSuccessfully = true;
-      this.activate=true
+      this.activate = true;
     } else {
       this.openAlert('Please fill all the mandatory fields');
       return false;
@@ -212,7 +210,7 @@ export class GenAiIntegrationComponent implements OnInit {
   clearServiceAccount() {
     this.projectId = '';
     this.serviceAccountEmail = '';
-    this.activate=true;
+    this.activate = true;
   }
 
   openAlert(msg: any, method = false) {
@@ -224,7 +222,6 @@ export class GenAiIntegrationComponent implements OnInit {
     });
   }
 
-  
   onGenAiEnableTick(isChecked: boolean) {
     if (isChecked) {
       console.log('Checkbox is checked');
@@ -245,29 +242,30 @@ export class GenAiIntegrationComponent implements OnInit {
           retryDelay: this.existingGenAiDetails.data.retryDelay,
           maxTokens: this.existingGenAiDetails.data.maxTokens,
           maxApiCalls: this.existingGenAiDetails.data.maxApiCalls,
-          service_account_email: this.existingGenAiDetails.data.service_account_email,
+          service_account_email:
+            this.existingGenAiDetails.data.service_account_email,
           project_id: this.existingGenAiDetails.data.project_id,
         });
 
+        if (
+          this.existingGenAiDetails.data.project_id &&
+          this.existingGenAiDetails.data.service_account_email
+        ) {
+          this.projectId = this.existingGenAiDetails.data.project_id || '';
+          this.serviceAccountEmail =
+            this.existingGenAiDetails.data.service_account_email || '';
+          this.isFilePresent = false;
+        }
 
-        
-          if (this.existingGenAiDetails.data.project_id && this.existingGenAiDetails.data.service_account_email) {
-            this.projectId = this.existingGenAiDetails.data.project_id || '';
-            this.serviceAccountEmail = this.existingGenAiDetails.data.service_account_email || '';
-            this.isFilePresent = false;
-          }
-
-       
         this.spinner.hide();
       });
     } else {
       console.log('Checkbox is unchecked');
-      
     }
   }
   validateFileUpload() {
     if (!this.fileName) {
-      console.log("no file")
+      console.log('no file');
       this.isFileRequired = true; // Set the flag if no file is uploaded
     } else {
       this.isFileRequired = false; // Clear the flag if the file is uploaded
@@ -288,46 +286,51 @@ export class GenAiIntegrationComponent implements OnInit {
       document.getElementById('file-upload-filename')!.textContent = fileName;
     }
   }
-  
+
   pingAndGetFlagData() {
-  
-      this.getFlagStatus()
-   
+    this.getFlagStatus();
   }
-  getFlagStatus(){
-    console.log("getFlag")
-  this.sql2PgService.fetchGenAiDetails(this.userId).subscribe((res) =>{
-    if (res.status == 'success')
-    {
-    this.setexistingGenAiDetails = res
-    this.chatGptEnabled =this.setexistingGenAiDetails.data.isEnable
-   
-      this.location=this.setexistingGenAiDetails.data.location,
-      this.modelSelection=this.setexistingGenAiDetails.data.modelSelection,
-      this.maxOutputTokens= this.setexistingGenAiDetails.data.maxOutputTokens,
-      this.temperature= this.setexistingGenAiDetails.data.temperature,
-      this.topP= this.setexistingGenAiDetails.data.topP,
-      this.apiCallLimit= this.setexistingGenAiDetails.data.apiCallLimit,
-      this.maxRetries= this.setexistingGenAiDetails.data.maxRetries,
-      this.retryDelay= this.setexistingGenAiDetails.data.retryDelay,
-      this.maxTokens=this.setexistingGenAiDetails.data.maxTokens,
-      this.maxApiCalls= this.setexistingGenAiDetails.data.maxApiCalls
-    
-    if (this.setexistingGenAiDetails.data.project_id && this.setexistingGenAiDetails.data.service_account_email) {
-      this.projectId = this.setexistingGenAiDetails.data.project_id || '';
-      this.serviceAccountEmail = this.setexistingGenAiDetails.data.service_account_email || '';
-      this.isFilePresent = false;
-      this.activate=false;
+  getFlagStatus() {
+    console.log('getFlag');
+    this.sql2PgService.fetchGenAiDetails(this.userId).subscribe(
+      (res) => {
+        if (res.status == 'success') {
+          this.setexistingGenAiDetails = res;
+          this.chatGptEnabled = this.setexistingGenAiDetails.data.isEnable;
 
-    }
+          (this.location = this.setexistingGenAiDetails.data.location),
+            (this.modelSelection =
+              this.setexistingGenAiDetails.data.modelSelection),
+            (this.maxOutputTokens =
+              this.setexistingGenAiDetails.data.maxOutputTokens),
+            (this.temperature = this.setexistingGenAiDetails.data.temperature),
+            (this.topP = this.setexistingGenAiDetails.data.topP),
+            (this.apiCallLimit =
+              this.setexistingGenAiDetails.data.apiCallLimit),
+            (this.maxRetries = this.setexistingGenAiDetails.data.maxRetries),
+            (this.retryDelay = this.setexistingGenAiDetails.data.retryDelay),
+            (this.maxTokens = this.setexistingGenAiDetails.data.maxTokens),
+            (this.maxApiCalls = this.setexistingGenAiDetails.data.maxApiCalls);
+
+          if (
+            this.setexistingGenAiDetails.data.project_id &&
+            this.setexistingGenAiDetails.data.service_account_email
+          ) {
+            this.projectId = this.setexistingGenAiDetails.data.project_id || '';
+            this.serviceAccountEmail =
+              this.setexistingGenAiDetails.data.service_account_email || '';
+            this.isFilePresent = false;
+            this.activate = false;
+          }
+        }
+      },
+      (error) => {
+        console.error('Error fetching status:', error);
+      }
+    );
   }
-    
-  },
-  (error) => {
-    console.error('Error fetching status:', error);
-  });
 
-}
-
-
+  toggleForm(value: string) {
+    this.selectedForm = value;
+  }
 }
