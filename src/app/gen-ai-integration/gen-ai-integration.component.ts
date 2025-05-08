@@ -16,8 +16,10 @@ import { LoginService } from '../common/Services/login-service.service';
 export class GenAiIntegrationComponent implements OnInit {
   selectedForm: string = 'gcp'; // default selected
   genAIForm: FormGroup;
+  genAIFormForAzure: FormGroup;
   @ViewChild('f', { static: false }) genAiForm: NgForm;
   @ViewChild('ff', { static: false }) serviceAccountForm: NgForm;
+  @ViewChild('fff', { static: false }) genAiFormForAzure: NgForm;
   userId: string | null = null;
   userName: string | null = null;
   setFlag: any;
@@ -54,6 +56,21 @@ export class GenAiIntegrationComponent implements OnInit {
       maxTokens: [''],
       maxApiCalls: ['1'],
     });
+    this.genAIFormForAzure = this.fb.group({
+      endpointUrl: [''],
+      deploymentName: [''],
+      apiKey: [''],
+      apiVersion: [''],
+      maxOutputTokensForAzure: [''],
+      temperatureForAzure: [1],
+      topPForAzure: [''],
+      frequencyPenalty: [''],
+      presencePenalty: [''],
+      maxApiCallsForAzure: ['1'],
+      maxTokensForAzure: [''],
+      retryDelayForAzure: ['1'],
+      maxRetriesForAzure: ['1'],
+    });
     this.pingAndGetFlagData();
     this.spinner.show();
     setInterval(() => {
@@ -68,6 +85,7 @@ export class GenAiIntegrationComponent implements OnInit {
   genAIEnabledSuccessfully: boolean = true;
   enableServiceAccount: boolean = false;
   status: boolean;
+  //For GCP
   location: string = '';
   modelSelection: string = 'Default';
   maxOutputTokens: string = '';
@@ -78,6 +96,22 @@ export class GenAiIntegrationComponent implements OnInit {
   retryDelay: string = '1';
   maxTokens: string = '';
   maxApiCalls: string = '1';
+
+  //For Azure
+  endpointUrl = '';
+  deploymentName = '';
+  apiKey = '';
+  apiVersion = '';
+  frequencyPenalty = '';
+  presencePenalty = '';
+  maxOutputTokensForAzure = '';
+  temperatureForAzure: any = 1;
+  topPForAzure: any = 1;
+  maxRetriesForAzure: string = '1';
+  retryDelayForAzure: string = '1';
+  maxTokensForAzure = '';
+  maxApiCallsForAzure: string = '1';
+
   locationInvalid: boolean = false;
   activate: boolean = true;
 
@@ -151,6 +185,56 @@ export class GenAiIntegrationComponent implements OnInit {
     });
 
     this.enableServiceAccount = true;
+  }
+
+  saveGenAiDetailsForAzure() {
+    const maxTokensForAzure = Number(this.maxOutputTokensForAzure);
+    if (
+      this.endpointUrl &&
+      this.deploymentName &&
+      this.apiKey &&
+      this.apiVersion &&
+      this.frequencyPenalty &&
+      this.presencePenalty &&
+      this.maxOutputTokensForAzure &&
+      maxTokensForAzure <= 4096 &&
+      this.temperatureForAzure !== null &&
+      this.temperatureForAzure !== undefined &&
+      this.temperatureForAzure >= 0 &&
+      this.temperatureForAzure <= 2 &&
+      this.topPForAzure !== null &&
+      this.topPForAzure !== undefined &&
+      this.topPForAzure >= 0 &&
+      this.topPForAzure <= 1 &&
+      this.maxRetriesForAzure &&
+      this.retryDelayForAzure &&
+      this.maxTokensForAzure &&
+      this.maxApiCallsForAzure
+    ) {
+      this.genAIEnabledSuccessfully = true;
+    } else {
+      if (this.topP < 0 || this.topP > 1) {
+        this.openAlert('Top P value must be between 0 and 1');
+      } else if (this.temperature < 0 || this.temperature > 2) {
+        this.openAlert('Temperature value must be between 0 and 2');
+      } else if (maxTokensForAzure > 4096) {
+        this.openAlert('Max Output Tokens cannot exceed more than 4096');
+      } else {
+        this.openAlert('Please fill all the mandatory fields');
+      }
+      return false;
+    }
+    this.spinner.show();
+    const genAidataForAzure: any = this.genAiFormForAzure.value;
+    genAidataForAzure.userId = this.userId;
+    genAidataForAzure.userName = this.userName;
+    genAidataForAzure.isEnabled = this.chatGptEnabled;
+    console.log('Gen Ai submit data for Azure - ', genAidataForAzure);
+    this.sql2PgService.saveGenAiDetails(genAidataForAzure).subscribe((res) => {
+      this.spinner.hide();
+      // this.pingAndGetFlagData()
+      this.openAlert(res.message);
+    });
   }
 
   validateLocation(value: string) {
