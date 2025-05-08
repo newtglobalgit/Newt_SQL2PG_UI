@@ -403,13 +403,93 @@
       [formGroup]="genAIForm"
       name="submitCredentials"
       #f="ngForm"
-      Hello1111
-    ></form>
+    >
+      <div
+        *ngIf="chatGptEnabled"
+        data-title="GenAI Form"
+        data-intro="Fields to fill in to enable GenAI along with Model Selection capability."
+      >
+        <div class="row adjust">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="location">
+                Location <span class="requiredField">*</span>
+              </label>
+              <input
+                type="text"
+                formControlName="location"
+                class="form-control"
+                id="location"
+                placeholder="Enter location"
+                [(ngModel)]="location"
+                name="location"
+                (ngModelChange)="validateLocation($event)"
+              />
+              <!-- Error message if the location contains invalid characters -->
+              <div *ngIf="locationInvalid" class="error-message">
+                Location must contain only letters.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="modelSelection"
+                >Model Selection <span class="requiredField">*</span></label
+              >
+              <select
+                class="form-control"
+                id="modelSelection"
+                formControlName="modelSelection"
+                [(ngModel)]="modelSelection"
+                name="modelSelection"
+              >
+                <option value="Default">Default</option>
+                <option value="gemini-1.5-pro-001">gemini-1.5-pro-001</option>
+                <option value="gemini-1.5-flash-001">
+                  gemini-1.5-flash-001
+                </option>
+                <option value="gemini-2.5-pro-preview-05-06">
+                  gemini-2.5-pro-preview-05-06
+                </option>
+                <option value="gemini-1.5-pro-002">gemini-1.5-pro-002</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="chatGptEnabled"
+        class="row margin0"
+        style="justify-content: flex-end; width: 98.5%"
+      >
+        <div
+          class="col-md-2;"
+          data-title="GenAI Action Buttons"
+          data-intro="Action buttons to clear or save the filled form."
+        >
+          <button
+            type="button"
+            class="btn btn-md btn-simple"
+            (click)="clearGenAI()"
+          >
+            Clear
+          </button>
+          &nbsp;
+          <button
+            type="button"
+            class="btn btn-md btn-primary"
+            (click)="saveGenAiDetails()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
     <!-- Azure form ends -->
   </div>
   <!-- Enable Service Account Section -->
   <div
-    *ngIf="chatGptEnabled"
+    *ngIf="chatGptEnabled && selectedForm === 'gcp'"
     class="wizardDiv"
     style="margin: 8px 14px; padding-bottom: 8px"
   >
