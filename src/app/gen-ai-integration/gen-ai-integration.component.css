@@ -45,3 +45,56 @@ input[type="file"] {
 .hidden {
   display: none;
 }
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  margin-left: 5px;
+}
+
+.info-icon {
+  background-color: #fff; /* white background */
+  color: #000; /* black "i" text */
+  border: 1px solid #000; /* black border */
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  text-align: center;
+  line-height: 13px;
+  font-size: 13px;
+  display: inline-block;
+}
+.tooltip-text {
+  visibility: hidden;
+  width: 350px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* position above the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

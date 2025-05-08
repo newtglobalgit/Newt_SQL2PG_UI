@@ -545,6 +545,14 @@
               <label for="frequencyPenalty"
                 >Frequency Penalty <span class="requiredField">*</span></label
               >
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <div class="tooltip-text">
+                  Reduce the chance of repeating a token proportionally based on
+                  how often it has appeared in the text so far.This decreases
+                  the likelihood of repeating the exact same text in a response.
+                </div>
+              </div>
               <input
                 type="number"
                 placeholder="Please enter value between 0 and 2"
@@ -568,6 +576,14 @@
               <label for="presencePenalty"
                 >Presence Penalty <span class="requiredField">*</span></label
               >
+              <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <div class="tooltip-text">
+                  Reduce the chance of repeating any token that has appeared in
+                  the text at all so far. This increases the likelihood of
+                  introducing new topics in a response.
+                </div>
+              </div>
               <input
                 type="number"
                 placeholder="Please enter value between 0 and 2"
