@@ -135,6 +135,22 @@ export class GenAiIntegrationComponent implements OnInit {
     this.maxApiCalls = '1';
   }
 
+  clearGenAIForAzure() {
+    this.endpointUrl = '';
+    this.deploymentName = '';
+    this.apiKey = '';
+    this.apiVersion = '';
+    this.frequencyPenalty = '';
+    this.presencePenalty = '';
+    this.maxOutputTokensForAzure = '';
+    this.temperatureForAzure = 1;
+    this.topPForAzure = '';
+    this.maxRetriesForAzure = '1';
+    this.retryDelayForAzure = '1';
+    this.maxTokensForAzure = '';
+    this.maxApiCallsForAzure = '1';
+  }
+
   saveGenAiDetails() {
     const maxTokens = Number(this.maxOutputTokens);
     if (
