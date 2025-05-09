@@ -452,233 +452,283 @@
             </div>
           </div>
         </div>
-        <div class="row adjust">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="apiKey">
-                API Key <span class="requiredField">*</span>
-              </label>
-              <input
-                type="text"
-                formControlName="apiKey"
-                class="form-control"
-                id="apiKey"
-                placeholder="(Azure OpenAI Key)"
-                [(ngModel)]="apiKey"
-                name="apiKey"
-              />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="apiVersion">
-                API Version <span class="requiredField">*</span>
-              </label>
-              <input
-                type="text"
-                formControlName="apiVersion"
-                class="form-control"
-                id="apiVersion"
-                placeholder="2023-12-01-preview"
-                [(ngModel)]="apiVersion"
-                name="apiVersion"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="row adjust">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="maxOutputTokensForAzure"
-                >Max Output Tokens <span class="requiredField">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="maxOutputTokensForAzure"
-                formControlName="maxOutputTokensForAzure"
-                placeholder="Max token limit 4096"
-                [(ngModel)]="maxOutputTokensForAzure"
-                name="maxOutputTokensForAzure"
-              />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="temperatureForAzure"
-                >Temperature <span class="requiredField">*</span></label
-              >
-              <input
-                type="number"
-                placeholder="Please enter value between 0 and 2"
-                min="0"
-                max="2"
-                step="0.01"
-                class="form-control"
-                id="temperatureForAzure"
-                formControlName="temperatureForAzure"
-                min="0"
-                max="2"
-                [(ngModel)]="temperatureForAzure"
-                name="temperatureForAzure"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="row adjust">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="topPForAzure"
-                >Top P <span class="requiredField">*</span></label
-              >
-              <input
-                type="number"
-                placeholder="Please enter value between 0 and 1"
-                min="0"
-                max="1"
-                step="0.01"
-                class="form-control"
-                id="topPForAzure"
-                formControlName="topPForAzure"
-                [(ngModel)]="topPForAzure"
-                name="topPForAzure"
-              />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="frequencyPenalty"
-                >Frequency Penalty <span class="requiredField">*</span></label
-              >
-              <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <div class="tooltip-text">
-                  Reduce the chance of repeating a token proportionally based on
-                  how often it has appeared in the text so far.This decreases
-                  the likelihood of repeating the exact same text in a response.
-                </div>
-              </div>
-              <input
-                type="number"
-                placeholder="Please enter value between 0 and 2"
-                min="0"
-                max="2"
-                step="0.01"
-                class="form-control"
-                id="frequencyPenalty"
-                formControlName="frequencyPenalty"
-                min="0"
-                max="2"
-                [(ngModel)]="frequencyPenalty"
-                name="frequencyPenalty"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="row adjust">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="presencePenalty"
-                >Presence Penalty <span class="requiredField">*</span></label
-              >
-              <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <div class="tooltip-text">
-                  Reduce the chance of repeating any token that has appeared in
-                  the text at all so far. This increases the likelihood of
-                  introducing new topics in a response.
-                </div>
-              </div>
-              <input
-                type="number"
-                placeholder="Please enter value between 0 and 2"
-                min="0"
-                max="2"
-                step="0.01"
-                class="form-control"
-                id="presencePenalty"
-                formControlName="presencePenalty"
-                min="0"
-                max="2"
-                [(ngModel)]="presencePenalty"
-                name="presencePenalty"
-              />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="maxApiCallsForAzure"
-                >Max API Calls <span class="requiredField">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="maxApiCallsForAzure"
-                formControlName="maxApiCallsForAzure"
-                [(ngModel)]="maxApiCallsForAzure"
-                name="maxApiCallsForAzure"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="row adjust">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="maxTokensForAzure"
-                >Max Tokens(Quota) <span class="requiredField">*</span></label
-              >
-              <input
-                type="number"
-                placeholder="Please enter value between 0 and 200000"
-                min="0"
-                max="200000"
-                step="0.01"
-                class="form-control"
-                id="maxTokensForAzure"
-                formControlName="maxTokensForAzure"
-                min="0"
-                max="200000"
-                [(ngModel)]="maxTokensForAzure"
-                name="maxTokensForAzure"
-              />
-            </div>
-          </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="retryDelayForAzure"
-                >Retry Delay(Sec) <span class="requiredField">*</span></label
-              >
-              <select
-                class="form-control"
-                id="retryDelayForAzure"
-                formControlName="retryDelayForAzure"
-                [(ngModel)]="retryDelayForAzure"
-                name="retryDelayForAzure"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
+        <div
+          *ngIf="
+            modelSelectionForAzure === 'Default' ||
+            modelSelectionForAzure === 'gpt-4o'
+          "
+        >
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="apiKey">
+                  API Key <span class="requiredField">*</span>
+                </label>
+                <input
+                  type="text"
+                  formControlName="apiKey"
+                  class="form-control"
+                  id="apiKey"
+                  placeholder="(Azure OpenAI Key)"
+                  [(ngModel)]="apiKey"
+                  name="apiKey"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="apiVersion">
+                  API Version <span class="requiredField">*</span>
+                </label>
+                <input
+                  type="text"
+                  formControlName="apiVersion"
+                  class="form-control"
+                  id="apiVersion"
+                  placeholder="2023-12-01-preview"
+                  [(ngModel)]="apiVersion"
+                  name="apiVersion"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="maxOutputTokensForAzure"
+                  >Max Output Tokens <span class="requiredField">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="maxOutputTokensForAzure"
+                  formControlName="maxOutputTokensForAzure"
+                  placeholder="Max token limit 4096"
+                  [(ngModel)]="maxOutputTokensForAzure"
+                  name="maxOutputTokensForAzure"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="temperatureForAzure"
+                  >Temperature <span class="requiredField">*</span></label
+                >
+                <input
+                  type="number"
+                  placeholder="Please enter value between 0 and 2"
+                  min="0"
+                  max="2"
+                  step="0.01"
+                  class="form-control"
+                  id="temperatureForAzure"
+                  formControlName="temperatureForAzure"
+                  min="0"
+                  max="2"
+                  [(ngModel)]="temperatureForAzure"
+                  name="temperatureForAzure"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="topPForAzure"
+                  >Top P <span class="requiredField">*</span></label
+                >
+                <input
+                  type="number"
+                  placeholder="Please enter value between 0 and 1"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  class="form-control"
+                  id="topPForAzure"
+                  formControlName="topPForAzure"
+                  [(ngModel)]="topPForAzure"
+                  name="topPForAzure"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="frequencyPenalty"
+                  >Frequency Penalty <span class="requiredField">*</span></label
+                >
+                <div class="tooltip-container">
+                  <span class="info-icon">i</span>
+                  <div class="tooltip-text">
+                    Reduce the chance of repeating a token proportionally based
+                    on how often it has appeared in the text so far.This
+                    decreases the likelihood of repeating the exact same text in
+                    a response.
+                  </div>
+                </div>
+                <input
+                  type="number"
+                  placeholder="Please enter value between 0 and 2"
+                  min="0"
+                  max="2"
+                  step="0.01"
+                  class="form-control"
+                  id="frequencyPenalty"
+                  formControlName="frequencyPenalty"
+                  min="0"
+                  max="2"
+                  [(ngModel)]="frequencyPenalty"
+                  name="frequencyPenalty"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="presencePenalty"
+                  >Presence Penalty <span class="requiredField">*</span></label
+                >
+                <div class="tooltip-container">
+                  <span class="info-icon">i</span>
+                  <div class="tooltip-text">
+                    Reduce the chance of repeating any token that has appeared
+                    in the text at all so far. This increases the likelihood of
+                    introducing new topics in a response.
+                  </div>
+                </div>
+                <input
+                  type="number"
+                  placeholder="Please enter value between 0 and 2"
+                  min="0"
+                  max="2"
+                  step="0.01"
+                  class="form-control"
+                  id="presencePenalty"
+                  formControlName="presencePenalty"
+                  min="0"
+                  max="2"
+                  [(ngModel)]="presencePenalty"
+                  name="presencePenalty"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="maxApiCallsForAzure"
+                  >Max API Calls <span class="requiredField">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="maxApiCallsForAzure"
+                  formControlName="maxApiCallsForAzure"
+                  [(ngModel)]="maxApiCallsForAzure"
+                  name="maxApiCallsForAzure"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="maxTokensForAzure"
+                  >Max Tokens(Quota) <span class="requiredField">*</span></label
+                >
+                <input
+                  type="number"
+                  placeholder="Please enter value between 0 and 200000"
+                  min="0"
+                  max="200000"
+                  step="0.01"
+                  class="form-control"
+                  id="maxTokensForAzure"
+                  formControlName="maxTokensForAzure"
+                  min="0"
+                  max="200000"
+                  [(ngModel)]="maxTokensForAzure"
+                  name="maxTokensForAzure"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="retryDelayForAzure"
+                  >Retry Delay(Sec) <span class="requiredField">*</span></label
+                >
+                <select
+                  class="form-control"
+                  id="retryDelayForAzure"
+                  formControlName="retryDelayForAzure"
+                  [(ngModel)]="retryDelayForAzure"
+                  name="retryDelayForAzure"
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="maxRetriesForAzure"
+                  >Max Retries <span class="requiredField">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="maxRetriesForAzure"
+                  formControlName="maxRetriesForAzure"
+                  [(ngModel)]="maxRetriesForAzure"
+                  name="maxRetriesForAzure"
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div class="row adjust">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="maxRetriesForAzure"
-                >Max Retries <span class="requiredField">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="maxRetriesForAzure"
-                formControlName="maxRetriesForAzure"
-                [(ngModel)]="maxRetriesForAzure"
-                name="maxRetriesForAzure"
-              />
+
+        <div *ngIf="modelSelectionForAzure === 'o3-mini'">
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="maxRetriesForAzure"
+                  >For o3-mini <span class="requiredField">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="maxRetriesForAzure"
+                  formControlName="maxRetriesForAzure"
+                  [(ngModel)]="maxRetriesForAzure"
+                  name="maxRetriesForAzure"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="modelSelectionForAzure === 'Phi-4-mini-reasoning'">
+          <div class="row adjust">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="maxRetriesForAzure"
+                  >For Phi-4-mini-reasoning
+                  <span class="requiredField">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="maxRetriesForAzure"
+                  formControlName="maxRetriesForAzure"
+                  [(ngModel)]="maxRetriesForAzure"
+                  name="maxRetriesForAzure"
+                />
+              </div>
             </div>
           </div>
         </div>
