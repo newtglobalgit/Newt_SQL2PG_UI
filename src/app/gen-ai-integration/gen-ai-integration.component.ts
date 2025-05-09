@@ -58,7 +58,7 @@ export class GenAiIntegrationComponent implements OnInit {
     });
     this.genAIFormForAzure = this.fb.group({
       endpointUrl: [''],
-      deploymentName: [''],
+      modelSelectionForAzure: ['Default'],
       apiKey: [''],
       apiVersion: [''],
       maxOutputTokensForAzure: [''],
@@ -99,7 +99,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
   //For Azure
   endpointUrl = '';
-  deploymentName = '';
+  modelSelectionForAzure = 'Default';
   apiKey = '';
   apiVersion = '';
   frequencyPenalty = '';
@@ -137,7 +137,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
   clearGenAIForAzure() {
     this.endpointUrl = '';
-    this.deploymentName = '';
+    this.modelSelectionForAzure = 'Default';
     this.apiKey = '';
     this.apiVersion = '';
     this.frequencyPenalty = '';
@@ -207,7 +207,7 @@ export class GenAiIntegrationComponent implements OnInit {
     const maxTokensForAzure = Number(this.maxOutputTokensForAzure);
     if (
       this.endpointUrl &&
-      this.deploymentName &&
+      this.modelSelectionForAzure &&
       this.apiKey &&
       this.apiVersion &&
       this.frequencyPenalty &&

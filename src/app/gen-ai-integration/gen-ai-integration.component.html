@@ -432,18 +432,23 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="deploymentName">
-                Deployment Name <span class="requiredField">*</span>
-              </label>
-              <input
-                type="text"
-                formControlName="deploymentName"
+              <label for="modelSelectionForAzure"
+                >Model Selection <span class="requiredField">*</span></label
+              >
+              <select
                 class="form-control"
-                id="deploymentName"
-                placeholder="Turboai, gpt4, etc."
-                [(ngModel)]="deploymentName"
-                name="deploymentName"
-              />
+                id="modelSelectionForAzure"
+                formControlName="modelSelectionForAzure"
+                [(ngModel)]="modelSelectionForAzure"
+                name="modelSelectionForAzure"
+              >
+                <option value="Default">Default</option>
+                <option value="gpt-4o">gpt-4o</option>
+                <option value="o3-mini">o3-mini</option>
+                <option value="Phi-4-mini-reasoning">
+                  Phi-4-mini-reasoning
+                </option>
+              </select>
             </div>
           </div>
         </div>
