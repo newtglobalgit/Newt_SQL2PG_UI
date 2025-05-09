@@ -70,6 +70,7 @@ export class GenAiIntegrationComponent implements OnInit {
       maxTokensForAzure: [''],
       retryDelayForAzure: ['1'],
       maxRetriesForAzure: ['1'],
+      reasoningEffort: ['High'],
     });
     this.pingAndGetFlagData();
     this.spinner.show();
@@ -111,6 +112,7 @@ export class GenAiIntegrationComponent implements OnInit {
   retryDelayForAzure: string = '1';
   maxTokensForAzure = '';
   maxApiCallsForAzure: string = '1';
+  reasoningEffort: String = 'High';
 
   locationInvalid: boolean = false;
   activate: boolean = true;
@@ -149,6 +151,7 @@ export class GenAiIntegrationComponent implements OnInit {
     this.retryDelayForAzure = '1';
     this.maxTokensForAzure = '';
     this.maxApiCallsForAzure = '1';
+    this.reasoningEffort = 'High';
   }
 
   saveGenAiDetails() {
