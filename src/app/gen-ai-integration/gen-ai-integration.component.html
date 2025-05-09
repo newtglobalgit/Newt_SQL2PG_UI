@@ -456,7 +456,8 @@
         <div
           *ngIf="
             modelSelectionForAzure === 'Default' ||
-            modelSelectionForAzure === 'gpt-4o'
+            modelSelectionForAzure === 'gpt-4o' ||
+            modelSelectionForAzure === 'Phi-4-mini-reasoning'
           "
         >
           <div class="row adjust">
@@ -898,27 +899,6 @@
                   <option value="Medium">Medium</option>
                   <option value="Low">Low</option>
                 </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="modelSelectionForAzure === 'Phi-4-mini-reasoning'">
-          <div class="row adjust">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="maxRetriesForAzure"
-                  >For Phi-4-mini-reasoning
-                  <span class="requiredField">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="maxRetriesForAzure"
-                  formControlName="maxRetriesForAzure"
-                  [(ngModel)]="maxRetriesForAzure"
-                  name="maxRetriesForAzure"
-                />
               </div>
             </div>
           </div>
