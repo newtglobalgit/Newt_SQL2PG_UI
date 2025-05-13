@@ -433,7 +433,27 @@ export class GenAiIntegrationComponent implements OnInit {
     );
   }
 
-  toggleForm(value: string) {
-    this.selectedForm = value;
-  }
+//   toggleForm(value: string) {
+//     this.selectedForm = value;
+//     console.log(value)
+//   }
+// }
+
+toggleForm(value: string) {
+  this.selectedForm = value;
+  console.log(value);
+
+
+  this.sql2PgService.getToggleValue(value).subscribe(
+    (response) => {
+      console.log("Response from backend:", response);
+      // Optionally assign response to a variable
+    },
+    (error) => {
+      console.error("Error calling backend:", error);
+    }
+  );
 }
+}
+
+
