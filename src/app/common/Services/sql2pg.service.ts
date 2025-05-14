@@ -129,10 +129,10 @@ export class Sql2PgService {
     return this.http.get(this.config.host + '/get_schemas_to_delete');
   }
   // adding service for toggleform
-  getToggleValue(value: any): Observable<any> {
-    const reqObj = { value: value };
-    return this.http.post(this.config.host + '/toggleformvalue', reqObj);
-  }
+  // getToggleValue(value: any): Observable<any> {
+  //   const reqObj = { value: value };
+  //   return this.http.post(this.config.host + '/toggleformvalue', reqObj);
+  // }
 
   mutiple_schema_delete(reqObj: any): Promise<any> {
     return this.http
