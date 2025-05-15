@@ -216,7 +216,7 @@ export class GenAiIntegrationComponent implements OnInit {
       this.frequencyPenalty &&
       this.presencePenalty &&
       this.maxOutputTokensForAzure &&
-      maxTokensForAzure <= 4096 &&
+      // maxTokensForAzure <= 4096 &&
       this.temperatureForAzure !== null &&
       this.temperatureForAzure !== undefined &&
       this.temperatureForAzure >= 0 &&
@@ -435,14 +435,13 @@ export class GenAiIntegrationComponent implements OnInit {
 
   toggleForm(value: string) {
     this.selectedForm = value;
-    console.log(value)
+    console.log(value);
   }
 }
 
 // toggleForm(value: string) {
 //   this.selectedForm = value;
 //   console.log(value);
-
 
 //   this.sql2PgService.getToggleValue(value).subscribe(
 //     (response) => {
@@ -455,5 +454,3 @@ export class GenAiIntegrationComponent implements OnInit {
 //   );
 // }
 // }
-
-
