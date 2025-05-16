@@ -46,7 +46,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
     this.genAIForm = this.fb.group({
       location: [''],
-      modelSelection: ['Default'],
+      modelSelection: ['Please select the model'],
       maxOutputTokens: [''],
       temperature: [1],
       topP: [''],
@@ -58,7 +58,7 @@ export class GenAiIntegrationComponent implements OnInit {
     });
     this.genAIFormForAzure = this.fb.group({
       endpointUrl: [''],
-      modelSelectionForAzure: ['Default'],
+      modelSelectionForAzure: ['Please select the model'],
       apiKey: [''],
       apiVersion: [''],
       maxOutputTokensForAzure: [''],
@@ -88,7 +88,7 @@ export class GenAiIntegrationComponent implements OnInit {
   status: boolean;
   //For GCP
   location: string = '';
-  modelSelection: string = 'Default';
+  modelSelection: string = 'Please select the model';
   maxOutputTokens: string = '';
   temperature: any = 1;
   topP: any = 1;
@@ -100,7 +100,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
   //For Azure
   endpointUrl = '';
-  modelSelectionForAzure = 'Default';
+  modelSelectionForAzure = 'Please select the model';
   apiKey = '';
   apiVersion = '';
   frequencyPenalty = '';
@@ -126,7 +126,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
   clearGenAI() {
     this.location = '';
-    this.modelSelection = 'Default';
+    this.modelSelection = 'Please select the model';
     this.maxOutputTokens = '';
     this.temperature = 1;
     this.topP = '';
@@ -139,7 +139,7 @@ export class GenAiIntegrationComponent implements OnInit {
 
   clearGenAIForAzure() {
     this.endpointUrl = '';
-    this.modelSelectionForAzure = 'Default';
+    this.modelSelectionForAzure = 'Please select the model';
     this.apiKey = '';
     this.apiVersion = '';
     this.frequencyPenalty = '';
@@ -160,6 +160,7 @@ export class GenAiIntegrationComponent implements OnInit {
       this.location &&
       !this.locationInvalid &&
       this.modelSelection &&
+      this.modelSelection != 'Please select the model' &&
       this.maxOutputTokens &&
       maxTokens <= 8192 &&
       this.temperature !== null &&
@@ -211,6 +212,7 @@ export class GenAiIntegrationComponent implements OnInit {
     if (
       this.endpointUrl &&
       this.modelSelectionForAzure &&
+      this.modelSelectionForAzure != 'Please select the model' &&
       this.apiKey &&
       this.apiVersion &&
       this.frequencyPenalty &&
