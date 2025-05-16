@@ -158,7 +158,11 @@
                 >Max Output Tokens <span class="requiredField">*</span></label
               >
               <input
-                type="text"
+                type="number"
+                placeholder="Please enter max output tokens"
+                step="1"
+                min="0"
+                max="8192"
                 class="form-control"
                 id="maxOutputTokens"
                 formControlName="maxOutputTokens"
@@ -192,21 +196,6 @@
         </div>
 
         <div class="row adjust">
-          <!-- <div class="col-md-6">
-            <div class="form-group">
-              <label for="topP"
-                >Top P <span class="requiredField">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="topP"
-                formControlName="topP"
-                [(ngModel)]="topP"
-                name="topP"
-              />
-            </div>
-          </div> -->
           <div class="col-md-6">
             <div class="form-group">
               <label for="topP"
@@ -232,7 +221,9 @@
                 >API Call Limit <span class="requiredField">*</span></label
               >
               <input
-                type="text"
+                type="number"
+                placeholder="Please enter API call limit"
+                step="1"
                 class="form-control"
                 id="apiCallLimit"
                 formControlName="apiCallLimit"
@@ -250,7 +241,9 @@
                 >Max Retries <span class="requiredField">*</span></label
               >
               <input
-                type="text"
+                type="number"
+                placeholder="Please enter max retries"
+                step="1"
                 class="form-control"
                 id="maxRetries"
                 formControlName="maxRetries"
@@ -259,42 +252,6 @@
               />
             </div>
           </div>
-          <!-- <div class="col-md-6">
-            <div class="form-group">
-              <label for="maxRetries"
-                >Max Retries <span class="requiredField">*</span></label
-              >
-              <select
-                class="form-control"
-                id="maxRetries"
-                formControlName="maxRetries"
-                [(ngModel)]="maxRetries"
-                name="maxRetries"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-          </div> -->
-
-          <!-- <div class="col-md-6">
-            <div class="form-group">
-              <label for="retryDelay"
-                >Retry Delay <span class="requiredField">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="retryDelay"
-                formControlName="retryDelay"
-                [(ngModel)]="retryDelay"
-                name="retryDelay"
-              />
-            </div>
-          </div> -->
 
           <div class="col-md-6">
             <div class="form-group">
@@ -325,7 +282,9 @@
                 >Max Tokens <span class="requiredField">*</span></label
               >
               <input
-                type="text"
+                type="number"
+                placeholder="Please enter max tokens"
+                step="1"
                 class="form-control"
                 id="maxTokens"
                 formControlName="maxTokens"
@@ -340,7 +299,9 @@
                 >Max API Calls <span class="requiredField">*</span></label
               >
               <input
-                type="text"
+                type="number"
+                placeholder="Please enter max API calls"
+                step="1"
                 class="form-control"
                 id="maxApiCalls"
                 formControlName="maxApiCalls"
@@ -349,27 +310,6 @@
               />
             </div>
           </div>
-
-          <!-- <div class="col-md-6">
-            <div class="form-group">
-              <label for="maxApiCalls"
-                >Max API Calls <span class="requiredField">*</span></label
-              >
-              <select
-                class="form-control"
-                id="maxApiCalls"
-                formControlName="maxApiCalls"
-                [(ngModel)]="maxApiCalls"
-                name="maxApiCalls"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-          </div> -->
         </div>
       </div>
 
@@ -503,7 +443,8 @@
                   >Max Output Tokens <span class="requiredField">*</span></label
                 >
                 <input
-                  type="text"
+                  type="number"
+                  step="1"
                   class="form-control"
                   id="maxOutputTokensForAzure"
                   formControlName="maxOutputTokensForAzure"
@@ -622,7 +563,9 @@
                   >Max API Calls <span class="requiredField">*</span></label
                 >
                 <input
-                  type="text"
+                  type="number"
+                  placeholder="Please enter max API calls"
+                  step="1"
                   class="form-control"
                   id="maxApiCallsForAzure"
                   formControlName="maxApiCallsForAzure"
@@ -683,7 +626,9 @@
                   >Max Retries <span class="requiredField">*</span></label
                 >
                 <input
-                  type="text"
+                  type="number"
+                  placeholder="Please enter max retries"
+                  step="1"
                   class="form-control"
                   id="maxRetriesForAzure"
                   formControlName="maxRetriesForAzure"
