@@ -55,7 +55,10 @@ export class DbSetupComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sourceDBTypeValue = 'MsSql';
+    this.targetDBTypeValue = 'Postgres';
+  }
 
   onRadioButtonSelected(event: any) {
     this.oracleConnect = event.target.value;
@@ -90,7 +93,7 @@ export class DbSetupComponent implements OnInit {
 
     this.sql2PgService.testSourceDbConnection(reqObj).subscribe((res) => {
       this.spinner.hide();
-     
+
       if (res[0].status === 'SUCCESS') {
         if (isTestSrcConBtnClicked) {
           this.disableSource = true;
@@ -116,7 +119,7 @@ export class DbSetupComponent implements OnInit {
 
     this.sql2PgService.testTargetDbConnection(reqObj).subscribe((res) => {
       this.spinner.hide();
-     
+
       if (res[0].status === 'SUCCESS') {
         if (isTestTargetConBtnClicked) {
           this.disableTarget = true;
@@ -139,8 +142,7 @@ export class DbSetupComponent implements OnInit {
         if (res[0].status === 'SUCCESS') {
           this.openAlert('Submitted Successfully');
           this.router.navigate(['/dbAssessment']);
-        }
-        else{
+        } else {
           this.openAlert(res[0].message);
         }
       });
@@ -153,5 +155,13 @@ export class DbSetupComponent implements OnInit {
       if (result === 'ok') {
       }
     });
+  }
+
+  onClear() {
+    this.dbCredentialsForm.resetForm();
+
+    setTimeout(() => {
+      this.ngOnInit();
+    }, 50);
   }
 }
