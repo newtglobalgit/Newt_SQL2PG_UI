@@ -390,7 +390,7 @@
                 <option value="gpt-4o">gpt-4o</option>
                 <option value="o3-mini">o3-mini</option>
                 <option value="gpt-4.1">gpt-4.1</option>
-                <option value="o4-mini">o4-mini</option>
+                <option value="Phi-4">Phi-4</option>
               </select>
             </div>
           </div>
@@ -400,11 +400,10 @@
           *ngIf="
             modelSelectionForAzure === 'Please select the model' ||
             modelSelectionForAzure === 'gpt-4o' ||
-            modelSelectionForAzure === 'gpt-4.1' 
-            
+            modelSelectionForAzure === 'gpt-4.1' ||
+            modelSelectionForAzure === 'Phi-4'
           "
         >
-        <!-- ||modelSelectionForAzure === 'o4-mini'-->
           <div class="row adjust">
             <div class="col-md-6">
               <div class="form-group">
@@ -853,124 +852,6 @@
             </div>
           </div>
         </div>
-
-        <!--Form for o4-mini -->
-        <div *ngIf="modelSelectionForAzure === 'o4-mini'">
-          <div class="row adjust">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="apiKey">
-                  API Key <span class="requiredField">*</span>
-                </label>
-                <input
-                  type="text"
-                  formControlName="apiKey"
-                  class="form-control"
-                  id="apiKey"
-                  placeholder="(Azure OpenAI Key)"
-                  [(ngModel)]="apiKey"
-                  name="apiKey"
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="apiVersion">
-                  API Version <span class="requiredField">*</span>
-                </label>
-                <input
-                  type="text"
-                  formControlName="apiVersion"
-                  class="form-control"
-                  id="apiVersion"
-                  placeholder="2023-12-01-preview"
-                  [(ngModel)]="apiVersion"
-                  name="apiVersion"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row adjust">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="maxOutputTokensForAzure"
-                  >Max Output Tokens <span class="requiredField">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="maxOutputTokensForAzure"
-                  formControlName="maxOutputTokensForAzure"
-                  placeholder="Max token limit 4096"
-                  [(ngModel)]="maxOutputTokensForAzure"
-                  name="maxOutputTokensForAzure"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row adjust">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="maxTokensForAzure"
-                  >Max Tokens(Quota) <span class="requiredField">*</span></label
-                >
-                <input
-                  type="number"
-                  placeholder="Please enter value between 0 and 200000"
-                  min="0"
-                  max="200000"
-                  step="0.01"
-                  class="form-control"
-                  id="maxTokensForAzure"
-                  formControlName="maxTokensForAzure"
-                  min="0"
-                  max="200000"
-                  [(ngModel)]="maxTokensForAzure"
-                  name="maxTokensForAzure"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="retryDelayForAzure"
-                  >Retry Delay(Sec) <span class="requiredField">*</span></label
-                >
-                <select
-                  class="form-control"
-                  id="retryDelayForAzure"
-                  formControlName="retryDelayForAzure"
-                  [(ngModel)]="retryDelayForAzure"
-                  name="retryDelayForAzure"
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row adjust">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="maxRetriesForAzure"
-                  >Max Retries <span class="requiredField">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="maxRetriesForAzure"
-                  formControlName="maxRetriesForAzure"
-                  [(ngModel)]="maxRetriesForAzure"
-                  name="maxRetriesForAzure"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Form end for o4-mini-->
       </div>
       <div
         *ngIf="chatGptEnabled"
