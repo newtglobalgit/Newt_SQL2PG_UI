@@ -390,6 +390,7 @@
                 <option value="gpt-4o">gpt-4o</option>
                 <option value="o3-mini">o3-mini</option>
                 <option value="gpt-4.1">gpt-4.1</option>
+                <option value="Phi-4">Phi-4</option>
               </select>
             </div>
           </div>
@@ -399,7 +400,8 @@
           *ngIf="
             modelSelectionForAzure === 'Please select the model' ||
             modelSelectionForAzure === 'gpt-4o' ||
-            modelSelectionForAzure === 'gpt-4.1'
+            modelSelectionForAzure === 'gpt-4.1' ||
+            modelSelectionForAzure === 'Phi-4'
           "
         >
           <div class="row adjust">
